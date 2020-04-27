@@ -17,6 +17,9 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('DOT Flutter Base', style: TextStyle(fontWeight: FontWeight.bold)),
+      ),
       body: menu.elementAt(_selectedIndex),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );

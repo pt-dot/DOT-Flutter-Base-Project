@@ -7,7 +7,7 @@ class ListPost extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Text('List Post'),
-      ),
+      )
     );
   }
 
