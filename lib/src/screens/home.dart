@@ -1,3 +1,4 @@
+import 'package:base_flutter/src/data/constants.dart';
 import 'package:base_flutter/src/screens/list_photo.dart';
 import 'package:base_flutter/src/screens/list_post.dart';
 import 'package:base_flutter/src/screens/profile.dart';
@@ -18,9 +19,12 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('DOT Flutter Base', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('DOT Flutter Base', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.white)),
       ),
-      body: menu.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: menu.map((t) => Center(child: t)).toList(),
+      ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }

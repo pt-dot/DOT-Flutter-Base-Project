@@ -7,10 +7,10 @@ class NetworkHelper {
 
   NetworkHelper() {
     _dio = Dio(BaseOptions(
-      baseUrl: BASE_URL,
-      connectTimeout: TIME_OUT,
-      receiveTimeout: TIME_OUT,
-      sendTimeout: TIME_OUT,
+      baseUrl: URLs.host,
+      connectTimeout: AppLimit.REQUEST_TIME_OUT,
+      receiveTimeout: AppLimit.REQUEST_TIME_OUT,
+      sendTimeout: AppLimit.REQUEST_TIME_OUT,
     ));
     if (isInDebugMode) {
       _dio.interceptors.add(LoggingInterceptor());
