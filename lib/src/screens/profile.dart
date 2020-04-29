@@ -48,12 +48,31 @@ class Profile extends StatelessWidget {
 
   Widget _buildProfile(BuildContext context, User user) {
     return Container(
+      padding: EdgeInsets.all(dpConverter(context, 4)),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(user.id.toString(), style: TextStyle(fontSize: dpConverter(context, TextSizeConst.verySmall)))
+          _title('Id: ${user.id}'),
+          _content('Name : ${user.name}'),
+          _content('Email : ${user.email}'),
+          _content('Phone : ${user.phone}'),
+          _title('Address'),
+          _content('Street : ${user.address.street}'),
+          _content('Suite : ${user.address.suite}'),
+          _title('Company'),
+          _content('Name : ${user.company.name}'),
         ],
       ),
     );
+  }
+
+  Widget _title(String content) {
+    return Text(content, style: TextStyle(fontSize: TextSizeConst.medium, fontWeight: FontWeight.bold));
+  }
+
+  Widget _content(String content) {
+    return Text(content, style: TextStyle(fontSize: TextSizeConst.regular));
   }
 
 }
