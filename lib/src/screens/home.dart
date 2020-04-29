@@ -18,9 +18,6 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('DOT Flutter Base', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.white)),
-      ),
       body: IndexedStack(
         index: _selectedIndex,
         children: menu.map((t) => Center(child: t)).toList(),
