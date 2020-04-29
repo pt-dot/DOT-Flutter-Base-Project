@@ -21,7 +21,7 @@ class Profile extends StatelessWidget {
   Widget _buildBody(BuildContext context, ProfileBloc bloc) {
     return StreamBuilder<UserState>(
       stream: bloc.streamUser,
-      initialData: UserUninitialized(),
+      initialData: UserUninitialized(User()),
       builder: (context, snapshot) {
         UserState userState = snapshot.data;
         if (userState is UserLoading) {

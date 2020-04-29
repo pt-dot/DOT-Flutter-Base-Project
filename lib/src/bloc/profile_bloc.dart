@@ -1,3 +1,4 @@
+import 'package:base_flutter/src/data/hive/user_hive.dart';
 import 'package:base_flutter/src/models/user.dart';
 import 'package:base_flutter/src/repositories/profile_repository.dart';
 import 'package:base_flutter/src/states/user_state.dart';
@@ -18,6 +19,7 @@ class ProfileBloc {
     try {
       final User user = await _profileRepository.getUser(id);
       changeUser(UserLoaded(user));
+      UserHive.saveUser(user);
     } catch (err) {
       changeUser(UserError(err));
     }
