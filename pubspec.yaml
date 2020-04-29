@@ -28,7 +28,7 @@ dependencies:
   dio: ^3.0.9
   equatable: ^1.1.1
   flutter_pagewise: ^1.2.3
-  provider: ^4.0.4
+  provider: ^4.0.5+1
   rxdart: ^0.24.0
 
 dev_dependencies:
