@@ -6,15 +6,25 @@ import 'package:base_flutter/src/widgets/my_app_toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+const int ID_USER = 1;
+
 class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     ProfileBloc bloc = Provider.of<ProfileBloc>(context, listen: false);
-    bloc.getUser(1);
+    bloc.getUser(ID_USER);
     return Scaffold(
       appBar: MyAppToolbar(title: 'Profile'),
-      body: _buildBody(context, bloc),
+      body: RefreshIndicator (
+        onRefresh: () async {
+          bloc.getUser(ID_USER);
+          await Future.value({});
+        },
+        child: SingleChildScrollView(
+          child: _buildBody(context, bloc),
+        ),
+      )
     );
   }
 
@@ -26,6 +36,7 @@ class Profile extends StatelessWidget {
         UserState userState = snapshot.data;
         if (userState is UserLoading) {
           return Container(
+            height: MediaQuery.of(context).size.height,
             child: Center(
               child: CircularProgressIndicator(),
             ),
@@ -49,6 +60,8 @@ class Profile extends StatelessWidget {
   Widget _buildProfile(BuildContext context, User user) {
     return Container(
       padding: EdgeInsets.all(dpConverter(context, 4)),
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
