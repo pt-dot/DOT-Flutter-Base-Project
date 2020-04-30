@@ -1,12 +1,13 @@
 import 'package:base_flutter/src/bloc/profile_bloc.dart';
 import 'package:base_flutter/src/data/constants.dart';
+import 'package:base_flutter/src/data/hive/user_hive.dart';
 import 'package:base_flutter/src/models/user.dart';
 import 'package:base_flutter/src/states/user_state.dart';
 import 'package:base_flutter/src/widgets/my_app_toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-const int ID_USER = 1;
+const int ID_USER = 2;
 
 class Profile extends StatelessWidget {
 
@@ -22,7 +23,9 @@ class Profile extends StatelessWidget {
           await Future.value({});
         },
         child: SingleChildScrollView(
-          child: _buildBody(context, bloc),
+          child: Container(
+            child: _buildBody(context, bloc),
+          ),
         ),
       )
     );
@@ -31,25 +34,23 @@ class Profile extends StatelessWidget {
   Widget _buildBody(BuildContext context, ProfileBloc bloc) {
     return StreamBuilder<UserState>(
       stream: bloc.streamUser,
-      initialData: UserUninitialized(User()),
+      initialData: UserUninitialized(UserHive.getUser()),
       builder: (context, snapshot) {
         UserState userState = snapshot.data;
+        if (userState is UserUninitialized) {
+          return _buildProfile(context, userState.user);
+        }
         if (userState is UserLoading) {
-          return Container(
-            height: MediaQuery.of(context).size.height,
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
+          return  Center(
+            child: Text('Loading...'),
           );
         }
         if (userState is UserLoaded) {
           return _buildProfile(context, userState.user);
         }
         if (userState is UserError) {
-          return Container(
-            child: Center(
-              child: Text(userState.error.toString()),
-            ),
+          return Center(
+            child: Text(userState.error.toString()),
           );
         }
         return Container();

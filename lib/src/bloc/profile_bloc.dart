@@ -15,11 +15,18 @@ class ProfileBloc {
   Function(UserState) get changeUser => _userState.sink.add;
 
   Future<void> getUser(int id) async {
+    User userDb = UserHive.getUser();
     changeUser(UserLoading());
     try {
       final User user = await _profileRepository.getUser(id);
-      changeUser(UserLoaded(user));
-      UserHive.saveUser(user);
+      final checkData = user == userDb;
+      print('Profile Bloc # is data user same ? $checkData');
+      if (!checkData) {
+        changeUser(UserLoaded(user));
+        UserHive.saveUser(user);
+      } else {
+        changeUser(UserUninitialized(userDb));
+      }
     } catch (err) {
       changeUser(UserError(err));
     }
