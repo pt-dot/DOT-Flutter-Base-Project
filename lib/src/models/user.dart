@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class User  extends Equatable {
+
   int id;
   String name;
   String username;
@@ -55,7 +56,8 @@ class User  extends Equatable {
 
 }
 
-class Address {
+class Address extends Equatable {
+
   String street;
   String suite;
   String city;
@@ -83,9 +85,14 @@ class Address {
     }
     return data;
   }
+
+  @override
+  List<Object> get props => [street, suite, city, zipcode, geo];
+
 }
 
-class Geo {
+class Geo extends Equatable {
+
   String lat;
   String lng;
 
@@ -102,9 +109,14 @@ class Geo {
     data['lng'] = this.lng;
     return data;
   }
+
+  @override
+  List<Object> get props => [lat, lng];
+
 }
 
-class Company {
+class Company extends Equatable {
+
   String name;
   String catchPhrase;
   String bs;
@@ -124,4 +136,8 @@ class Company {
     data['bs'] = this.bs;
     return data;
   }
+
+  @override
+  List<Object> get props => [name, catchPhrase, bs];
+
 }
