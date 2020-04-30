@@ -19,7 +19,8 @@ void main() {
   SystemChrome.setPreferredOrientations([service.DeviceOrientation.portraitUp]).then((_){
     runApp(
       DevicePreview(
-        enabled: isInDebugMode ? true : false,
+        // enabled: isInDebugMode ? true : false,
+        enabled: false,
         builder: (context) => MyApp(),
       )
     );
