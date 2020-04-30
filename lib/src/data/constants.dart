@@ -11,6 +11,7 @@ mixin URLs {
 mixin AppLimit {
   static const int REQUEST_TIME_OUT = 30000;
   static const ALBUM_PAGE_SIZE = 18;
+  static const POST_PAGE_SIZE =  100;
 }
 
 // Colors
