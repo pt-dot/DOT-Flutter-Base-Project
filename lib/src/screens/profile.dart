@@ -1,44 +1,56 @@
 import 'package:base_flutter/src/bloc/profile_bloc.dart';
 import 'package:base_flutter/src/data/constants.dart';
+import 'package:base_flutter/src/data/hive/user_hive.dart';
 import 'package:base_flutter/src/models/user.dart';
 import 'package:base_flutter/src/states/user_state.dart';
 import 'package:base_flutter/src/widgets/my_app_toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+const int ID_USER = 2;
+
 class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     ProfileBloc bloc = Provider.of<ProfileBloc>(context, listen: false);
-    bloc.getUser(1);
+    bloc.getUser(ID_USER);
     return Scaffold(
       appBar: MyAppToolbar(title: 'Profile'),
-      body: _buildBody(context, bloc),
+      body: RefreshIndicator (
+        onRefresh: () async {
+          bloc.getUser(ID_USER);
+          await Future.value({});
+        },
+        child: SingleChildScrollView(
+          child: Container(
+            child: _buildBody(context, bloc),
+          ),
+        ),
+      )
     );
   }
 
   Widget _buildBody(BuildContext context, ProfileBloc bloc) {
     return StreamBuilder<UserState>(
       stream: bloc.streamUser,
-      initialData: UserUninitialized(),
+      initialData: UserUninitialized(UserHive.getUser()),
       builder: (context, snapshot) {
         UserState userState = snapshot.data;
+        if (userState is UserUninitialized) {
+          return _buildProfile(context, userState.user);
+        }
         if (userState is UserLoading) {
-          return Container(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
+          return  Center(
+            child: Text('Loading...'),
           );
         }
         if (userState is UserLoaded) {
           return _buildProfile(context, userState.user);
         }
         if (userState is UserError) {
-          return Container(
-            child: Center(
-              child: Text(userState.error.toString()),
-            ),
+          return Center(
+            child: Text(userState.error.toString()),
           );
         }
         return Container();
@@ -49,6 +61,8 @@ class Profile extends StatelessWidget {
   Widget _buildProfile(BuildContext context, User user) {
     return Container(
       padding: EdgeInsets.all(dpConverter(context, 4)),
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
