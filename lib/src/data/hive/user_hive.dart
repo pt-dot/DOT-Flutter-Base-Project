@@ -57,4 +57,36 @@ class UserHive extends HiveObject {
     boxUser.add(userHive);
   }
 
+  static User getUser() {
+    Box<UserHive> boxUser = Hive.box<UserHive>(DB_USER);
+    if (boxUser.length > 0) {
+      UserHive userHive = boxUser.getAt(0);
+      return User(
+        id: userHive.id,
+        name: userHive.name,
+        username: userHive.username,
+        email: userHive.email,
+        address: Address(
+          street: userHive.address.street,
+          suite: userHive.address.suite,
+          city: userHive.address.city,
+          zipcode: userHive.address.zipcode,
+          geo: Geo(
+            lat: userHive.address.geo.lat,
+            lng: userHive.address.geo.lng
+          )
+        ),
+        phone: userHive.phone,
+        website: userHive.website,
+        company: Company(
+          name: userHive.company.name,
+          catchPhrase: userHive.company.catchPhrase,
+          bs: userHive.company.bs
+        )
+      );
+    } else {
+      return User(id: 0);
+    }
+  }
+
 }
