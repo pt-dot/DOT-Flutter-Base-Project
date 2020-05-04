@@ -22,31 +22,31 @@ class User  extends Equatable {
         this.company});
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    username = json['username'];
-    email = json['email'];
+    id = json['id'] as int;
+    name = json['name'] as String;
+    username = json['username'] as String;
+    email = json['email'] as String;
     address =
-    json['address'] != null ? new Address.fromJson(json['address']) : null;
-    phone = json['phone'];
-    website = json['website'];
+    json['address'] != null ? Address.fromJson(json['address'] as Map<String, dynamic>) : null;
+    phone = json['phone'] as String;
+    website = json['website'] as String;
     company =
-    json['company'] != null ? new Company.fromJson(json['company']) : null;
+    json['company'] != null ? Company.fromJson(json['company'] as Map<String, dynamic>) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['username'] = this.username;
-    data['email'] = this.email;
-    if (this.address != null) {
-      data['address'] = this.address.toJson();
+    data['id'] = id;
+    data['name'] = name;
+    data['username'] = username;
+    data['email'] = email;
+    if (address != null) {
+      data['address'] = address.toJson();
     }
-    data['phone'] = this.phone;
-    data['website'] = this.website;
-    if (this.company != null) {
-      data['company'] = this.company.toJson();
+    data['phone'] = phone;
+    data['website'] = website;
+    if (company != null) {
+      data['company'] = company.toJson();
     }
     return data;
   }
@@ -67,21 +67,21 @@ class Address extends Equatable {
   Address({this.street, this.suite, this.city, this.zipcode, this.geo});
 
   Address.fromJson(Map<String, dynamic> json) {
-    street = json['street'];
-    suite = json['suite'];
-    city = json['city'];
-    zipcode = json['zipcode'];
-    geo = json['geo'] != null ? new Geo.fromJson(json['geo']) : null;
+    street = json['street'] as String;
+    suite = json['suite'] as String;
+    city = json['city'] as String;
+    zipcode = json['zipcode'] as String;
+    geo = json['geo'] != null ? Geo.fromJson(json['geo'] as Map<String, dynamic>) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['street'] = this.street;
-    data['suite'] = this.suite;
-    data['city'] = this.city;
-    data['zipcode'] = this.zipcode;
-    if (this.geo != null) {
-      data['geo'] = this.geo.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['street'] = street;
+    data['suite'] = suite;
+    data['city'] = city;
+    data['zipcode'] = zipcode;
+    if (geo != null) {
+      data['geo'] = geo.toJson();
     }
     return data;
   }
@@ -99,14 +99,14 @@ class Geo extends Equatable {
   Geo({this.lat, this.lng});
 
   Geo.fromJson(Map<String, dynamic> json) {
-    lat = json['lat'];
-    lng = json['lng'];
+    lat = json['lat'] as String;
+    lng = json['lng'] as String;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['lng'] = this.lng;
+    data['lat'] = lat;
+    data['lng'] = lng;
     return data;
   }
 
@@ -124,16 +124,16 @@ class Company extends Equatable {
   Company({this.name, this.catchPhrase, this.bs});
 
   Company.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    catchPhrase = json['catchPhrase'];
-    bs = json['bs'];
+    name = json['name'] as String;
+    catchPhrase = json['catchPhrase'] as String;
+    bs = json['bs'] as String;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['catchPhrase'] = this.catchPhrase;
-    data['bs'] = this.bs;
+    data['name'] = name;
+    data['catchPhrase'] = catchPhrase;
+    data['bs'] = bs;
     return data;
   }
 

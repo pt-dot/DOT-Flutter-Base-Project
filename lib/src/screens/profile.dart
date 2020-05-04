@@ -20,7 +20,7 @@ class Profile extends StatelessWidget {
       body: RefreshIndicator (
         onRefresh: () async {
           bloc.getUser(ID_USER);
-          await Future.value({});
+          // await Future.value({});
         },
         child: SingleChildScrollView(
           child: Container(

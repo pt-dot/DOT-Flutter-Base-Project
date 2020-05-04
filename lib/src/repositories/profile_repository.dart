@@ -8,7 +8,7 @@ class ProfileRepository {
 
   Future<User> getUser(int id) async {
     final Response<dynamic> response = await _networkHelper.get('users/$id') as Response<dynamic>;
-    return User.fromJson(response.data);
+    return User.fromJson(response.data as Map<String, dynamic>);
   }
 
 }

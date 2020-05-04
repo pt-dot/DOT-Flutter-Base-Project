@@ -23,7 +23,7 @@ class ListPost extends StatelessWidget {
         onRefresh: () async {
           //refresh page
           _pageLoaderController.reset();
-          await Future.value({});
+          // await Future.value({});
         },
         child: PagewiseListView(
           padding: EdgeInsets.all(8),

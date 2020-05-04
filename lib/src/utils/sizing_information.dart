@@ -8,17 +8,18 @@ enum DeviceScreenType {
 
 class SizingInformation {
 
-  final Orientation orientation;
-  final DeviceScreenType deviceType;
-  final Size screenSize;
-  final Size localWidgetSize;
-
   SizingInformation({
     this.orientation,
     this.deviceType,
     this.screenSize,
     this.localWidgetSize,
   });
+  
+  final Orientation orientation;
+  final DeviceScreenType deviceType;
+  final Size screenSize;
+  final Size localWidgetSize;
+
 
   @override
   String toString() {

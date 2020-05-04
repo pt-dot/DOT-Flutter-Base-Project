@@ -10,7 +10,7 @@ class ListAlbum {
 
 }
 
-class Album extends Equatable{
+class Album extends Equatable {
 
   Album({this.userId, this.id, this.title});
 

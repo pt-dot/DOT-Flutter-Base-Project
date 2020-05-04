@@ -22,7 +22,7 @@ class ListPhoto extends StatelessWidget {
       body: RefreshIndicator(
         onRefresh: () async {
           _pageLoadController.reset();
-          await Future.value({});
+          // await Future.value({});
         },
         child:  PagewiseGridView.count(
           crossAxisCount: 3,
