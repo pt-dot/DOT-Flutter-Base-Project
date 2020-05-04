@@ -1,4 +1,4 @@
-import 'package:base_flutter/src/screens/home.dart';
+import 'package:base_flutter/src/ui/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
 class Splash extends StatelessWidget {

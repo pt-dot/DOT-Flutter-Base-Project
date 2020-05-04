@@ -1,4 +1,4 @@
-import 'package:base_flutter/src/models/user.dart';
+import 'package:base_flutter/src/core/data/models/user.dart';
 
 abstract class UserState {
   const UserState();

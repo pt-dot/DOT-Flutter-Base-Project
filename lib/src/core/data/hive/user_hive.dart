@@ -1,8 +1,8 @@
-import 'package:base_flutter/src/data/hive/address_hive.dart';
-import 'package:base_flutter/src/data/hive/company_hive.dart';
-import 'package:base_flutter/src/data/hive/geo_hive.dart';
-import 'package:base_flutter/src/data/hive_constants.dart';
-import 'package:base_flutter/src/models/user.dart';
+import 'package:base_flutter/src/core/data/hive/address_hive.dart';
+import 'package:base_flutter/src/core/data/hive/company_hive.dart';
+import 'package:base_flutter/src/core/data/hive/geo_hive.dart';
+import 'package:base_flutter/src/core/data/hive_constants.dart';
+import 'package:base_flutter/src/core/data/models/user.dart';
 import 'package:hive/hive.dart';
 part 'user_hive.g.dart';
 

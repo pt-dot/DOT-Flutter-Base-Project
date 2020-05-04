@@ -1,9 +1,9 @@
-import 'package:base_flutter/src/bloc/profile_bloc.dart';
-import 'package:base_flutter/src/data/constants.dart';
-import 'package:base_flutter/src/data/hive/user_hive.dart';
-import 'package:base_flutter/src/models/user.dart';
-import 'package:base_flutter/src/states/user_state.dart';
-import 'package:base_flutter/src/widgets/my_app_toolbar.dart';
+import 'package:base_flutter/src/core/bloc/profile_bloc.dart';
+import 'package:base_flutter/src/ui/shared/ui_constants.dart';
+import 'package:base_flutter/src/core/data/hive/user_hive.dart';
+import 'package:base_flutter/src/core/data/models/user.dart';
+import 'package:base_flutter/src/core/states/user_state.dart';
+import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

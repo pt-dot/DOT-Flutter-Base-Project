@@ -1,7 +1,7 @@
-import 'package:base_flutter/src/data/constants.dart';
-import 'package:base_flutter/src/screens/list_photo.dart';
-import 'package:base_flutter/src/screens/list_post.dart';
-import 'package:base_flutter/src/screens/profile.dart';
+import 'package:base_flutter/src/core/data/constants.dart';
+import 'package:base_flutter/src/ui/screens/home/list_photo.dart';
+import 'package:base_flutter/src/ui/screens/home/list_post.dart';
+import 'package:base_flutter/src/ui/screens/home/profile.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {

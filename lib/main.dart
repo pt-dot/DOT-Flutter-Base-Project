@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:base_flutter/src/data/hive/address_hive.dart';
-import 'package:base_flutter/src/data/hive/company_hive.dart';
-import 'package:base_flutter/src/data/hive/geo_hive.dart';
-import 'package:base_flutter/src/data/hive/user_hive.dart';
-import 'package:base_flutter/src/data/hive_constants.dart';
+import 'package:base_flutter/src/core/data/hive/address_hive.dart';
+import 'package:base_flutter/src/core/data/hive/company_hive.dart';
+import 'package:base_flutter/src/core/data/hive/geo_hive.dart';
+import 'package:base_flutter/src/core/data/hive/user_hive.dart';
+import 'package:base_flutter/src/core/data/hive_constants.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

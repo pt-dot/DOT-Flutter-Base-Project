@@ -1,5 +1,5 @@
-import 'package:base_flutter/src/models/album.dart';
-import 'package:base_flutter/src/repositories/photo_repository.dart';
+import 'package:base_flutter/src/core/data/models/album.dart';
+import 'package:base_flutter/src/core/repositories/photo_repository.dart';
 
 class PhotoBloc {
 

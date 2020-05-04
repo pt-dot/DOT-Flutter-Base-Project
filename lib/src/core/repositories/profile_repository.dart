@@ -1,5 +1,5 @@
-import 'package:base_flutter/src/models/user.dart';
-import 'package:base_flutter/src/networks/network_helper.dart';
+import 'package:base_flutter/src/core/data/models/user.dart';
+import 'package:base_flutter/src/core/networks/network_helper.dart';
 import 'package:dio/dio.dart';
 
 class ProfileRepository {

@@ -1,6 +1,6 @@
-import 'package:base_flutter/src/data/constants.dart';
-import 'package:base_flutter/src/providers/provider_list.dart';
-import 'package:base_flutter/src/routes/app_route.dart';
+import 'package:base_flutter/src/core/data/constants.dart';
+import 'package:base_flutter/src/core/providers/provider_list.dart';
+import 'package:base_flutter/src/core/routes/app_route.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
