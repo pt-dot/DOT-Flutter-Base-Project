@@ -1,6 +1,5 @@
 import 'package:base_flutter/src/core/bloc/profile_bloc.dart';
 import 'package:base_flutter/src/ui/shared/ui_constants.dart';
-import 'package:base_flutter/src/core/data/hive/user_hive.dart';
 import 'package:base_flutter/src/core/data/models/user.dart';
 import 'package:base_flutter/src/core/states/user_state.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
@@ -34,12 +33,8 @@ class Profile extends StatelessWidget {
   Widget _buildBody(BuildContext context, ProfileBloc bloc) {
     return StreamBuilder<UserState>(
       stream: bloc.streamUser,
-      initialData: UserUninitialized(UserHive.getUser()),
       builder: (context, snapshot) {
         UserState userState = snapshot.data;
-        if (userState is UserUninitialized) {
-          return _buildProfile(context, userState.user);
-        }
         if (userState is UserLoading) {
           return  Center(
             child: Text('Loading...'),

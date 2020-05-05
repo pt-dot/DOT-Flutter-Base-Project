@@ -1,14 +1,25 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
+part 'user.g.dart';
 
-class User  extends Equatable {
+@HiveType(typeId: 4)
+class User  extends Equatable with HiveObject{
 
+  @HiveField(0)
   int id;
+  @HiveField(1)
   String name;
+  @HiveField(2)
   String username;
+  @HiveField(3)
   String email;
+  @HiveField(4)
   Address address;
+  @HiveField(5)
   String phone;
+  @HiveField(6)
   String website;
+  @HiveField(7)
   Company company;
 
   User(
@@ -56,12 +67,18 @@ class User  extends Equatable {
 
 }
 
-class Address extends Equatable {
+@HiveType(typeId: 3)
+class Address extends Equatable with HiveObject {
 
+  @HiveField(0)
   String street;
+  @HiveField(1)
   String suite;
+  @HiveField(2)
   String city;
+  @HiveField(3)
   String zipcode;
+  @HiveField(4)
   Geo geo;
 
   Address({this.street, this.suite, this.city, this.zipcode, this.geo});
@@ -91,9 +108,12 @@ class Address extends Equatable {
 
 }
 
-class Geo extends Equatable {
+@HiveType(typeId: 2)
+class Geo extends Equatable with HiveObject{
 
+  @HiveField(0)
   String lat;
+  @HiveField(1)
   String lng;
 
   Geo({this.lat, this.lng});
@@ -115,10 +135,14 @@ class Geo extends Equatable {
 
 }
 
-class Company extends Equatable {
+@HiveType(typeId: 1)
+class Company extends Equatable with HiveObject {
 
+  @HiveField(0)
   String name;
+  @HiveField(1)
   String catchPhrase;
+  @HiveField(2)
   String bs;
 
   Company({this.name, this.catchPhrase, this.bs});
