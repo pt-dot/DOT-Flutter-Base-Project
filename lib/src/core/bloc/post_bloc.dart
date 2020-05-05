@@ -1,5 +1,5 @@
 import 'package:base_flutter/src/core/data/models/post.dart';
-import 'package:base_flutter/src/core/repositories/post_repository.dart';
+import 'package:base_flutter/src/core/repositories/api/post_repository.dart';
 
 class PostBloc {
 
