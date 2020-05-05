@@ -38,7 +38,6 @@ class Post extends Equatable{
   String body;
 
   @override
-  // TODO: implement props
   List<Object> get props => [id, title];
 
 }

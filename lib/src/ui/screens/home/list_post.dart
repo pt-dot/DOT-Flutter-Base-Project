@@ -1,6 +1,7 @@
 import 'package:base_flutter/src/core/bloc/post_bloc.dart';
 import 'package:base_flutter/src/core/data/constants.dart';
-import 'package:base_flutter/src/core/data/models/Post.dart';
+import 'package:base_flutter/src/core/data/models/post.dart';
+import 'package:base_flutter/src/ui/screens/home/widgets/item_post.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
@@ -28,15 +29,11 @@ class ListPost extends StatelessWidget {
         child: PagewiseListView(
           padding: EdgeInsets.all(8),
           pageLoadController: _pageLoaderController,
-          itemBuilder: this._postCell,
+          itemBuilder: (BuildContext context, Post post, int index) {
+            return ItemPost(post);
+          },
         ),
       )
-    );
-  }
-
-  Widget _postCell(BuildContext context, Post item, int _){
-    return Container(
-      child: Text(item.title),
     );
   }
 
