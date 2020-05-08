@@ -15,7 +15,7 @@ class ListPhoto extends StatelessWidget {
     final PhotoBloc _bloc = Provider.of<PhotoBloc>(context, listen: false);
     final _pageLoadController = PagewiseLoadController(
         pageSize: AppLimit.ALBUM_PAGE_SIZE,
-        pageFuture: (pageIndex) => _bloc.getListAlbum(pageIndex * AppLimit.ALBUM_PAGE_SIZE)
+        pageFuture: (pageIndex) => _bloc.fetchAlbumList(pageIndex * AppLimit.ALBUM_PAGE_SIZE)
     );
 
     return Scaffold(

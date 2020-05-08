@@ -1,16 +1,18 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
+part 'album.g.dart';
 
-class ListAlbum {
+@HiveType(typeId: 5)
+class Album extends Equatable with HiveObject {
 
-  ListAlbum.fromJson(List<dynamic> json) {
-   listAlbum = json.map((dynamic i) => Album.fromJson(i)).toList();
-  }
+  @HiveField(0)
+  int userId;
 
-  List<Album> listAlbum;
+  @HiveField(1)
+  int id;
 
-}
-
-class Album extends Equatable {
+  @HiveField(2)
+  String title;
 
   Album({this.userId, this.id, this.title});
 
@@ -20,9 +22,6 @@ class Album extends Equatable {
     title = json['title'].toString();
   }
 
-  int userId;
-  int id;
-  String title;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -34,5 +33,17 @@ class Album extends Equatable {
 
   @override
   List<Object> get props => <Object>[id, title];
+
+}
+
+class ListAlbum {
+
+  ListAlbum({this.listAlbum});
+
+  static ListAlbum fromJson(List<dynamic> json) => ListAlbum(
+   listAlbum: json.map((dynamic i) => Album.fromJson(i)).toList()
+  );
+
+  List<Album> listAlbum;
 
 }
