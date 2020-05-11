@@ -9,7 +9,7 @@ class PostRepository {
   final NetworkHelper _networkHelper = NetworkHelper();
 
   Future<ApiServiceModel<ListPost>> getListPost(int start) async {
-    final Response<dynamic> response = await  _networkHelper.get('posts?_start=$start&limit=${AppLimit.ALBUM_PAGE_SIZE}') as Response<dynamic>;
+    final Response<dynamic> response = await  _networkHelper.get('posts?_start=$start&limit=${AppLimit.POST_PAGE_SIZE}') as Response<dynamic>;
     return ApiServiceModel.fromList(response, ListPost.fromJson);
   }
 

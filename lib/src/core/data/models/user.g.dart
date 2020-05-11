@@ -14,7 +14,7 @@ class UserAdapter extends TypeAdapter<User> {
   User read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+      // for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return User(
       id: fields[0] as int,
@@ -59,7 +59,7 @@ class AddressAdapter extends TypeAdapter<Address> {
   Address read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+      // for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Address(
       street: fields[0] as String,
@@ -95,7 +95,7 @@ class GeoAdapter extends TypeAdapter<Geo> {
   Geo read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+      // for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Geo(
       lat: fields[0] as String,
@@ -122,7 +122,7 @@ class CompanyAdapter extends TypeAdapter<Company> {
   Company read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+      // for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Company(
       name: fields[0] as String,

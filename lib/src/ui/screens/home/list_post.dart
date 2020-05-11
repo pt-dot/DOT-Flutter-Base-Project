@@ -17,23 +17,13 @@ class ListPost extends StatelessWidget {
     _postBloc.getPostList();
     return Scaffold(
       appBar: MyAppToolbar(title: 'Post'),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          _postBloc.fetchPostList(0 * AppLimit.POST_PAGE_SIZE);
+      body: BaseListView<Post>(
+        stream: _postBloc.postStream,
+        onRefresh: () async => _postBloc.getPostList(),
+        loadMore: () async => _postBloc.getPostList(init: false),
+        itemBuilder: (context, state, data) {
+          return ItemPost(data);
         },
-        child: BaseListView<Post>(
-          dataStream: _postBloc.listPostStream,
-          stateStream: _postBloc.statePostStream,
-          builder: (context, state, data) {
-            return ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                return ItemPost(data[index]);
-              }
-            );
-          },
-
-        )
       )
     );
   }
