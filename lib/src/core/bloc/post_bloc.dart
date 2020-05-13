@@ -2,34 +2,43 @@ import 'package:base_flutter/src/core/data/constants.dart';
 import 'package:base_flutter/src/core/data/models/post.dart';
 import 'package:base_flutter/src/core/networks/api_service_model.dart';
 import 'package:base_flutter/src/core/repositories/api/post_repository.dart';
-import 'package:base_flutter/src/core/states/data_state.dart';
-import 'package:base_flutter/src/utils/base_streamlist.dart';
+import 'package:base_flutter/src/core/repositories/db/post_db_repository.dart';
+import 'package:base_flutter/src/core/states/list_state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PostBloc {
 
   final PostRepository _repository = PostRepository();
+  final PostDbRepository _dbRepository = PostDbRepository();
 
-  final _postSubject = BehaviorSubject<BaseStreamList<Post>>.seeded(
-    BaseStreamList(
-      page: 0,
-      data: <Post>[],
-      state: DataState.FIRST_LOAD
-    )
-  );
+  final _postSubject = BehaviorSubject<ListState<Post>>();
 
-  Stream<BaseStreamList<Post>> get postStream => _postSubject.stream;
+  Stream<ListState<Post>> get postStream => _postSubject.stream;
+
+  Function(ListState<Post>) get updatePostStream => _postSubject.sink.add;
 
   void getPostList({bool init = true}) async {
+
+    if (init) { 
+      if (_dbRepository.getAllPost().isEmpty) {
+        updatePostStream(ListState<Post>.init());
+      } else {
+        updatePostStream(ListState<Post>.initWithData(_dbRepository.getAllPost()));
+      }
+    }
+
     int page = init ? 0 : _postSubject.value.page + 1;
     List<Post> postList = await fetchPostList(page * AppLimit.POST_PAGE_SIZE);
-    if (page == 0) {
-      updateStreamList<Post>(_postSubject, data: postList, state: DataState.LOADED, page: 0);
+
+    if (init) {
+      updatePostStream(ListState<Post>.firstLoadSuccess(postList));
+      _dbRepository.replacePosts(postList);
     } else {
       List<Post> tempPostList = _postSubject.value.data;
       tempPostList.addAll(postList);
-      updateStreamList<Post>(_postSubject, data: tempPostList, state: DataState.LOADED, page: page);
+      updatePostStream(ListState<Post>.loadMoreSuccess(tempPostList, page));
     }
+
   }
 
   Future<List<Post>> fetchPostList(int start) async {
@@ -37,12 +46,14 @@ class PostBloc {
       final ApiServiceModel<ListPost> postApi = await _repository.getListPost(start);
       return postApi.data.listPost;
     } catch (err) {
+      if (start == 0) updatePostStream(ListState<Post>.firstLoadError());
+      else updatePostStream(ListState<Post>.loadMoreError(_postSubject.value.data, _postSubject.value.page));
       rethrow;
     }
   }
 
-  void updateStreamList<T> (BehaviorSubject<BaseStreamList<T>> subject, {DataState state, int page, List<T> data}) {
-    subject.sink.add(BaseStreamList(
+  void updateStreamList<T> (BehaviorSubject<ListState<T>> subject, {DataState state, int page, List<T> data}) {
+    subject.sink.add(ListState(
       state: state ?? subject.value.state,
       page: page ?? subject.value.page,
       data: data ?? subject.value.data

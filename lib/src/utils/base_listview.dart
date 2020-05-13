@@ -1,10 +1,9 @@
-import 'package:base_flutter/src/core/states/data_state.dart';
-import 'package:base_flutter/src/utils/base_streamlist.dart';
+import 'package:base_flutter/src/core/states/list_state.dart';
 import 'package:flutter/material.dart';
 
 class BaseListView<T> extends StatelessWidget {
 
-  final Stream<BaseStreamList<T>> stream;
+  final Stream<ListState<T>> stream;
   final Future<void> Function() onRefresh;
   final Future<void> Function() loadMore;
   final Widget loadingBuilder;
@@ -35,7 +34,7 @@ class BaseListView<T> extends StatelessWidget {
 
     return RefreshIndicator(
       onRefresh: onRefresh ?? () async =>  null,
-      child: StreamBuilder<BaseStreamList<T>>(
+      child: StreamBuilder<ListState<T>>(
         stream: stream,
         builder: (streamContext, snapshot) {
           if (snapshot.hasData) {

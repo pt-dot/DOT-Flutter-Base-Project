@@ -14,7 +14,7 @@ class PostAdapter extends TypeAdapter<Post> {
   Post read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
-      // for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Post(
       id: fields[1] as int,

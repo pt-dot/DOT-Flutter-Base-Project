@@ -1,4 +1,3 @@
-import 'package:base_flutter/src/core/data/models/album.dart';
 import 'package:base_flutter/src/core/networks/app_exceptions.dart';
 import 'package:dio/dio.dart';
 
@@ -7,13 +6,8 @@ enum Status { LOADING, COMPLETED, LOADED_ALL, ERROR, DIOERROR }
 class ApiServiceModel<T> {
 
   ApiServiceModel.loading(this.data) : status = Status.LOADING;
-  ApiServiceModel.loadedAll(this.data) : status = Status.LOADED_ALL;
   ApiServiceModel.completed(this.data) : status = Status.COMPLETED;
-
   ApiServiceModel.error(this.data) : status = Status.ERROR;
-
-  // ApiServiceModel.error(this.message): status = Status.ERROR;
-  ApiServiceModel.dioError(this.error) : status = Status.DIOERROR;
 
   ApiServiceModel.fromResponse(Response response, T Function(Map<String, dynamic>) fromJson) {
     final dataResponse = response.data as Map<String, dynamic>;
