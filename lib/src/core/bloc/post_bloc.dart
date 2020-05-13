@@ -21,9 +21,9 @@ class PostBloc {
 
     if (init) { 
       if (_dbRepository.getAllPost().isEmpty) {
-        updatePostStream(ListState<Post>.init());
+        updatePostStream(ListState.init());
       } else {
-        updatePostStream(ListState<Post>.initWithData(_dbRepository.getAllPost()));
+        updatePostStream(ListState.initWithData(_dbRepository.getAllPost()));
       }
     }
 
@@ -31,12 +31,12 @@ class PostBloc {
     List<Post> postList = await fetchPostList(page * AppLimit.POST_PAGE_SIZE);
 
     if (init) {
-      updatePostStream(ListState<Post>.firstLoadSuccess(postList));
+      updatePostStream(ListState.firstLoadSuccess(postList));
       _dbRepository.replacePosts(postList);
     } else {
       List<Post> tempPostList = _postSubject.value.data;
       tempPostList.addAll(postList);
-      updatePostStream(ListState<Post>.loadMoreSuccess(tempPostList, page));
+      updatePostStream(ListState.loadMoreSuccess(tempPostList, page));
     }
 
   }
@@ -46,18 +46,12 @@ class PostBloc {
       final ApiServiceModel<ListPost> postApi = await _repository.getListPost(start);
       return postApi.data.listPost;
     } catch (err) {
-      if (start == 0) updatePostStream(ListState<Post>.firstLoadError());
-      else updatePostStream(ListState<Post>.loadMoreError(_postSubject.value.data, _postSubject.value.page));
+      if (start == 0) 
+        updatePostStream(ListState.firstLoadError());
+      else 
+        updatePostStream(ListState.loadMoreError(_postSubject.value.data, _postSubject.value.page));
       rethrow;
     }
-  }
-
-  void updateStreamList<T> (BehaviorSubject<ListState<T>> subject, {DataState state, int page, List<T> data}) {
-    subject.sink.add(ListState(
-      state: state ?? subject.value.state,
-      page: page ?? subject.value.page,
-      data: data ?? subject.value.data
-    ));
   }
 
 }

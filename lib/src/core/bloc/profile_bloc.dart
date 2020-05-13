@@ -1,7 +1,7 @@
 import 'package:base_flutter/src/core/data/models/user.dart';
 import 'package:base_flutter/src/core/repositories/db/profile_db_repository.dart';
 import 'package:base_flutter/src/core/repositories/api/profile_repository.dart';
-import 'package:base_flutter/src/core/states/user_state.dart';
+import 'package:base_flutter/src/core/states/object_state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProfileBloc {
@@ -9,28 +9,28 @@ class ProfileBloc {
   final ProfileRepository _profileRepository = ProfileRepository();
   final ProfileDbRepository _profileDbRepository = ProfileDbRepository();
 
-  final BehaviorSubject<UserState> _userState = BehaviorSubject<UserState>();
+  final BehaviorSubject<ObjectState<User>> _userState = BehaviorSubject<ObjectState<User>>();
 
-  Stream<UserState> get streamUser => _userState.stream;
+  Stream<ObjectState<User>> get streamUser => _userState.stream;
 
-  Function(UserState) get changeUser => _userState.sink.add;
+  Function(ObjectState<User>) get changeUser => _userState.sink.add;
 
   Future<void> getUser(int id) async {
     if (_profileDbRepository.getUser() == null) {
-      changeUser(UserLoading());
+      changeUser(ObjectLoading());
     } else {
-      changeUser(UserLoaded(_profileDbRepository.getUser()));
+      changeUser(ObjectLoaded(_profileDbRepository.getUser()));
     }
     try {
       final User user = await _profileRepository.getUser(id);
       bool check = user == _profileDbRepository.getUser();
       print('Profile Bloc # is data same? $check');
       if (!check) {
-        changeUser(UserLoaded(user));
+        changeUser(ObjectLoaded(user));
         _profileDbRepository.saveUser(user);
       }
     } catch (err) {
-      changeUser(UserError(err));
+      changeUser(ObjectError(err));
     }
   }
 

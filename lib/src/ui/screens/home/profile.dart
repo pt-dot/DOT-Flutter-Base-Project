@@ -1,7 +1,7 @@
 import 'package:base_flutter/src/core/bloc/profile_bloc.dart';
 import 'package:base_flutter/src/ui/shared/ui_constants.dart';
 import 'package:base_flutter/src/core/data/models/user.dart';
-import 'package:base_flutter/src/core/states/user_state.dart';
+import 'package:base_flutter/src/core/states/object_state.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,19 +31,19 @@ class Profile extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context, ProfileBloc bloc) {
-    return StreamBuilder<UserState>(
+    return StreamBuilder<ObjectState<User>>(
       stream: bloc.streamUser,
       builder: (context, snapshot) {
-        UserState userState = snapshot.data;
-        if (userState is UserLoading) {
+        ObjectState<User> userState = snapshot.data;
+        if (userState is ObjectLoading<User>) {
           return  Center(
             child: Text('Loading...'),
           );
         }
-        if (userState is UserLoaded) {
-          return _buildProfile(context, userState.user);
+        if (userState is ObjectLoaded<User>) {
+          return _buildProfile(context, userState.data);
         }
-        if (userState is UserError) {
+        if (userState is ObjectError<User>) {
           return Center(
             child: Text(userState.error.toString()),
           );

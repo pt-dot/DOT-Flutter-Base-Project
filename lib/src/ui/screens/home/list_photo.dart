@@ -3,6 +3,7 @@ import 'package:base_flutter/src/core/data/constants.dart';
 import 'package:base_flutter/src/core/data/models/album.dart';
 import 'package:base_flutter/src/ui/screens/home/widgets/item_album.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
+import 'package:base_flutter/src/utils/base_gridview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 import 'package:provider/provider.dart';
@@ -13,30 +14,22 @@ class ListPhoto extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final PhotoBloc _bloc = Provider.of<PhotoBloc>(context, listen: false);
-    final _pageLoadController = PagewiseLoadController(
-        pageSize: AppLimit.ALBUM_PAGE_SIZE,
-        pageFuture: (pageIndex) => _bloc.fetchAlbumList(pageIndex * AppLimit.ALBUM_PAGE_SIZE)
-    );
-
+    _bloc.getAlbumList();
     return Scaffold(
       appBar: MyAppToolbar(title: 'Album'),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          _pageLoadController.reset();
-          // await Future.value({});
+      body: BaseGridView<Album>(
+        childAspectRatio: 1,
+        crossAxisCount: 3,
+        mainAxisSpacing: 8.0,
+        crossAxisSpacing: 8.0,
+        padding: EdgeInsets.all(12.0),
+        stream: _bloc.albumStream,
+        onRefresh: () async => _bloc.getAlbumList(),
+        loadMore: () async => _bloc.getAlbumList(init: false),
+        itemBuilder: (context, state, data) {
+          return ItemAlbum(data);
         },
-        child:  PagewiseGridView.count(
-          crossAxisCount: 3,
-          mainAxisSpacing: 8.0,
-          crossAxisSpacing: 8.0,
-          childAspectRatio: 1,
-          padding: EdgeInsets.all(12.0),
-          pageLoadController: _pageLoadController,
-          itemBuilder: (BuildContext context, Album item, int index) {
-            return ItemAlbum(item);
-          },
-        ),
-      ),
+      )
     );
   }
 }
