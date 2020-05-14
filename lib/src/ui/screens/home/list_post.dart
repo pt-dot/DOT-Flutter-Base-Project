@@ -3,7 +3,7 @@ import 'package:base_flutter/src/core/data/constants.dart';
 import 'package:base_flutter/src/core/data/models/post.dart';
 import 'package:base_flutter/src/ui/screens/home/widgets/item_post.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
-import 'package:base_flutter/src/utils/base_listview.dart';
+import 'package:base_flutter/src/ui/shared/base_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 import 'package:provider/provider.dart';

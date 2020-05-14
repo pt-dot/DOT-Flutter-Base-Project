@@ -1,7 +1,7 @@
 import 'package:base_flutter/src/core/states/list_state.dart';
 import 'package:flutter/material.dart';
 
-class BaseGridView<T> extends StatelessWidget {
+class BaseListView<T> extends StatelessWidget {
 
   final Stream<ListState<T>> stream;
   final Future<void> Function() onRefresh;
@@ -9,26 +9,16 @@ class BaseGridView<T> extends StatelessWidget {
   final Widget loadingBuilder;
   final Widget errorBuilder;
   final Widget loadMoreBuilder;
-  final int crossAxisCount;
-  final double childAspectRatio;
-  final double mainAxisSpacing;
-  final double crossAxisSpacing;
-  final EdgeInsetsGeometry padding;
   final Widget Function(BuildContext context, DataState state, T data) itemBuilder;
 
-  BaseGridView({
-    @required this.stream,
-    @required this.childAspectRatio,
-    @required this.crossAxisCount,
+  BaseListView({
+    @required this.stream, 
     this.itemBuilder, 
     this.onRefresh, 
     this.errorBuilder,
     this.loadingBuilder,
     this.loadMore,
-    this.loadMoreBuilder,
-    this.crossAxisSpacing,
-    this.mainAxisSpacing,
-    this.padding
+    this.loadMoreBuilder
   });
     
   ScrollController _scrollController;
@@ -36,18 +26,19 @@ class BaseGridView<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    _scrollController = ScrollController()..addListener(() {
-      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-        loadMore();
-      }
-    });
-
     return RefreshIndicator(
       onRefresh: onRefresh ?? () async =>  null,
       child: StreamBuilder<ListState<T>>(
         stream: stream,
         builder: (streamContext, snapshot) {
           if (snapshot.hasData) {
+
+            _scrollController = ScrollController()..addListener(() {
+              if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+                if (!(snapshot.data.state == DataState.LOAD_MORE || snapshot.data.state == DataState.LOADED_ALL || snapshot.data.state == DataState.ERROR_LOAD_MORE )) 
+                  loadMore();
+              }
+            });
 
             if (snapshot.data.state == DataState.FIRST_LOAD) {
               if (loadingBuilder != null) {
@@ -61,29 +52,29 @@ class BaseGridView<T> extends StatelessWidget {
               if (errorBuilder != null) {
                 return errorBuilder;
               } else {
-                return Center(child: Text('Error has occured'));
+                return Center(child: _errorWidget());
               }
 
             } else {
 
               if (snapshot.hasData && snapshot.data.data.isNotEmpty) {
-                return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: crossAxisCount,
-                    childAspectRatio: childAspectRatio,
-                    mainAxisSpacing: mainAxisSpacing ?? 0,
-                    crossAxisSpacing: crossAxisSpacing ?? 0
-                  ),
+
+                return ListView.builder(
                   controller: _scrollController,
                   shrinkWrap: true,
-                  padding: padding ?? EdgeInsets.all(0),
-                  itemCount: snapshot.data.state != DataState.LOADED_ALL ? snapshot.data.data.length + 1 : snapshot.data.data.length,
+                  itemCount: snapshot.data.state == DataState.LOADED_ALL
+                    ? snapshot.data.data.length
+                    : snapshot.data.data.length + 1,
                   itemBuilder: (context, index) {
-                    if (snapshot.data.state != DataState.LOADED_ALL && index == snapshot.data.data.length) {
+
+                    if (snapshot.data.state == DataState.ERROR_LOAD_MORE && index == snapshot.data.data.length) {
+                      return _errorWidget(isLoadMore: true);
+                    } else if (snapshot.data.state != DataState.LOADED_ALL && index == snapshot.data.data.length) {
                       return loadMoreBuilder ?? Container(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
                     } else {
                       return itemBuilder(context, snapshot.data.state, snapshot.data.data[index]);
                     }
+
                   }
                 );
               } else {
@@ -99,4 +90,21 @@ class BaseGridView<T> extends StatelessWidget {
       )
     );
   }
+
+  Widget _errorWidget({bool isLoadMore = false}) {
+    return Padding(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        children: <Widget>[
+          Text('Error has occured'),
+          SizedBox(height: 20,),
+          RaisedButton(
+            onPressed: isLoadMore ? loadMore : onRefresh,
+            child: const Text('RELOAD', style: TextStyle(fontSize: 20)),
+          ),
+        ],
+      )
+    );
+  }
+
 }

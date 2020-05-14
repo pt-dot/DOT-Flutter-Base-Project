@@ -19,22 +19,28 @@ class PostBloc {
 
   void getPostList({bool init = true}) async {
 
-    if (init) { 
+    int page = init ? 0 : _postSubject.value.page + 1;
+    List<Post> tempPostList;
+    if (init) {
       if (_dbRepository.getAllPost().isEmpty) {
         updatePostStream(ListState.init());
       } else {
         updatePostStream(ListState.initWithData(_dbRepository.getAllPost()));
+        // updatePostStream(ListState.init());
       }
+    } else {
+      tempPostList = _postSubject.value.data;
+      updatePostStream(ListState.loadMore(tempPostList, page));
     }
 
-    int page = init ? 0 : _postSubject.value.page + 1;
     List<Post> postList = await fetchPostList(page * AppLimit.POST_PAGE_SIZE);
 
-    if (init) {
+    if (postList.isEmpty) {
+      updatePostStream(ListState.loadedAll(tempPostList, page - 1));
+    } else if (init) {
       updatePostStream(ListState.firstLoadSuccess(postList));
       _dbRepository.replacePosts(postList);
     } else {
-      List<Post> tempPostList = _postSubject.value.data;
       tempPostList.addAll(postList);
       updatePostStream(ListState.loadMoreSuccess(tempPostList, page));
     }
@@ -53,5 +59,7 @@ class PostBloc {
       rethrow;
     }
   }
+
+
 
 }

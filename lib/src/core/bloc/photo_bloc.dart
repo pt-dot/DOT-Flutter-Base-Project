@@ -19,22 +19,27 @@ class PhotoBloc {
 
   void getAlbumList({bool init = true}) async {
 
+    int page = init ? 0 : _albumSubject.value.page + 1;
+    List<Album> tempAlbumList;
     if (init) { 
       if (_dbRepository.getAllAlbum().isEmpty) {
         updateAlbumStream(ListState.init());
       } else {
         updateAlbumStream(ListState.initWithData(_dbRepository.getAllAlbum()));
       }
+    } else {
+      tempAlbumList = _albumSubject.value.data;
+      updateAlbumStream(ListState.loadMore(tempAlbumList, page));
     }
-
-    int page = init ? 0 : _albumSubject.value.page + 1;
+    
     List<Album> albumList = await fetchAlbumList(page * AppLimit.ALBUM_PAGE_SIZE);
 
-    if (init) {
+    if (albumList.isEmpty) {
+      updateAlbumStream(ListState.loadedAll(tempAlbumList, page - 1));
+    } else if (init) {
       updateAlbumStream(ListState.firstLoadSuccess(albumList));
       _dbRepository.replaceAlbums(albumList);
     } else {
-      List<Album> tempAlbumList = _albumSubject.value.data;
       tempAlbumList.addAll(albumList);
       updateAlbumStream(ListState.loadMoreSuccess(tempAlbumList, page));
     }
@@ -49,7 +54,7 @@ class PhotoBloc {
       if (start == 0) 
         updateAlbumStream(ListState.firstLoadError());
       else 
-        updateAlbumStream(ListState.loadMoreError(_albumSubject.value.data, _albumSubject.value.page));
+        updateAlbumStream(ListState.loadMoreError(_albumSubject.value.data, _albumSubject.value.page - 1));
       rethrow;
     }
   }

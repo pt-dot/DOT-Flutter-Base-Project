@@ -42,7 +42,7 @@ class ListState<T> {
   }
 
   ListState.loadMoreSuccess(this.data, this.page) {
-    state = DataState.LOAD_MORE;
+    state = DataState.LOADED;
   }
 
   ListState.loadMoreError(this.data, this.page) {

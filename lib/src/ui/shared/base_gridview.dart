@@ -1,7 +1,7 @@
 import 'package:base_flutter/src/core/states/list_state.dart';
 import 'package:flutter/material.dart';
 
-class BaseListView<T> extends StatelessWidget {
+class BaseGridView<T> extends StatelessWidget {
 
   final Stream<ListState<T>> stream;
   final Future<void> Function() onRefresh;
@@ -9,16 +9,26 @@ class BaseListView<T> extends StatelessWidget {
   final Widget loadingBuilder;
   final Widget errorBuilder;
   final Widget loadMoreBuilder;
+  final int crossAxisCount;
+  final double childAspectRatio;
+  final double mainAxisSpacing;
+  final double crossAxisSpacing;
+  final EdgeInsetsGeometry padding;
   final Widget Function(BuildContext context, DataState state, T data) itemBuilder;
 
-  BaseListView({
-    @required this.stream, 
+  BaseGridView({
+    @required this.stream,
+    @required this.childAspectRatio,
+    @required this.crossAxisCount,
     this.itemBuilder, 
     this.onRefresh, 
     this.errorBuilder,
     this.loadingBuilder,
     this.loadMore,
-    this.loadMoreBuilder
+    this.loadMoreBuilder,
+    this.crossAxisSpacing,
+    this.mainAxisSpacing,
+    this.padding
   });
     
   ScrollController _scrollController;
@@ -26,18 +36,19 @@ class BaseListView<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    _scrollController = ScrollController()..addListener(() {
-      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-        loadMore();
-      }
-    });
-
     return RefreshIndicator(
       onRefresh: onRefresh ?? () async =>  null,
       child: StreamBuilder<ListState<T>>(
         stream: stream,
         builder: (streamContext, snapshot) {
           if (snapshot.hasData) {
+            
+            _scrollController = ScrollController()..addListener(() {
+              if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+                if (!(snapshot.data.state == DataState.LOAD_MORE || snapshot.data.state == DataState.LOADED_ALL)) 
+                  loadMore();
+              }
+            });
 
             if (snapshot.data.state == DataState.FIRST_LOAD) {
               if (loadingBuilder != null) {
@@ -57,9 +68,16 @@ class BaseListView<T> extends StatelessWidget {
             } else {
 
               if (snapshot.hasData && snapshot.data.data.isNotEmpty) {
-                return ListView.builder(
+                return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    childAspectRatio: childAspectRatio,
+                    mainAxisSpacing: mainAxisSpacing ?? 0,
+                    crossAxisSpacing: crossAxisSpacing ?? 0
+                  ),
                   controller: _scrollController,
                   shrinkWrap: true,
+                  padding: padding ?? EdgeInsets.all(0),
                   itemCount: snapshot.data.state != DataState.LOADED_ALL ? snapshot.data.data.length + 1 : snapshot.data.data.length,
                   itemBuilder: (context, index) {
                     if (snapshot.data.state != DataState.LOADED_ALL && index == snapshot.data.data.length) {
@@ -79,6 +97,22 @@ class BaseListView<T> extends StatelessWidget {
             return Container();
           }
         }
+      )
+    );
+  }
+
+  Widget _errorWidget({bool isLoadMore = false}) {
+    return Padding(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        children: <Widget>[
+          Text('Error has occured'),
+          SizedBox(height: 20,),
+          RaisedButton(
+            onPressed: isLoadMore ? loadMore : onRefresh,
+            child: const Text('RELOAD', style: TextStyle(fontSize: 20)),
+          ),
+        ],
       )
     );
   }
