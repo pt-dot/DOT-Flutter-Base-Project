@@ -26,7 +26,6 @@ class PostBloc {
         updatePostStream(ListState.init());
       } else {
         updatePostStream(ListState.initWithData(_dbRepository.getAllPost()));
-        // updatePostStream(ListState.init());
       }
     } else {
       tempPostList = _postSubject.value.data;
@@ -55,7 +54,7 @@ class PostBloc {
       if (start == 0) 
         updatePostStream(ListState.firstLoadError());
       else 
-        updatePostStream(ListState.loadMoreError(_postSubject.value.data, _postSubject.value.page));
+        updatePostStream(ListState.loadMoreError(_postSubject.value.data, _postSubject.value.page - 1));
       rethrow;
     }
   }

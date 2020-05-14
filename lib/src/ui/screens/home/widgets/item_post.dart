@@ -10,12 +10,12 @@ class ItemPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text('${post.id}. ${post.title}'),
-          SizedBox(height: 4),
+          SizedBox(height: 8),
           Divider(thickness: 1, height: 1,)
         ],
       ),
