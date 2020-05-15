@@ -37,7 +37,12 @@ class BaseListView<T> extends StatelessWidget {
 
             _scrollController = ScrollController()..addListener(() {
               if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-                if (!(snapshot.data.state == DataState.LOAD_MORE || snapshot.data.state == DataState.LOADED_ALL || snapshot.data.state == DataState.ERROR_LOAD_MORE )) 
+                if (!(
+                    snapshot.data.state == DataState.LOAD_MORE || 
+                    snapshot.data.state == DataState.LOADED_ALL || 
+                    snapshot.data.state == DataState.ERROR_LOAD_MORE ||
+                    snapshot.data.state == DataState.FIRST_LOAD
+                  )) 
                   loadMore();
               }
             });
@@ -113,7 +118,10 @@ class BaseListView<T> extends StatelessWidget {
 
     if (dataState == DataState.ERROR_LOAD_MORE) {
       return _errorWidget(isLoadMore: true);
-    } else if (!(dataState == DataState.LOADED_ALL || dataState == DataState.ERROR_FIRST_LOAD)) {
+    } else if (!(
+        dataState == DataState.LOADED_ALL || 
+        dataState == DataState.ERROR_FIRST_LOAD || 
+        dataState == DataState.FIRST_LOAD)) {
       return loadMoreBuilder ?? _loadingIndicator();
     }
     return Container();
