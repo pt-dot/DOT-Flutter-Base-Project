@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 mixin URLs {
   static const String host = 'http://jsonplaceholder.typicode.com/';
@@ -13,3 +11,7 @@ mixin AppLimit {
   static const int ALBUM_PAGE_SIZE = 18;
   static const int POST_PAGE_SIZE =  100;
 }
+
+const String sentryDSN = '';
+const String appVersion = '0.0.1';
+const String environment = 'Production';
