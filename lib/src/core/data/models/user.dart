@@ -32,17 +32,17 @@ class User  extends Equatable with HiveObject{
         this.website,
         this.company});
 
-  User.fromJson(Map<String, dynamic> json) {
-    id = json['id'] as int;
-    name = json['name'] as String;
-    username = json['username'] as String;
-    email = json['email'] as String;
-    address =
-    json['address'] != null ? Address.fromJson(json['address'] as Map<String, dynamic>) : null;
-    phone = json['phone'] as String;
-    website = json['website'] as String;
-    company =
-    json['company'] != null ? Company.fromJson(json['company'] as Map<String, dynamic>) : null;
+  static User fromJson(Map<String, dynamic> json) {
+    return User(
+        id : json['id'] as int,
+        name : json['name'] as String,
+        username : json['username'] as String,
+        email : json['email'] as String,
+        address : json['address'] != null ? Address.fromJson(json['address'] as Map<String, dynamic>) : null,
+        phone : json['phone'] as String,
+        website : json['website'] as String,
+        company : json['company'] != null ? Company.fromJson(json['company'] as Map<String, dynamic>) : null
+    );
   }
 
   Map<String, dynamic> toJson() {
