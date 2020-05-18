@@ -10,11 +10,12 @@ class ApiServiceModel<T> {
   ApiServiceModel.error(this.data) : status = Status.ERROR;
 
   ApiServiceModel.fromResponse(Response response, T Function(Map<String, dynamic>) fromJson) {
+    // response will be different from API, adjusted from current API
     final dataResponse = response.data as Map<String, dynamic>;
     if (response.statusCode == 200 || response.statusCode == 201 && dataResponse['success'] as bool) {
       message = dataResponse['message'] as String;
-      if (dataResponse['data'] != null) {
-        data = fromJson(dataResponse['data'] as Map<String, dynamic>);
+      if (dataResponse != null) {
+        data = fromJson(dataResponse);
       }
       status = Status.COMPLETED;
     } else {

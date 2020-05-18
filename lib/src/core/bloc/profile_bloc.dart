@@ -1,4 +1,5 @@
 import 'package:base_flutter/src/core/data/models/user.dart';
+import 'package:base_flutter/src/core/networks/api_service_model.dart';
 import 'package:base_flutter/src/core/repositories/db/profile_db_repository.dart';
 import 'package:base_flutter/src/core/repositories/api/profile_repository.dart';
 import 'package:base_flutter/src/core/states/object_state.dart';
@@ -22,12 +23,12 @@ class ProfileBloc {
       changeUser(ObjectLoaded(_profileDbRepository.getUser()));
     }
     try {
-      final User user = await _profileRepository.getUser(id);
-      bool check = user == _profileDbRepository.getUser();
+      final ApiServiceModel<User> user = await _profileRepository.getUser(id);
+      bool check = user.data == _profileDbRepository.getUser();
       print('Profile Bloc # is data same? $check');
       if (!check) {
-        changeUser(ObjectLoaded(user));
-        _profileDbRepository.saveUser(user);
+        changeUser(ObjectLoaded(user.data));
+        _profileDbRepository.saveUser(user.data);
       }
     } catch (err) {
       changeUser(ObjectError(err));
