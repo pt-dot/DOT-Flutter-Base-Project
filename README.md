@@ -1,16 +1,20 @@
-# base_flutter
+# DOT Flutter Base Project
 
-A new Flutter project.
+Build with Flutter, using BLoC pattern
 
-## Getting Started
+#### Screenshot
 
-This project is a starting point for a Flutter application.
+| ![List Post](https://i.imgur.com/jC7UoeL.jpg) | ![List Photo](https://i.imgur.com/dtaBedk.jpg) | ![Profile](https://i.imgur.com/mxJlOoe.jpg) |
+| --------------------------------------------- | ---------------------------------------------- | ------------------------------------------- |
+|                                               |                                                |                                             |
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+#### List Libraries
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Cached Network Image](https://pub.dev/packages/cached_network_image)
+- [Device Preview](https://pub.dev/packages/device_preview)
+- [Dio](https://pub.dev/packages/dio)
+- [Hive](https://pub.dev/packages/hive)
+- [Provider](https://pub.dev/packages/provider)
+- [RXDart](https://pub.dev/packages/rxdart)
+- [Sentry](https://pub.dev/packages/sentry)
