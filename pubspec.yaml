@@ -28,7 +28,6 @@ dependencies:
   device_info: '>=0.4.2+4 <2.0.0'
   dio: ^3.0.9
   equatable: ^1.1.1
-  flutter_pagewise: ^1.2.3
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
   path_provider: ^1.6.7
