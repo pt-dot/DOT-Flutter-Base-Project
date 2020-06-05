@@ -1,6 +1,7 @@
-# DOT Flutter Base Project
+## DOT Flutter Base Project 1.0.0
 
-Build with Flutter, using BLoC pattern
+Build with Flutter, using BLoC pattern  
+Download apk [here](https://www.dropbox.com/s/5vckeobixycz7ac)
 
 #### Dependencies ####
 ```
