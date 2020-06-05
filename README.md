@@ -1,16 +1,31 @@
-# base_flutter
+## DOT Flutter Base Project 1.0.0
 
-A new Flutter project.
+Build with Flutter, using BLoC pattern  
+Download apk [here](https://www.dropbox.com/s/5vckeobixycz7ac)
 
-## Getting Started
+#### Dependencies ####
+```
+Flutter 1.17.2 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 5f21edf8b6 (7 days ago) • 2020-05-28 12:44:12 -0700
+Engine • revision b851c71829
+Tools • Dart 2.8.3
+```
+#### Screenshot ####
 
-This project is a starting point for a Flutter application.
+| ![List Post](https://i.imgur.com/jC7UoeL.jpg) | ![List Photo](https://i.imgur.com/dtaBedk.jpg) | ![Profile](https://i.imgur.com/mxJlOoe.jpg) |
+| --------------------------------------------- | ---------------------------------------------- | ------------------------------------------- |
+|                                               |                                                |                                             |
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+#### List Libraries
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Cached Network Image](https://pub.dev/packages/cached_network_image)
+- [Device Info](https://pub.dev/packages/device_info)
+- [Device Preview](https://pub.dev/packages/device_preview)
+- [Dio](https://pub.dev/packages/dio)
+- [Equatable](https://pub.dev/packages/equatable)
+- [Hive](https://pub.dev/packages/hive)
+- [Path Provider](https://pub.dev/packages/path_provider)
+- [Provider](https://pub.dev/packages/provider)
+- [RXDart](https://pub.dev/packages/rxdart)
+- [Sentry](https://pub.dev/packages/sentry)
