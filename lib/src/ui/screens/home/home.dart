@@ -1,6 +1,7 @@
-import 'package:base_flutter/src/screens/list_photo.dart';
-import 'package:base_flutter/src/screens/list_post.dart';
-import 'package:base_flutter/src/screens/profile.dart';
+import 'package:base_flutter/src/core/data/constants.dart';
+import 'package:base_flutter/src/ui/screens/home/list_photo.dart';
+import 'package:base_flutter/src/ui/screens/home/list_post.dart';
+import 'package:base_flutter/src/ui/screens/home/profile.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -17,7 +18,10 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: menu.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: menu.map((t) => Center(child: t)).toList(),
+      ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
