@@ -7,7 +7,6 @@ import 'package:base_flutter/src/core/states/list_state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PhotoBloc {
-
   final PhotoRepository _repository = PhotoRepository();
   final AlbumDbRepository _dbRepository = AlbumDbRepository();
 
@@ -17,46 +16,66 @@ class PhotoBloc {
 
   Function(ListState<Album>) get updateAlbumStream => _albumSubject.sink.add;
 
+  /// Get album list from fetchPostList method & update to stream.
+  /// Set [init] to true for first load.
   void getAlbumList({bool init = true}) async {
-
     int page = init ? 0 : _albumSubject.value.page + 1;
     List<Album> tempAlbumList;
-    if (init) { 
+
+    /// SET DATA STATE
+    /// first load
+    if (init) {
+      /// if local data was empty, set data state to FIRST_LOAD
       if (_dbRepository.getAllAlbum().isEmpty) {
         updateAlbumStream(ListState.init());
+
+        /// if local data was not empty,  set data state to FIRST_LOAD_WITH_INIT_DATA
       } else {
         updateAlbumStream(ListState.initWithData(_dbRepository.getAllAlbum()));
       }
+
+      /// load more
     } else {
       tempAlbumList = _albumSubject.value.data;
       updateAlbumStream(ListState.loadMore(tempAlbumList, page));
     }
-    
-    List<Album> albumList = await fetchAlbumList(page * AppLimit.ALBUM_PAGE_SIZE);
 
+    /// FETCH POST LIST
+    List<Album> albumList =
+        await fetchAlbumList(page * AppLimit.ALBUM_PAGE_SIZE);
+
+    /// if fetched post list was empty, set data state to LOADED_ALL
     if (albumList.isEmpty) {
       updateAlbumStream(ListState.loadedAll(tempAlbumList, page - 1));
+
+      /// if first load, set data state to LOADED and replace local data with fetched data
     } else if (init) {
       updateAlbumStream(ListState.firstLoadSuccess(albumList));
       _dbRepository.replaceAlbums(albumList);
+
+      /// if load more, add fetched data to existed data
     } else {
       tempAlbumList.addAll(albumList);
       updateAlbumStream(ListState.loadMoreSuccess(tempAlbumList, page));
     }
-
   }
 
+  /// fetch album list from API
   Future<List<Album>> fetchAlbumList(int start) async {
     try {
-      final ApiServiceModel<ListAlbum> albumApi = await _repository.getListAlbum(start);
+      final ApiServiceModel<ListAlbum> albumApi =
+          await _repository.getListAlbum(start);
       return albumApi.data.listAlbum;
     } catch (err) {
-      if (start == 0) 
+      /// if first load error
+      if (start == 0)
         updateAlbumStream(ListState.firstLoadError());
-      else 
-        updateAlbumStream(ListState.loadMoreError(_albumSubject.value.data, _albumSubject.value.page - 1));
+
+      /// if load more error
+      else
+        updateAlbumStream(ListState.loadMoreError(
+            _albumSubject.value.data, _albumSubject.value.page - 1));
       rethrow;
     }
   }
-
 }
