@@ -1,20 +1,19 @@
-## DOT Flutter Base Project 1.0.0
+## DOT Flutter Base Project 1.0.1
 
 Build with Flutter, using BLoC pattern  
-Download apk [here](https://www.dropbox.com/s/5vckeobixycz7ac)
+Download apk [here](https://www.dropbox.com/s/beyyydndt0cvp0q)
 
 #### Dependencies ####
 ```
-Flutter 1.17.2 • channel stable • https://github.com/flutter/flutter.git
-Framework • revision 5f21edf8b6 (7 days ago) • 2020-05-28 12:44:12 -0700
-Engine • revision b851c71829
-Tools • Dart 2.8.3
+Flutter 1.17.5 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 8af6b2f038 (3 weeks ago) • 2020-06-30 12:53:55 -0700
+Engine • revision ee76268252
+Tools • Dart 2.8.4
 ```
 #### Screenshot ####
-
+| List Post | Album | Profile |
+| :-------: | :---: | :-----: |
 | ![List Post](https://i.imgur.com/jC7UoeL.jpg) | ![List Photo](https://i.imgur.com/dtaBedk.jpg) | ![Profile](https://i.imgur.com/mxJlOoe.jpg) |
-| --------------------------------------------- | ---------------------------------------------- | ------------------------------------------- |
-|                                               |                                                |                                             |
 
 
 #### List Libraries
