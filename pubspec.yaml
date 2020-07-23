@@ -43,6 +43,7 @@ dev_dependencies:
 
 dependency_overrides:
   dartx: ^0.3.0
+  path: ^1.7.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

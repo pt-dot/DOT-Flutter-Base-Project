@@ -5,7 +5,9 @@ import 'package:dio/dio.dart';
 
 class ProfileRepository {
 
-  final NetworkHelper _networkHelper = NetworkHelper();
+  final NetworkHelper _networkHelper;
+
+  ProfileRepository(this._networkHelper);
 
   Future<ApiServiceModel<User>> getUser(int id) async {
     final Response<dynamic> response = await _networkHelper.get('users/$id') as Response<dynamic>;
