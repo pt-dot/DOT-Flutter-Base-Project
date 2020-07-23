@@ -3,11 +3,12 @@ enum DataState {
   FIRST_LOAD_WITH_INIT_DATA, // when fetch data from api with local data
   LOADED, // fetch data success
   LOAD_MORE, // when load more data
-  LOADED_ALL, // data loaded all
-  ERROR_FIRST_LOAD, // error first load
-  ERROR_LOAD_MORE, // error load more
+  LOADED_ALL, // data has been loaded all
+  ERROR_FIRST_LOAD, // error when first load
+  ERROR_LOAD_MORE, // error when load more
 }
 
+/// Global data list state, T = Model class
 class ListState<T> {
   DataState state;
   List<T> data;
@@ -19,7 +20,7 @@ class ListState<T> {
     page = 0;
     data = <T>[];
     state = DataState.FIRST_LOAD;
-  } 
+  }
 
   ListState.initWithData(this.data) {
     page = 0;
@@ -52,5 +53,4 @@ class ListState<T> {
   ListState.loadedAll(this.data, this.page) {
     state = DataState.LOADED_ALL;
   }
-
 }
