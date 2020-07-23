@@ -7,7 +7,7 @@ import 'package:base_flutter/src/core/states/list_state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PostBloc {
-  final PostRepository _repository = PostRepository();
+  final PostRepository _repository;
   final PostDbRepository _dbRepository = PostDbRepository();
 
   final _postSubject = BehaviorSubject<ListState<Post>>();
@@ -15,6 +15,8 @@ class PostBloc {
   Stream<ListState<Post>> get postStream => _postSubject.stream;
 
   Function(ListState<Post>) get updatePostStream => _postSubject.sink.add;
+
+  PostBloc(this._repository);
 
   /// Get post list from fetchPostList method & update to stream.
   /// Set [init] to true for first load.

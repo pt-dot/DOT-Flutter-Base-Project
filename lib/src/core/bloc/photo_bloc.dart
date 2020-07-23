@@ -7,7 +7,7 @@ import 'package:base_flutter/src/core/states/list_state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PhotoBloc {
-  final PhotoRepository _repository = PhotoRepository();
+  final PhotoRepository _repository;
   final AlbumDbRepository _dbRepository = AlbumDbRepository();
 
   final _albumSubject = BehaviorSubject<ListState<Album>>();
@@ -15,6 +15,8 @@ class PhotoBloc {
   Stream<ListState<Album>> get albumStream => _albumSubject.stream;
 
   Function(ListState<Album>) get updateAlbumStream => _albumSubject.sink.add;
+
+  PhotoBloc(this._repository);
 
   /// Get album list from fetchPostList method & update to stream.
   /// Set [init] to true for first load.
