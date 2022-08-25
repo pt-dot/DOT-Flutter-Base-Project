@@ -6,11 +6,11 @@ import 'package:base_flutter/src/core/states/object_state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProfileBloc {
-
   final ProfileRepository _profileRepository;
   final ProfileDbRepository _profileDbRepository = ProfileDbRepository();
 
-  final BehaviorSubject<ObjectState<User>> _userState = BehaviorSubject<ObjectState<User>>();
+  final BehaviorSubject<ObjectState<User>> _userState =
+      BehaviorSubject<ObjectState<User>>();
 
   Stream<ObjectState<User>> get streamUser => _userState.stream;
 
@@ -22,19 +22,18 @@ class ProfileBloc {
     if (_profileDbRepository.getUser() == null) {
       changeUser(ObjectLoading());
     } else {
-      changeUser(ObjectLoaded(_profileDbRepository.getUser()));
+      changeUser(ObjectLoaded(_profileDbRepository.getUser()!));
     }
     try {
       final ApiServiceModel<User> user = await _profileRepository.getUser(id);
       bool check = user.data == _profileDbRepository.getUser();
       print('Profile Bloc # is data same? $check');
       if (!check) {
-        changeUser(ObjectLoaded(user.data));
-        _profileDbRepository.saveUser(user.data);
+        changeUser(ObjectLoaded(user.data!));
+        _profileDbRepository.saveUser(user.data!);
       }
     } catch (err) {
       changeUser(ObjectError(err));
     }
   }
-
 }

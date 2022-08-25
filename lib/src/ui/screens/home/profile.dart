@@ -9,34 +9,32 @@ import 'package:provider/provider.dart';
 const int ID_USER = 2;
 
 class Profile extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     ProfileBloc bloc = Provider.of<ProfileBloc>(context, listen: false);
     bloc.getUser(ID_USER);
     return Scaffold(
-      appBar: MyAppToolbar(title: 'Profile'),
-      body: RefreshIndicator (
-        onRefresh: () async {
-          bloc.getUser(ID_USER);
-          // await Future.value({});
-        },
-        child: SingleChildScrollView(
-          child: Container(
-            child: _buildBody(context, bloc),
+        appBar: MyAppToolbar(title: 'Profile'),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            bloc.getUser(ID_USER);
+            // await Future.value({});
+          },
+          child: SingleChildScrollView(
+            child: Container(
+              child: _buildBody(context, bloc),
+            ),
           ),
-        ),
-      )
-    );
+        ));
   }
 
   Widget _buildBody(BuildContext context, ProfileBloc bloc) {
     return StreamBuilder<ObjectState<User>>(
       stream: bloc.streamUser,
       builder: (context, snapshot) {
-        ObjectState<User> userState = snapshot.data;
+        ObjectState<User>? userState = snapshot.data;
         if (userState is ObjectLoading<User>) {
-          return  Center(
+          return Center(
             child: Text('Loading...'),
           );
         }
@@ -67,21 +65,22 @@ class Profile extends StatelessWidget {
           _content('Email : ${user.email}'),
           _content('Phone : ${user.phone}'),
           _title('Address'),
-          _content('Street : ${user.address.street}'),
-          _content('Suite : ${user.address.suite}'),
+          _content('Street : ${user.address?.street}'),
+          _content('Suite : ${user.address?.suite}'),
           _title('Company'),
-          _content('Name : ${user.company.name}'),
+          _content('Name : ${user.company?.name}'),
         ],
       ),
     );
   }
 
   Widget _title(String content) {
-    return Text(content, style: TextStyle(fontSize: TextSizeConst.medium, fontWeight: FontWeight.bold));
+    return Text(content,
+        style: TextStyle(
+            fontSize: TextSizeConst.medium, fontWeight: FontWeight.bold));
   }
 
   Widget _content(String content) {
     return Text(content, style: TextStyle(fontSize: TextSizeConst.regular));
   }
-
 }

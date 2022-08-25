@@ -21,8 +21,8 @@ class PostBloc {
   /// Get post list from fetchPostList method & update to stream.
   /// Set [init] to true for first load.
   void getPostList({bool init = true}) async {
-    int page = init ? 0 : _postSubject.value.page + 1;
-    List<Post> tempPostList;
+    int page = init ? 0 : _postSubject.value.page ?? 0 + 1;
+    List<Post>? tempPostList;
 
     /// SET DATA STATE
     /// first load
@@ -38,7 +38,7 @@ class PostBloc {
 
       /// load more
     } else {
-      tempPostList = _postSubject.value.data;
+      tempPostList = _postSubject.value.data!;
       updatePostStream(ListState.loadMore(tempPostList, page));
     }
 
@@ -56,7 +56,7 @@ class PostBloc {
 
       /// if load more, add fetched data to existed data
     } else {
-      tempPostList.addAll(postList);
+      tempPostList?.addAll(postList);
       updatePostStream(ListState.loadMoreSuccess(tempPostList, page));
     }
   }
@@ -66,7 +66,7 @@ class PostBloc {
     try {
       final ApiServiceModel<ListPost> postApi =
           await _repository.getListPost(start);
-      return postApi.data.listPost;
+      return postApi.data?.listPost ?? [];
     } catch (err) {
       /// if first load error
       if (start == 0)
@@ -75,7 +75,7 @@ class PostBloc {
       /// if load more error
       else
         updatePostStream(ListState.loadMoreError(
-            _postSubject.value.data, _postSubject.value.page - 1));
+            _postSubject.value.data, _postSubject.value.page ?? 1 - 1));
       rethrow;
     }
   }

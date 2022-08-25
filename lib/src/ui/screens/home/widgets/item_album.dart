@@ -2,7 +2,6 @@ import 'package:base_flutter/src/core/data/models/album.dart';
 import 'package:flutter/material.dart';
 
 class ItemAlbum extends StatelessWidget {
-
   const ItemAlbum(this.album);
 
   final Album album;
@@ -16,9 +15,8 @@ class ItemAlbum extends StatelessWidget {
         color: Colors.white,
       ),
       child: Center(
-        child: Text(album.title, textAlign: TextAlign.center),
+        child: Text(album.title ?? '', textAlign: TextAlign.center),
       ),
     );
   }
-
 }

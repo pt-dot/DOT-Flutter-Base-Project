@@ -2,19 +2,19 @@ import 'package:base_flutter/src/core/states/list_state.dart';
 import 'package:flutter/material.dart';
 
 class BaseListView<T> extends StatelessWidget {
-  final Stream<ListState<T>> stream;
-  final Future<void> Function() onRefresh;
-  final Future<void> Function() loadMore;
-  final Widget loadingBuilder;
-  final Widget errorBuilder;
-  final Widget loadMoreBuilder;
-  final Widget header;
+  final Stream<ListState<T>>? stream;
+  final Future<void> Function()? onRefresh;
+  final Future<void> Function()? loadMore;
+  final Widget? loadingBuilder;
+  final Widget? errorBuilder;
+  final Widget? loadMoreBuilder;
+  final Widget? header;
   final Widget Function(BuildContext context, DataState state, T data)
       itemBuilder;
 
   BaseListView(
-      {@required this.stream,
-      this.itemBuilder,
+      {required this.stream,
+      required this.itemBuilder,
       this.onRefresh,
       this.errorBuilder,
       this.loadingBuilder,
@@ -22,25 +22,27 @@ class BaseListView<T> extends StatelessWidget {
       this.loadMoreBuilder,
       this.header});
 
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        onRefresh: onRefresh ?? () async => null,
+        onRefresh: onRefresh ?? () async {},
         child: StreamBuilder<ListState<T>>(
             stream: stream,
             builder: (streamContext, snapshot) {
               if (snapshot.hasData) {
                 _scrollController = ScrollController()
                   ..addListener(() {
-                    if (_scrollController.position.pixels ==
-                        _scrollController.position.maxScrollExtent) {
-                      if (!(snapshot.data.state == DataState.LOAD_MORE ||
-                          snapshot.data.state == DataState.LOADED_ALL ||
-                          snapshot.data.state == DataState.ERROR_LOAD_MORE ||
-                          snapshot.data.state == DataState.FIRST_LOAD))
-                        loadMore();
+                    if (_scrollController?.position.pixels ==
+                        _scrollController?.position.maxScrollExtent) {
+                      if (!(snapshot.data?.state == DataState.LOAD_MORE ||
+                          snapshot.data?.state == DataState.LOADED_ALL ||
+                          snapshot.data?.state == DataState.ERROR_LOAD_MORE ||
+                          snapshot.data?.state ==
+                              DataState.FIRST_LOAD)) if (loadMore != null) {
+                        loadMore!();
+                      }
                     }
                   });
 
@@ -70,29 +72,30 @@ class BaseListView<T> extends StatelessWidget {
   }
 
   Widget _streamBuilderBody(AsyncSnapshot<ListState<T>> snapshot) {
-    if (snapshot.data.state == DataState.FIRST_LOAD) {
+    if (snapshot.data?.state == DataState.FIRST_LOAD) {
       return loadingBuilder ?? _loadingIndicator();
-    } else if (snapshot.data.state == DataState.ERROR_FIRST_LOAD) {
+    } else if (snapshot.data?.state == DataState.ERROR_FIRST_LOAD) {
       return errorBuilder ?? _errorWidget();
     } else {
-      if (snapshot.hasData && snapshot.data.data.isNotEmpty) {
+      if (snapshot.hasData && snapshot.data?.data?.isNotEmpty == true) {
         return ListView.builder(
             physics: ClampingScrollPhysics(),
             controller: _scrollController,
             shrinkWrap: true,
             itemCount: header != null
-                ? snapshot.data.data.length + 2
-                : snapshot.data.data.length + 1,
+                ? (snapshot.data?.data?.length ?? 0) + 2
+                : (snapshot.data?.data?.length ?? 0) + 1,
             itemBuilder: (context, index) {
               if (index == 0 && header != null)
-                return header;
-              else if (header != null && index == snapshot.data.data.length + 1)
-                return _loadMoreWidget(snapshot.data.state);
-              else if (header == null && index == snapshot.data.data.length)
-                return _loadMoreWidget(snapshot.data.state);
+                return header!;
+              else if (header != null &&
+                  index == (snapshot.data?.data?.length ?? 0) + 1)
+                return _loadMoreWidget(snapshot.data!.state!);
+              else if (header == null && index == snapshot.data?.data?.length)
+                return _loadMoreWidget(snapshot.data!.state!);
               else
-                return itemBuilder(context, snapshot.data.state,
-                    snapshot.data.data[index - 1]);
+                return itemBuilder(context, snapshot.data!.state!,
+                    snapshot.data!.data![index - 1]);
             });
       } else {
         return Container();

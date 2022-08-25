@@ -9,17 +9,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: ProviderList.list,
-      child: MaterialApp(
-        title: 'Flutter Base',
-        locale: DevicePreview.of(context).locale,
-        builder: DevicePreview.appBuilder,
-        theme: ThemeData(
-          primaryColor: Colors.teal,
-          fontFamily: 'Product-Sans',
-        ),
-        onGenerateRoute: AppRoute.routes,
-      )
-    );
+        providers: ProviderList.list,
+        child: MaterialApp(
+          title: 'Flutter Base',
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
+          theme: ThemeData(
+            primaryColor: Colors.teal,
+            fontFamily: 'Product-Sans',
+          ),
+          onGenerateRoute: AppRoute.routes,
+        ));
   }
 }

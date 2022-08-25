@@ -2,56 +2,60 @@ import 'package:base_flutter/src/core/states/list_state.dart';
 import 'package:flutter/material.dart';
 
 class BaseGridView<T> extends StatelessWidget {
-  final Stream<ListState<T>> stream;
-  final Future<void> Function() onRefresh;
-  final Future<void> Function() loadMore;
-  final Widget loadingBuilder;
-  final Widget errorBuilder;
-  final Widget loadMoreBuilder;
-  final Widget header;
+  final Stream<ListState<T>>? stream;
+  final Future<void> Function()? onRefresh;
+  final Future<void> Function()? loadMore;
+  final Widget? loadingBuilder;
+  final Widget? errorBuilder;
+  final Widget? loadMoreBuilder;
+  final Widget? header;
   final int crossAxisCount;
   final double childAspectRatio;
-  final double mainAxisSpacing;
-  final double crossAxisSpacing;
-  final EdgeInsetsGeometry padding;
+  final double? mainAxisSpacing;
+  final double? crossAxisSpacing;
+  final EdgeInsetsGeometry? padding;
   final Widget Function(BuildContext context, DataState state, T data)
       itemBuilder;
 
-  BaseGridView(
-      {@required this.stream,
-      @required this.childAspectRatio,
-      @required this.crossAxisCount,
-      this.itemBuilder,
-      this.onRefresh,
-      this.errorBuilder,
-      this.loadingBuilder,
-      this.loadMore,
-      this.loadMoreBuilder,
-      this.crossAxisSpacing,
-      this.mainAxisSpacing,
-      this.padding,
-      this.header});
+  BaseGridView({
+    required this.stream,
+    required this.childAspectRatio,
+    required this.crossAxisCount,
+    required this.itemBuilder,
+    this.onRefresh,
+    this.errorBuilder,
+    this.loadingBuilder,
+    this.loadMore,
+    this.loadMoreBuilder,
+    this.crossAxisSpacing,
+    this.mainAxisSpacing,
+    this.padding,
+    this.header,
+  });
 
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
   @override
   Widget build(BuildContext context) {
     // _scrollController.addListener(_scrollListener);
     return RefreshIndicator(
-        onRefresh: onRefresh ?? () async => null,
+        onRefresh: onRefresh ?? () async {},
         child: StreamBuilder<ListState<T>>(
             stream: stream,
             builder: (streamContext, snapshot) {
               if (snapshot.hasData) {
                 _scrollController = ScrollController()
                   ..addListener(() {
-                    if (_scrollController.position.pixels ==
-                        _scrollController.position.maxScrollExtent) {
-                      if (!(snapshot.data.state == DataState.LOAD_MORE ||
-                          snapshot.data.state == DataState.LOADED_ALL ||
-                          snapshot.data.state == DataState.ERROR_LOAD_MORE ||
-                          snapshot.data.state == DataState.FIRST_LOAD))
-                        loadMore();
+                    if (_scrollController?.position.pixels ==
+                        _scrollController?.position.maxScrollExtent) {
+                      if (!(snapshot.data?.state == DataState.LOAD_MORE ||
+                              snapshot.data?.state == DataState.LOADED_ALL ||
+                              snapshot.data?.state ==
+                                  DataState.ERROR_LOAD_MORE ||
+                              snapshot.data?.state == DataState.FIRST_LOAD) &&
+                          loadMore != null) {
+                        loadMore!();
+                      }
                     }
                   });
 
@@ -62,7 +66,7 @@ class BaseGridView<T> extends StatelessWidget {
                     children: <Widget>[
                       header ?? Container(),
                       _streamBuilderBody(snapshot),
-                      _loadMoreWidget(snapshot.data.state)
+                      _loadMoreWidget(snapshot.data!.state!)
                     ],
                   ),
                 );
@@ -91,12 +95,12 @@ class BaseGridView<T> extends StatelessWidget {
   }
 
   Widget _streamBuilderBody(AsyncSnapshot<ListState<T>> snapshot) {
-    if (snapshot.data.state == DataState.FIRST_LOAD) {
+    if (snapshot.data!.state == DataState.FIRST_LOAD) {
       return loadingBuilder ?? _loadingIndicator();
-    } else if (snapshot.data.state == DataState.ERROR_FIRST_LOAD) {
+    } else if (snapshot.data!.state == DataState.ERROR_FIRST_LOAD) {
       return errorBuilder ?? _errorWidget();
     } else {
-      if (snapshot.hasData && snapshot.data.data.isNotEmpty) {
+      if (snapshot.hasData && snapshot.data!.data!.isNotEmpty) {
         return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
@@ -106,10 +110,10 @@ class BaseGridView<T> extends StatelessWidget {
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             padding: padding ?? EdgeInsets.all(0),
-            itemCount: snapshot.data.data.length,
+            itemCount: snapshot.data!.data!.length,
             itemBuilder: (context, index) {
               return itemBuilder(
-                  context, snapshot.data.state, snapshot.data.data[index]);
+                  context, snapshot.data!.state!, snapshot.data!.data![index]);
             });
       } else {
         return Container();

@@ -21,8 +21,8 @@ class PhotoBloc {
   /// Get album list from fetchPostList method & update to stream.
   /// Set [init] to true for first load.
   void getAlbumList({bool init = true}) async {
-    int page = init ? 0 : _albumSubject.value.page + 1;
-    List<Album> tempAlbumList;
+    int page = init ? 0 : _albumSubject.value.page ?? 0 + 1;
+    List<Album>? tempAlbumList;
 
     /// SET DATA STATE
     /// first load
@@ -38,7 +38,7 @@ class PhotoBloc {
 
       /// load more
     } else {
-      tempAlbumList = _albumSubject.value.data;
+      tempAlbumList = _albumSubject.value.data!;
       updateAlbumStream(ListState.loadMore(tempAlbumList, page));
     }
 
@@ -57,7 +57,7 @@ class PhotoBloc {
 
       /// if load more, add fetched data to existed data
     } else {
-      tempAlbumList.addAll(albumList);
+      tempAlbumList?.addAll(albumList);
       updateAlbumStream(ListState.loadMoreSuccess(tempAlbumList, page));
     }
   }
@@ -67,7 +67,7 @@ class PhotoBloc {
     try {
       final ApiServiceModel<ListAlbum> albumApi =
           await _repository.getListAlbum(start);
-      return albumApi.data.listAlbum;
+      return albumApi.data?.listAlbum ?? [];
     } catch (err) {
       /// if first load error
       if (start == 0)
@@ -76,7 +76,7 @@ class PhotoBloc {
       /// if load more error
       else
         updateAlbumStream(ListState.loadMoreError(
-            _albumSubject.value.data, _albumSubject.value.page - 1));
+            _albumSubject.value.data, _albumSubject.value.page ?? 1 - 1));
       rethrow;
     }
   }
