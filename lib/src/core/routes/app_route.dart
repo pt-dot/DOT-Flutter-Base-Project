@@ -1,6 +1,7 @@
 import 'package:base_flutter/src/ui/module/home/home.dart';
-import 'package:base_flutter/src/ui/screens/splash/splash.dart';
 import 'package:flutter/material.dart';
+
+import '../../ui/module/splash/splash.dart';
 
 class AppRoute {
   static Route<dynamic> routes(RouteSettings settings) {
