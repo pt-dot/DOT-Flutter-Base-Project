@@ -2,7 +2,6 @@ import 'package:base_flutter/src/core/data/models/post.dart';
 import 'package:base_flutter/src/ui/module/post/list_post_bloc.dart';
 import 'package:base_flutter/src/ui/module/post/list_post_event.dart';
 import 'package:base_flutter/src/ui/module/post/list_post_state.dart';
-import 'package:base_flutter/src/ui/screens/home/widgets/item_post.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +10,7 @@ import 'package:formz/formz.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../shared/base_listview.dart';
+import '../widgets/item_post.dart';
 
 class ListPost extends StatefulWidget {
   @override
