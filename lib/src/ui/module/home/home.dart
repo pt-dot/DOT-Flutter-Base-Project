@@ -1,5 +1,4 @@
-import 'package:base_flutter/src/core/data/constants.dart';
-import 'package:base_flutter/src/ui/screens/home/list_photo.dart';
+import 'package:base_flutter/src/ui/module/photo/list_photo.dart';
 import 'package:base_flutter/src/ui/screens/home/list_post.dart';
 import 'package:base_flutter/src/ui/screens/home/profile.dart';
 import 'package:flutter/material.dart';

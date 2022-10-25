@@ -7,10 +7,12 @@ class BaseCommonTextInput extends StatelessWidget {
   final TextInputType? textInputType;
   final TextInputAction? textInputAction;
   final Color? backgroundColor;
+  final Function(String)? onChanged;
 
   const BaseCommonTextInput({
     required this.textFieldController,
     required this.label,
+    this.onChanged,
     this.textInputType,
     this.textInputAction,
     this.backgroundColor,
@@ -22,6 +24,7 @@ class BaseCommonTextInput extends StatelessWidget {
       keyboardType: textInputType ?? TextInputType.text,
       obscureText: textInputType == TextInputType.visiblePassword,
       textInputAction: textInputAction ?? TextInputAction.done,
+      onChanged: onChanged,
       decoration: InputDecoration(
           hintText: label,
           fillColor: backgroundColor ?? AppColors.white,
