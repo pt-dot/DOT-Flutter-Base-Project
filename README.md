@@ -3,18 +3,20 @@
 Build with Flutter, using BLoC pattern  
 Download apk [here](https://www.dropbox.com/s/beyyydndt0cvp0q)
 
-#### Dependencies ####
+#### Dependencies
+
 ```
 Flutter 1.17.5 • channel stable • https://github.com/flutter/flutter.git
 Framework • revision 8af6b2f038 (3 weeks ago) • 2020-06-30 12:53:55 -0700
 Engine • revision ee76268252
 Tools • Dart 2.8.4
 ```
-#### Screenshot ####
-| List Post | Album | Profile |
-| :-------: | :---: | :-----: |
-| ![List Post](https://i.imgur.com/jC7UoeL.jpg) | ![List Photo](https://i.imgur.com/dtaBedk.jpg) | ![Profile](https://i.imgur.com/mxJlOoe.jpg) |
 
+#### Screenshot
+
+|                   List Post                   |                     Album                      |                   Profile                   |
+| :-------------------------------------------: | :--------------------------------------------: | :-----------------------------------------: |
+| ![List Post](https://i.imgur.com/jC7UoeL.jpg) | ![List Photo](https://i.imgur.com/dtaBedk.jpg) | ![Profile](https://i.imgur.com/mxJlOoe.jpg) |
 
 #### List Libraries
 
@@ -24,7 +26,7 @@ Tools • Dart 2.8.4
 - [Dio](https://pub.dev/packages/dio)
 - [Equatable](https://pub.dev/packages/equatable)
 - [Hive](https://pub.dev/packages/hive)
-- [Path Provider](https://pub.dev/packages/path_provider)
-- [Provider](https://pub.dev/packages/provider)
-- [RXDart](https://pub.dev/packages/rxdart)
+- [flutter_bloc](https://pub.dev/packages/flutter_bloc)
+- [formz](https://pub.dev/packages/formz)
+- [pull_to_refresh](https://pub.dev/packages/pull_to_refresh)
 - [Sentry](https://pub.dev/packages/sentry)
