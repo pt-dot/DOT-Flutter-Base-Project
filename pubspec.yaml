@@ -31,8 +31,6 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   path_provider: ^2.0.11
-  provider: ^6.0.3
-  rxdart: ^0.27.5
   sentry: ^6.9.1
   flutter_bloc: ^8.1.1
   formz: ^0.4.1
