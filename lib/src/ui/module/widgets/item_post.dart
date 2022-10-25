@@ -2,10 +2,9 @@ import 'package:base_flutter/src/core/data/models/post.dart';
 import 'package:flutter/material.dart';
 
 class ItemPost extends StatelessWidget {
-
   const ItemPost(this.post);
 
-  final Post post;
+  final Post? post;
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +13,12 @@ class ItemPost extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('${post.id}. ${post.title}'),
+          Text('${post?.id}. ${post?.title}'),
           SizedBox(height: 8),
-          Divider(thickness: 1, height: 1,)
+          Divider(
+            thickness: 1,
+            height: 1,
+          )
         ],
       ),
     );

@@ -10,11 +10,15 @@ enum DataState {
 
 /// Global data list state, T = Model class
 class ListState<T> {
-  DataState state;
-  List<T> data;
-  int page;
+  DataState? state;
+  List<T>? data;
+  int? page;
 
-  ListState({this.state, this.data, this.page});
+  ListState({
+    this.state,
+    this.data,
+    this.page,
+  });
 
   ListState.init() {
     page = 0;

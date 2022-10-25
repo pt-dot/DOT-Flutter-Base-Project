@@ -1,7 +1,6 @@
-import 'package:base_flutter/src/core/data/constants.dart';
-import 'package:base_flutter/src/ui/screens/home/list_photo.dart';
-import 'package:base_flutter/src/ui/screens/home/list_post.dart';
-import 'package:base_flutter/src/ui/screens/home/profile.dart';
+import 'package:base_flutter/src/ui/module/photo/list_photo.dart';
+import 'package:base_flutter/src/ui/module/post/list_post.dart';
+import 'package:base_flutter/src/ui/module/profile/profile.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -11,7 +10,6 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-
   int _selectedIndex = 0;
   final List<Widget> menu = <Widget>[ListPost(), ListPhoto(), Profile()];
 
@@ -28,18 +26,18 @@ class HomeState extends State<Home> {
 
   Widget _buildBottomNavigationBar() {
     return BottomNavigationBar(
-      items: [
+      items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.view_list),
-          title: Text('List Post'),
+          label: 'List Post',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.image),
-          title: Text('List Photo'),
+          label: 'List Photo',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          title: Text('Profile'),
+          label: 'Profile',
         ),
       ],
       type: BottomNavigationBarType.fixed,
@@ -53,5 +51,4 @@ class HomeState extends State<Home> {
       _selectedIndex = index;
     });
   }
-
 }
