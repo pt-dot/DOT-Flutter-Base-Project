@@ -4,22 +4,21 @@ import 'package:flutter/material.dart';
 
 class AppRoute {
   static Route<dynamic> routes(RouteSettings settings) {
-    if (settings.name == '/') {
-      return MaterialPageRoute<dynamic>(builder: (BuildContext context) {
-        return Splash();
-      });
-    } else if (settings.name == Home.routeName) {
-      return MaterialPageRoute<dynamic>(builder: (BuildContext context) {
-        return Home();
-      });
-    } else {
-      return MaterialPageRoute<dynamic>(builder: (BuildContext context) {
-        return Scaffold(
-          body: Center(
-            child: Text('Page Not Found'),
+    switch (settings.name) {
+      case '/':
+        return MaterialPageRoute<dynamic>(
+            builder: (BuildContext context) => Splash());
+      case Home.routeName:
+        return MaterialPageRoute<dynamic>(
+            builder: (BuildContext context) => Home());
+      default:
+        return MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => Scaffold(
+            body: Center(
+              child: Text('Page Not Found'),
+            ),
           ),
         );
-      });
     }
   }
 }
