@@ -18,7 +18,7 @@ class BaseListView<T> extends StatelessWidget {
     this.padding,
   });
 
-  ScrollController? _scrollController;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {

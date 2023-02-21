@@ -1,6 +1,6 @@
 import 'package:base_flutter/src/core/data/constants.dart';
-import 'package:base_flutter/src/utils/app_helper.dart';
 import 'package:base_flutter/src/core/networks/logging_interceptor.dart';
+import 'package:base_flutter/src/utils/app_helper.dart';
 import 'package:dio/dio.dart';
 
 class NetworkHelper {

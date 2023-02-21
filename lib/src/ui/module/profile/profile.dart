@@ -1,8 +1,8 @@
 import 'package:base_flutter/src/ui/module/profile/profile_bloc.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_event.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_state.dart';
-import 'package:base_flutter/src/ui/shared/ui_constants.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
+import 'package:base_flutter/src/ui/shared/ui_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';

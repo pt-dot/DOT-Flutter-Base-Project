@@ -11,10 +11,8 @@ class LoggingInterceptor extends Interceptor {
         '--> ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${'' + (options.baseUrl) + (options.path)}');
     print('Headers:');
     options.headers.forEach((k, dynamic v) => print('$k: $v'));
-    if (options.queryParameters != null) {
-      print('queryParameters:');
-      options.queryParameters.forEach((k, dynamic v) => print('$k: $v'));
-    }
+    print('queryParameters:');
+    options.queryParameters.forEach((k, dynamic v) => print('$k: $v'));
     if (options.data != null) {
       print('Body: ${options.data.toString()}');
     }
@@ -24,14 +22,13 @@ class LoggingInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioError dioError, ErrorInterceptorHandler handler) {
+  void onError(DioError err, ErrorInterceptorHandler handler) {
     print('\n');
     print(
-        "<-- ${dioError.message} ${dioError.response?.requestOptions != null ? (dioError.response?.requestOptions.baseUrl) : 'URL'}");
-    print(
-        '${dioError.response != null ? dioError.response?.data : 'Unknown Error'}');
+        "<-- ${err.message} ${err.response?.requestOptions != null ? (err.response?.requestOptions.baseUrl) : 'URL'}");
+    print('${err.response != null ? err.response?.data : 'Unknown Error'}');
     print('<-- End error');
-    handler.next(dioError);
+    handler.next(err);
   }
 
   @override
