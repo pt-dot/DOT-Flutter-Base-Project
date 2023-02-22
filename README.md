@@ -1,4 +1,6 @@
-## DOT Flutter Base Project 1.0.1
+## DOT Flutter Base Project
+
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/pt-dot/DOT-Flutter-Base-Project?label=latest%20release&style=for-the-badge)](https://github.com/pt-dot/DOT-Flutter-Base-Project/releases/latest)
 
 Build with Flutter, using BLoC pattern  
 Download apk [here](https://www.dropbox.com/s/beyyydndt0cvp0q)
