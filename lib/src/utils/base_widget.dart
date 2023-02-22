@@ -2,9 +2,9 @@ import 'package:base_flutter/src/utils/sizing_information.dart';
 import 'package:flutter/widgets.dart';
 
 class BaseWidget extends StatelessWidget {
-
-  final Widget Function(BuildContext context, SizingInformation sizingInformation) builder;
-  const BaseWidget({Key key, this.builder}) : super(key: key);
+  final Widget Function(
+      BuildContext context, SizingInformation sizingInformation) builder;
+  const BaseWidget({Key? key, required this.builder}) : super(key: key);
 
   DeviceScreenType getDeviceType(MediaQueryData mediaQuery) {
     var orientation = mediaQuery.orientation;
@@ -25,7 +25,6 @@ class BaseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     var mediaQuery = MediaQuery.of(context);
 
     return LayoutBuilder(builder: (context, boxSizing) {
@@ -37,7 +36,5 @@ class BaseWidget extends StatelessWidget {
       );
       return builder(context, sizingInformation);
     });
-    
   }
-
 }

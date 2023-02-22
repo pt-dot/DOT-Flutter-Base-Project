@@ -1,47 +1,52 @@
 import 'package:dio/dio.dart';
 
-class LoggingInterceptor extends Interceptor{
-
+class LoggingInterceptor extends Interceptor {
   @override
-  Future<dynamic> onRequest(RequestOptions options) {
+  void onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) {
     print('\n');
-    print('--> ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${'' + (options.baseUrl ?? '') + (options.path ?? '')}');
+    print(
+        '--> ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${'' + (options.baseUrl) + (options.path)}');
     print('Headers:');
     options.headers.forEach((k, dynamic v) => print('$k: $v'));
-    if (options.queryParameters != null) {
-      print('queryParameters:');
-      options.queryParameters.forEach((k, dynamic v) => print('$k: $v'));
-    }
+    print('queryParameters:');
+    options.queryParameters.forEach((k, dynamic v) => print('$k: $v'));
     if (options.data != null) {
-      print('Body: ${options.data}');
+      print('Body: ${options.data.toString()}');
     }
-    print('--> END ${options.method != null ? options.method.toUpperCase() : 'METHOD'}');
-
-    return super.onRequest(options);
+    print(
+        '--> END ${options.method != null ? options.method.toUpperCase() : 'METHOD'}');
+    handler.next(options);
   }
 
   @override
-  Future onError(DioError dioError) {
+  void onError(DioError err, ErrorInterceptorHandler handler) {
     print('\n');
-    print('<-- ${dioError.message} ${dioError.response?.request != null ? (dioError.response.request.baseUrl + dioError.response.request.path) : 'URL'}');
-    print('${dioError.response != null ? dioError.response.data : 'Unknown Error'}');
+    print(
+        "<-- ${err.message} ${err.response?.requestOptions != null ? (err.response?.requestOptions.baseUrl) : 'URL'}");
+    print('${err.response != null ? err.response?.data : 'Unknown Error'}');
     print('<-- End error');
-    return super.onError(dioError);
+    handler.next(err);
   }
 
   @override
-  Future<dynamic> onResponse(Response<dynamic> response) {
+  void onResponse(
+      Response<dynamic> response, ResponseInterceptorHandler handler) {
     print('\n\n');
-    print('<--- HTTP CODE : ${response.statusCode} URL : ${response.request.baseUrl}${response.request.path}');
+    print(
+        '<--- HTTP CODE : ${response.statusCode} URL : ${response.requestOptions.baseUrl}${response.requestOptions.path}');
     print('Headers: ');
     printWrapped('Response : ${response.data}');
     print('<--- END HTTP');
-    return super.onResponse(response);
+    handler.next(response);
   }
 
   void printWrapped(String text) {
     final RegExp pattern = RegExp('.{1,800}');
-    pattern.allMatches(text).forEach((RegExpMatch match) => print(match.group(0)));
+    pattern
+        .allMatches(text)
+        .forEach((RegExpMatch match) => print(match.group(0)));
   }
-
 }
