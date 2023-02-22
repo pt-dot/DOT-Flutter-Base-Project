@@ -41,7 +41,7 @@ class BusinessException {
   }
 
   String errorMessage() {
-    var message = new StringBuffer();
+    var message = StringBuffer();
     errors?.forEach((_, dynamic value) {
       message.write(value.join(', '));
     });

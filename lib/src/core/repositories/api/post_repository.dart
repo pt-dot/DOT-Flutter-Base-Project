@@ -1,7 +1,7 @@
+import 'package:base_flutter/src/core/data/constants.dart';
+import 'package:base_flutter/src/core/data/models/post.dart';
 import 'package:base_flutter/src/core/networks/api_service_model.dart';
 import 'package:base_flutter/src/core/networks/network_helper.dart';
-import 'package:base_flutter/src/core/data/models/post.dart';
-import 'package:base_flutter/src/core/data/constants.dart';
 import 'package:dio/dio.dart';
 
 class PostRepository {
