@@ -50,7 +50,7 @@ class _ProfileState extends State<Profile> {
       builder: (context, state) {
         return state.user != null
             ? _buildProfile(state.user)
-            : state.status == FormzStatus.submissionInProgress
+            : state.status == FormzSubmissionStatus.inProgress
                 ? Center(child: Text('Loading...'))
                 : Container();
       },

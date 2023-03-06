@@ -23,7 +23,7 @@ class ListPostBloc extends Bloc<ListPostEvent, ListPostState> {
 
   Future<void> _onDataRequest(
       LoadListPostEvent event, Emitter<ListPostState> emit) async {
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
     try {
       final result = await _repository?.getListPost(event.page);
       final items = result?.data?.listPost ?? [];
@@ -33,7 +33,7 @@ class ListPostBloc extends Bloc<ListPostEvent, ListPostState> {
       _dbRepository.replacePosts(allItems);
 
       emit(state.copyWith(
-        status: FormzStatus.submissionSuccess,
+        status: FormzSubmissionStatus.success,
         post: allItems,
         page: event.page,
       ));
@@ -42,16 +42,11 @@ class ListPostBloc extends Bloc<ListPostEvent, ListPostState> {
         final items = _dbRepository.getAllPost();
         emit(state.copyWith(
           post: items,
-          status: FormzStatus.submissionFailure,
+          status: FormzSubmissionStatus.failure,
         ));
       } else {
-        emit(state.copyWith(status: FormzStatus.submissionFailure));
+        emit(state.copyWith(status: FormzSubmissionStatus.failure));
       }
     }
-  }
-
-  @override
-  Future<void> close() {
-    return super.close();
   }
 }

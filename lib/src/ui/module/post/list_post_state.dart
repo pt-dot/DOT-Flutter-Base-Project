@@ -5,18 +5,18 @@ import '../../../core/data/models/post.dart';
 
 class ListPostState extends Equatable {
   final List<Post> post;
-  final FormzStatus status;
+  final FormzSubmissionStatus status;
   final int page;
 
   const ListPostState({
     this.post = const [],
-    this.status = FormzStatus.pure,
+    this.status = FormzSubmissionStatus.initial,
     this.page = 1,
   });
 
   ListPostState copyWith({
     List<Post>? post,
-    FormzStatus? status,
+    FormzSubmissionStatus? status,
     int? page,
   }) =>
       ListPostState(

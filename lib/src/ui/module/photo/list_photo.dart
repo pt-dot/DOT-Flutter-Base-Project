@@ -46,13 +46,13 @@ class _ListPhotoState extends State<ListPhoto> {
                   listenWhen: (previous, current) =>
                       previous.status != current.status,
                   listener: (context, state) {
-                    if (state.status == FormzStatus.submissionSuccess) {
+                    if (state.status == FormzSubmissionStatus.success) {
                       if (_refreshController?.isRefresh == true) {
                         _refreshController?.refreshCompleted();
                       } else if (_refreshController?.isLoading == true) {
                         _refreshController?.loadComplete();
                       }
-                    } else if (state.status == FormzStatus.submissionFailure) {
+                    } else if (state.status == FormzSubmissionStatus.failure) {
                       if (_refreshController?.isRefresh == true) {
                         _refreshController?.refreshFailed();
                       } else if (_refreshController?.isLoading == true) {
