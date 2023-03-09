@@ -4,20 +4,20 @@ import 'package:formz/formz.dart';
 
 class ProfileState extends Equatable {
   final User? user;
-  final FormzStatus status;
+  final FormzSubmissionStatus status;
 
   const ProfileState({
     this.user,
-    this.status = FormzStatus.pure,
+    this.status = FormzSubmissionStatus.initial,
   });
 
   ProfileState copyWith({
     User? user,
-    FormzStatus? status,
+    FormzSubmissionStatus? status,
   }) =>
       ProfileState(
         user: user ?? this.user,
-        status: status ?? FormzStatus.pure,
+        status: status ?? FormzSubmissionStatus.initial,
       );
 
   @override

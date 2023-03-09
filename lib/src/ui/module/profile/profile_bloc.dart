@@ -16,8 +16,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   Future<void> _onInit(
-      InitProfileEvent event, Emitter<ProfileState> emit) async {
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    InitProfileEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
+    emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
     try {
       final result = await _repository?.getUser(event.id);
       final user = result?.data;
@@ -28,20 +30,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       }
 
       emit(state.copyWith(
-        status: FormzStatus.submissionSuccess,
+        status: FormzSubmissionStatus.success,
         user: user,
       ));
     } catch (e) {
       final user = _dbRepository.getUser();
       emit(state.copyWith(
         user: user,
-        status: FormzStatus.submissionFailure,
+        status: FormzSubmissionStatus.failure,
       ));
     }
-  }
-
-  @override
-  Future<void> close() {
-    return super.close();
   }
 }

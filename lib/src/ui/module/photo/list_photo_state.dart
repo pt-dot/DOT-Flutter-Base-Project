@@ -5,18 +5,18 @@ import '../../../core/data/models/album.dart';
 
 class ListPhotoState extends Equatable {
   final List<Album> albums;
-  final FormzStatus status;
+  final FormzSubmissionStatus status;
   final int page;
 
   const ListPhotoState({
     this.albums = const [],
-    this.status = FormzStatus.pure,
+    this.status = FormzSubmissionStatus.initial,
     this.page = 1,
   });
 
   ListPhotoState copyWith({
     List<Album>? albums,
-    FormzStatus? status,
+    FormzSubmissionStatus? status,
     int? page,
   }) =>
       ListPhotoState(

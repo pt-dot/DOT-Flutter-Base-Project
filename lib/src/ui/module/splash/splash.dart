@@ -15,8 +15,14 @@ class Splash extends StatelessWidget {
 
   void _delay(BuildContext context) {
     Future<void>.delayed(const Duration(seconds: 2), () {
-      Navigator.pushNamedAndRemoveUntil(
-          context, Home.routeName, ModalRoute.withName('/'));
+      // Always check if the widget is mounted in async function that require context
+      if (context.mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          Home.routeName,
+          ModalRoute.withName('/'),
+        );
+      }
     });
   }
 }

@@ -22,8 +22,10 @@ class ListPhotoBloc extends Bloc<ListPhotoEvent, ListPhotoState> {
   }
 
   Future<void> _onDataRequest(
-      LoadListPhotoEvent event, Emitter<ListPhotoState> emit) async {
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    LoadListPhotoEvent event,
+    Emitter<ListPhotoState> emit,
+  ) async {
+    emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
     try {
       final result = await _repository?.getListAlbum(event.page);
       final items = result?.data?.listAlbum ?? [];
@@ -33,7 +35,7 @@ class ListPhotoBloc extends Bloc<ListPhotoEvent, ListPhotoState> {
       _dbRepository.replaceAlbums(allItems);
 
       emit(state.copyWith(
-        status: FormzStatus.submissionSuccess,
+        status: FormzSubmissionStatus.success,
         albums: allItems,
         page: event.page,
       ));
@@ -42,16 +44,11 @@ class ListPhotoBloc extends Bloc<ListPhotoEvent, ListPhotoState> {
         final items = _dbRepository.getAllAlbum();
         emit(state.copyWith(
           albums: items,
-          status: FormzStatus.submissionFailure,
+          status: FormzSubmissionStatus.failure,
         ));
       } else {
-        emit(state.copyWith(status: FormzStatus.submissionFailure));
+        emit(state.copyWith(status: FormzSubmissionStatus.failure));
       }
     }
-  }
-
-  @override
-  Future<void> close() {
-    return super.close();
   }
 }
