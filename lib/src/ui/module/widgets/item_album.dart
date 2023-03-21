@@ -15,7 +15,14 @@ class ItemAlbum extends StatelessWidget {
         color: Colors.white,
       ),
       child: Center(
-        child: Text(album?.title ?? '', textAlign: TextAlign.center),
+        child: Text(
+          album?.title ?? '',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+          ),
+        ),
       ),
     );
   }

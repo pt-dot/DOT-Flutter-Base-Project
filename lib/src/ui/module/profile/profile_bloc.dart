@@ -1,11 +1,10 @@
+import 'package:base_flutter/src/core/networks/network_helper.dart';
+import 'package:base_flutter/src/core/repositories/api/profile_repository.dart';
+import 'package:base_flutter/src/core/repositories/db/profile_db_repository.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_event.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_state.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
-
-import '../../../core/networks/network_helper.dart';
-import '../../../core/repositories/api/profile_repository.dart';
-import '../../../core/repositories/db/profile_db_repository.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileRepository? _repository;

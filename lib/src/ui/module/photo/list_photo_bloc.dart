@@ -1,11 +1,10 @@
+import 'package:base_flutter/src/core/networks/network_helper.dart';
+import 'package:base_flutter/src/core/repositories/api/photo_repository.dart';
+import 'package:base_flutter/src/core/repositories/db/album_db_repository.dart';
 import 'package:base_flutter/src/ui/module/photo/list_photo_event.dart';
 import 'package:base_flutter/src/ui/module/photo/list_photo_state.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
-
-import '../../../core/networks/network_helper.dart';
-import '../../../core/repositories/api/photo_repository.dart';
-import '../../../core/repositories/db/album_db_repository.dart';
 
 class ListPhotoBloc extends Bloc<ListPhotoEvent, ListPhotoState> {
   PhotoRepository? _repository;

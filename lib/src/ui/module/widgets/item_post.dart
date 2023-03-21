@@ -13,12 +13,18 @@ class ItemPost extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('${post?.id}. ${post?.title}'),
+          Text(
+            '${post?.id}. ${post?.title}',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+            ),
+          ),
           SizedBox(height: 8),
           Divider(
             thickness: 1,
             height: 1,
-          )
+          ),
         ],
       ),
     );

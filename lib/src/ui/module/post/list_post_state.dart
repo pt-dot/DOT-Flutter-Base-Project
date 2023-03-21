@@ -1,7 +1,6 @@
+import 'package:base_flutter/src/core/data/models/post.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-
-import '../../../core/data/models/post.dart';
 
 class ListPostState extends Equatable {
   final List<Post> post;

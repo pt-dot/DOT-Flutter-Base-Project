@@ -1,22 +1,29 @@
 import 'package:base_flutter/src/ui/module/home/home.dart';
+import 'package:base_flutter/src/ui/module/splash/splash.dart';
 import 'package:flutter/material.dart';
-
-import '../../ui/module/splash/splash.dart';
 
 class AppRoute {
   static Route<dynamic> routes(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute<dynamic>(
-            builder: (BuildContext context) => Splash());
+        return MaterialPageRoute(
+          builder: (BuildContext context) => Splash(),
+        );
       case Home.routeName:
-        return MaterialPageRoute<dynamic>(
-            builder: (BuildContext context) => Home());
+        return MaterialPageRoute(
+          builder: (BuildContext context) => Home(),
+        );
       default:
-        return MaterialPageRoute<dynamic>(
+        return MaterialPageRoute(
           builder: (BuildContext context) => Scaffold(
             body: Center(
-              child: Text('Page Not Found'),
+              child: Text(
+                'Page Not Found',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                ),
+              ),
             ),
           ),
         );

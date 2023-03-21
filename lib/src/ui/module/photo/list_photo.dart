@@ -2,14 +2,14 @@ import 'package:base_flutter/src/core/data/models/album.dart';
 import 'package:base_flutter/src/ui/module/photo/list_photo_bloc.dart';
 import 'package:base_flutter/src/ui/module/photo/list_photo_event.dart';
 import 'package:base_flutter/src/ui/module/photo/list_photo_state.dart';
+import 'package:base_flutter/src/ui/module/widgets/item_album.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
+import 'package:base_flutter/src/ui/shared/base_gridview.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-import '../../shared/base_gridview.dart';
-import '../widgets/item_album.dart';
 
 class ListPhoto extends StatefulWidget {
   @override

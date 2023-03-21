@@ -1,7 +1,6 @@
+import 'package:base_flutter/src/core/data/models/album.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-
-import '../../../core/data/models/album.dart';
 
 class ListPhotoState extends Equatable {
   final List<Album> albums;

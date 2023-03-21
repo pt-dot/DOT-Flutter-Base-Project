@@ -1,11 +1,10 @@
+import 'package:base_flutter/src/core/networks/network_helper.dart';
 import 'package:base_flutter/src/core/repositories/api/post_repository.dart';
 import 'package:base_flutter/src/core/repositories/db/post_db_repository.dart';
+import 'package:base_flutter/src/ui/module/post/list_post_event.dart';
+import 'package:base_flutter/src/ui/module/post/list_post_state.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
-
-import '../../../core/networks/network_helper.dart';
-import 'list_post_event.dart';
-import 'list_post_state.dart';
 
 class ListPostBloc extends Bloc<ListPostEvent, ListPostState> {
   PostRepository? _repository;
