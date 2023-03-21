@@ -8,10 +8,10 @@ Download apk [here](https://www.dropbox.com/s/beyyydndt0cvp0q)
 #### Dependencies
 
 ```
-Flutter 3.0.5 • channel stable • https://github.com/flutter/flutter.git
-Framework • revision f1875d570e (3 months ago) • 2022-07-13 11:24:16 -0700
-Engine • revision e85ea0e79c
-Tools • Dart 2.17.6 • DevTools 2.12.2
+Flutter 3.7.7 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 2ad6cd72c0 (13 days ago) • 2023-03-08 09:41:59 -0800
+Engine • revision 1837b5be5f
+Tools • Dart 2.19.4 • DevTools 2.20.1
 ```
 
 #### Screenshot
@@ -30,5 +30,4 @@ Tools • Dart 2.17.6 • DevTools 2.12.2
 - [Hive](https://pub.dev/packages/hive)
 - [flutter_bloc](https://pub.dev/packages/flutter_bloc)
 - [formz](https://pub.dev/packages/formz)
-- [pull_to_refresh](https://pub.dev/packages/pull_to_refresh)
 - [Sentry](https://pub.dev/packages/sentry)

@@ -7,7 +7,6 @@ import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../shared/base_listview.dart';
 import '../widgets/item_post.dart';
@@ -21,13 +20,11 @@ class _ListPostState extends State<ListPost> {
   final TextEditingController _searchController = TextEditingController();
 
   ListPostBloc? _bloc;
-  RefreshController? _refreshController;
 
   @override
   void initState() {
     super.initState();
     _bloc = ListPostBloc();
-    _refreshController = RefreshController();
   }
 
   @override
@@ -47,24 +44,13 @@ class _ListPostState extends State<ListPost> {
                       previous.status != current.status,
                   listener: (context, state) {
                     if (state.status == FormzSubmissionStatus.success) {
-                      if (_refreshController?.isRefresh == true) {
-                        _refreshController?.refreshCompleted();
-                      } else if (_refreshController?.isLoading == true) {
-                        _refreshController?.loadComplete();
-                      }
-                    } else if (state.status == FormzSubmissionStatus.failure) {
-                      if (_refreshController?.isRefresh == true) {
-                        _refreshController?.refreshFailed();
-                      } else if (_refreshController?.isLoading == true) {
-                        _refreshController?.loadFailed();
-                      }
+
                     }
                   },
                   buildWhen: (previous, current) =>
                       previous.status != current.status,
                   builder: (context, state) {
                     return BaseListView<Post>(
-                      controller: _refreshController!,
                       items: state.post,
                       onRefresh: () => _bloc?.add(InitListPostEvent()),
                       onLoadMore: () =>
