@@ -50,7 +50,7 @@ class _ListPostState extends State<ListPost> {
                       previous.status != current.status,
                   builder: (context, state) {
                     return BaseListView<Post>(
-                      items: state.post,
+                      items: state.posts,
                       onRefresh: () => _bloc?.add(InitListPostEvent()),
                       onLoadMore: () =>
                           _bloc?.add(LoadListPostEvent(page: state.page + 1)),
