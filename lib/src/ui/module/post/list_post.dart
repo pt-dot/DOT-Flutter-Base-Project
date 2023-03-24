@@ -64,6 +64,14 @@ class _ListPostState extends State<ListPost> {
     );
   }
 
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
+
   Widget _buildSearchBar() {
     return Container(
       padding: EdgeInsets.all(15),
