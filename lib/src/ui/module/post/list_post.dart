@@ -18,7 +18,8 @@ class ListPost extends StatefulWidget {
 class _ListPostState extends State<ListPost> {
   final TextEditingController _searchController = TextEditingController();
 
-  ListPostBloc? _bloc;
+  final _scrollController = ScrollController();
+  late ListPostBloc _bloc;
 
   @override
   void initState() {
@@ -28,39 +29,34 @@ class _ListPostState extends State<ListPost> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _bloc!..add(InitListPostEvent()),
-      child: Scaffold(
-          appBar: MyAppToolbar(title: 'Post'),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildSearchBar(),
-              Expanded(
-                child: BlocConsumer<ListPostBloc, ListPostState>(
-                  listenWhen: (previous, current) =>
-                      previous.status != current.status,
-                  listener: (context, state) {
-                    if (state.status == FormzSubmissionStatus.success) {
-
-                    }
-                  },
-                  buildWhen: (previous, current) =>
-                      previous.status != current.status,
-                  builder: (context, state) {
-                    return BaseListView<Post>(
-                      items: state.posts,
-                      onRefresh: () => _bloc?.add(InitListPostEvent()),
-                      onLoadMore: () =>
-                          _bloc?.add(LoadListPostEvent(page: state.page + 1)),
-                      itemBuilder: (context, state, data) => ItemPost(data),
-                    );
-                  },
-                ),
-              ),
-            ],
-          )),
+    return Scaffold(
+      appBar: MyAppToolbar(title: 'Post'),
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSearchBar(),
+          BlocBuilder<ListPostBloc, ListPostState>(
+            bloc: _bloc,
+            buildWhen: (previous, current) {
+              return previous.status != current.status ||
+                  previous.posts != current.posts;
+            },
+            builder: (context, state) {
+              if (state.status == PostStatus.initial) {
+                return Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              } else {
+                return Container();
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -72,5 +68,16 @@ class _ListPostState extends State<ListPost> {
         label: 'Search...',
       ),
     );
+  }
+
+  void _onScroll() {
+    if (_isBottom) _bloc.add(InitListPostEvent());
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
   }
 }

@@ -6,6 +6,7 @@ class BaseListView<T> extends StatelessWidget {
   final VoidCallback? onLoadMore;
   final EdgeInsetsGeometry? padding;
   final Widget Function(BuildContext context, int index, T? data) itemBuilder;
+  final ScrollController? scrollController;
 
   BaseListView({
     required this.items,
@@ -13,9 +14,9 @@ class BaseListView<T> extends StatelessWidget {
     this.onRefresh,
     this.onLoadMore,
     this.padding,
+    this.scrollController,
   });
 
-  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class BaseListView<T> extends StatelessWidget {
       onRefresh: () async {},
       child: ListView.builder(
         physics: ClampingScrollPhysics(),
-        controller: _scrollController,
+        controller: scrollController,
         shrinkWrap: true,
         itemCount: items?.length ?? 0,
         itemBuilder: (context, index) => itemBuilder(
