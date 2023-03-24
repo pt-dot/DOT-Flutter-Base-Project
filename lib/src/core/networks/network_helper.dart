@@ -18,10 +18,13 @@ class NetworkHelper {
 
   Dio? _dio;
 
-  Future<dynamic> get(String url) async {
+  Future<dynamic> get(
+    String url, {
+    Map<String, dynamic>? query,
+  }) async {
     dynamic response;
     try {
-      response = await _dio?.get<dynamic>(url);
+      response = await _dio?.get<dynamic>(url, queryParameters: query);
     } catch (err) {
       rethrow;
     }
