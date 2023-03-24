@@ -1,14 +1,12 @@
-import 'package:base_flutter/src/core/data/models/post.dart';
 import 'package:base_flutter/src/ui/module/post/list_post_bloc.dart';
 import 'package:base_flutter/src/ui/module/post/list_post_event.dart';
 import 'package:base_flutter/src/ui/module/post/list_post_state.dart';
+import 'package:base_flutter/src/ui/module/widgets/item_load_more.dart';
 import 'package:base_flutter/src/ui/module/widgets/item_post.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
-import 'package:base_flutter/src/ui/shared/base_listview.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 
 class ListPost extends StatefulWidget {
   @override
@@ -24,7 +22,9 @@ class _ListPostState extends State<ListPost> {
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_onScroll);
     _bloc = ListPostBloc();
+    _bloc.add(InitListPostEvent());
   }
 
   @override
@@ -51,7 +51,9 @@ class _ListPostState extends State<ListPost> {
                   ),
                 );
               } else {
-                return Container();
+                return Expanded(
+                  child: _buildList(state),
+                );
               }
             },
           ),
@@ -66,6 +68,25 @@ class _ListPostState extends State<ListPost> {
       child: BaseCommonTextInput(
         textFieldController: _searchController,
         label: 'Search...',
+      ),
+    );
+  }
+
+  Widget _buildList(ListPostState state) {
+    return ListView.separated(
+      controller: _scrollController,
+      itemCount:
+          state.hasReachedMax ? state.posts.length : state.posts.length + 1,
+      itemBuilder: (context, index) {
+        return index >= state.posts.length
+            ? ItemLoadMore()
+            : ItemPost(
+                post: state.posts[index],
+              );
+      },
+      separatorBuilder: (context, index) => Divider(
+        height: 1,
+        thickness: 1,
       ),
     );
   }

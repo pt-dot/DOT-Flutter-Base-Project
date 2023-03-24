@@ -12,35 +12,42 @@ class ListPostBloc extends Bloc<ListPostEvent, ListPostState> {
   ListPostBloc() : super(const ListPostState()) {
     _repository = PostRepository(NetworkHelper());
     on<InitListPostEvent>(_onInit);
-    on<LoadListPostEvent>(_onDataRequest);
   }
 
-  void _onInit(InitListPostEvent event, Emitter<ListPostState> emit) {
-    add(LoadListPostEvent());
-  }
-
-  Future<void> _onDataRequest(
-      LoadListPostEvent event, Emitter<ListPostState> emit) async {
+  void _onInit(InitListPostEvent event, Emitter<ListPostState> emit) async {
+    if (state.hasReachedMax) return;
     try {
-      final result = await _repository?.getListPost(event.page);
-      final items = result?.data?.listPost ?? [];
-      final allItems = event.page < 2 ? items : state.posts + items;
-
-      /// save to local
-      _dbRepository.replacePosts(allItems);
-
-      emit(state.copyWith(
-        posts: allItems,
-        page: event.page,
-      ));
-    } catch (e) {
-      if (event.page == 1) {
-        final items = _dbRepository.getAllPost();
+      if (state.status == PostStatus.initial) {
+        final response = await _repository?.getListPost(state.page);
+        final posts = response?.data?.listPost ?? [];
         emit(state.copyWith(
-          posts: items,
+          status: PostStatus.success,
+          posts: posts,
+          hasReachedMax: false,
+        ));
+      }
+      int nextPage = state.page + 1;
+      emit(state.copyWith(
+        page: nextPage,
+      ));
+      final response = await _repository?.getListPost(state.page);
+      final posts = response?.data?.listPost ?? [];
+      if (posts.isEmpty) {
+        emit(state.copyWith(
+          status: PostStatus.success,
+          hasReachedMax: true,
         ));
       } else {
+        emit(state.copyWith(
+          status: PostStatus.success,
+          hasReachedMax: false,
+          posts: List.of(state.posts)..addAll(posts),
+        ));
       }
+    } catch (e) {
+      emit(state.copyWith(
+        status: PostStatus.failure,
+      ));
     }
   }
 }
