@@ -5,4 +5,6 @@ abstract class ListPostEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitListPostEvent extends ListPostEvent {}
+class ListPostInitEvent extends ListPostEvent {}
+
+class ListPostRefreshEvent extends ListPostEvent {}

@@ -19,13 +19,14 @@ class ListPostBloc extends Bloc<ListPostEvent, ListPostState> {
 
   ListPostBloc() : super(const ListPostState()) {
     _repository = PostRepository(NetworkHelper());
-    on<InitListPostEvent>(
+    on<ListPostInitEvent>(
       _onInit,
       transformer: throttleDroppable(throttleDuration),
     );
+    on<ListPostRefreshEvent>(_onRefresh);
   }
 
-  void _onInit(InitListPostEvent event, Emitter<ListPostState> emit) async {
+  void _onInit(ListPostInitEvent event, Emitter<ListPostState> emit) async {
     if (state.hasReachedMax) return;
     try {
       if (state.status == PostStatus.initial) {
@@ -60,5 +61,15 @@ class ListPostBloc extends Bloc<ListPostEvent, ListPostState> {
         status: PostStatus.failure,
       ));
     }
+  }
+
+  void _onRefresh(ListPostRefreshEvent event, Emitter<ListPostState> emit) {
+    emit(state.copyWith(
+      status: PostStatus.initial,
+      page: 1,
+      hasReachedMax: false,
+      posts: [],
+    ));
+    add(ListPostInitEvent());
   }
 }

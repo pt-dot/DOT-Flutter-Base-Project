@@ -24,7 +24,7 @@ class _ListPostState extends State<ListPost> {
     super.initState();
     _scrollController.addListener(_onScroll);
     _bloc = ListPostBloc();
-    _bloc.add(InitListPostEvent());
+    _bloc.add(ListPostInitEvent());
   }
 
   @override
@@ -83,26 +83,33 @@ class _ListPostState extends State<ListPost> {
   }
 
   Widget _buildList(ListPostState state) {
-    return ListView.separated(
-      controller: _scrollController,
-      itemCount:
-          state.hasReachedMax ? state.posts.length : state.posts.length + 1,
-      itemBuilder: (context, index) {
-        return index >= state.posts.length
-            ? ItemLoadMore()
-            : ItemPost(
-                post: state.posts[index],
-              );
+    return RefreshIndicator(
+      onRefresh: () async {
+        _bloc.add(ListPostRefreshEvent());
       },
-      separatorBuilder: (context, index) => Divider(
-        height: 1,
-        thickness: 1,
+      child: ListView.separated(
+        physics: const AlwaysScrollableScrollPhysics(),
+        controller: _scrollController,
+        itemCount:
+            state.hasReachedMax ? state.posts.length : state.posts.length + 1,
+        itemBuilder: (context, index) {
+          return index >= state.posts.length
+              ? ItemLoadMore()
+              : ItemPost(
+                  post: state.posts[index],
+                );
+        },
+        separatorBuilder: (context, index) => Divider(
+          color: Colors.grey[300],
+          height: 1,
+          thickness: 1,
+        ),
       ),
     );
   }
 
   void _onScroll() {
-    if (_isBottom) _bloc.add(InitListPostEvent());
+    if (_isBottom) _bloc.add(ListPostInitEvent());
   }
 
   bool get _isBottom {
