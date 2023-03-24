@@ -1,17 +1,28 @@
 import 'package:base_flutter/src/core/networks/network_helper.dart';
 import 'package:base_flutter/src/core/repositories/api/post_repository.dart';
-import 'package:base_flutter/src/core/repositories/db/post_db_repository.dart';
 import 'package:base_flutter/src/ui/module/post/list_post_event.dart';
 import 'package:base_flutter/src/ui/module/post/list_post_state.dart';
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:stream_transform/stream_transform.dart';
+
+const throttleDuration = Duration(milliseconds: 100);
+
+EventTransformer<E> throttleDroppable<E>(Duration duration) {
+  return (events, mapper) {
+    return droppable<E>().call(events.throttle(duration), mapper);
+  };
+}
 
 class ListPostBloc extends Bloc<ListPostEvent, ListPostState> {
   PostRepository? _repository;
-  final PostDbRepository _dbRepository = PostDbRepository();
 
   ListPostBloc() : super(const ListPostState()) {
     _repository = PostRepository(NetworkHelper());
-    on<InitListPostEvent>(_onInit);
+    on<InitListPostEvent>(
+      _onInit,
+      transformer: throttleDroppable(throttleDuration),
+    );
   }
 
   void _onInit(InitListPostEvent event, Emitter<ListPostState> emit) async {

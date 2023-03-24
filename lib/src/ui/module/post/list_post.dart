@@ -41,7 +41,9 @@ class _ListPostState extends State<ListPost> {
             bloc: _bloc,
             buildWhen: (previous, current) {
               return previous.status != current.status ||
-                  previous.posts != current.posts;
+                  previous.posts != current.posts ||
+                  previous.hasReachedMax != current.hasReachedMax ||
+                  previous.page != current.page;
             },
             builder: (context, state) {
               if (state.status == PostStatus.initial) {
