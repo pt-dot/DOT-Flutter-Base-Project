@@ -1,8 +1,8 @@
-import 'package:base_flutter/src/core/data/models/album.dart';
 import 'package:base_flutter/src/ui/module/photo/list_photo_bloc.dart';
 import 'package:base_flutter/src/ui/module/photo/list_photo_event.dart';
 import 'package:base_flutter/src/ui/module/photo/list_photo_state.dart';
 import 'package:base_flutter/src/ui/module/widgets/item_album.dart';
+import 'package:base_flutter/src/ui/module/widgets/item_load_more.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
 import 'package:flutter/material.dart';
@@ -39,13 +39,35 @@ class _ListPhotoState extends State<ListPhoto> {
           _buildSearchBar(),
           BlocBuilder<ListPhotoBloc, ListPhotoState>(
             bloc: _bloc,
+            buildWhen: (previous, current) {
+              return previous.status != current.status ||
+                  previous.albums != current.albums ||
+                  previous.hasReachedMax != current.hasReachedMax ||
+                  previous.page != current.page;
+            },
             builder: (context, state) {
-              return Container();
+              if (state.status == AlbumStatus.initial) {
+                return Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              } else {
+                return Expanded(child: _buildGrid(state));
+              }
             },
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
   }
 
   Widget _buildSearchBar() {
@@ -55,6 +77,29 @@ class _ListPhotoState extends State<ListPhoto> {
         textFieldController: _searchController,
         label: 'Search...',
         onChanged: (p0) {},
+      ),
+    );
+  }
+
+  Widget _buildGrid(ListPhotoState state) {
+    final length = state.albums.length;
+    return RefreshIndicator(
+      onRefresh: () async {
+        _bloc.add(ListPhotoRefreshEvent());
+      },
+      child: GridView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        controller: _scrollController,
+        itemCount: state.hasReachedMax ? length : length + 1,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+        ),
+        itemBuilder: (context, index) {
+          return index >= length
+              ? ItemLoadMore()
+              : ItemAlbum(state.albums[index]);
+        },
       ),
     );
   }
