@@ -30,6 +30,7 @@ class _ListPostState extends State<ListPost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: MyAppToolbar(title: 'Post'),
       body: Column(
         mainAxisSize: MainAxisSize.max,

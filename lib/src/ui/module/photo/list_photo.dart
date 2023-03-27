@@ -30,6 +30,7 @@ class _ListPhotoState extends State<ListPhoto> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: MyAppToolbar(title: 'Album'),
       body: Column(
         mainAxisSize: MainAxisSize.max,

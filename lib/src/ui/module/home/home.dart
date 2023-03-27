@@ -16,7 +16,6 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: IndexedStack(
         index: _selectedIndex,
         children: menu.map((t) => Center(child: t)).toList(),

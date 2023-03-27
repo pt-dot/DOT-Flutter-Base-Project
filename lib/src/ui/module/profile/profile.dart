@@ -29,6 +29,7 @@ class _ProfileState extends State<Profile> {
     return BlocProvider(
       create: (context) => _bloc!..add(InitProfileEvent(id: ID_USER)),
       child: Scaffold(
+        backgroundColor: Colors.white,
           appBar: MyAppToolbar(title: 'Profile'),
           body: RefreshIndicator(
             onRefresh: () async {
