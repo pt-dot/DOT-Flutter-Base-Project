@@ -4,12 +4,9 @@ import 'package:base_flutter/src/ui/module/photo/list_photo_event.dart';
 import 'package:base_flutter/src/ui/module/photo/list_photo_state.dart';
 import 'package:base_flutter/src/ui/module/widgets/item_album.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
-import 'package:base_flutter/src/ui/shared/base_gridview.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
-
 
 class ListPhoto extends StatefulWidget {
   @override
@@ -19,54 +16,35 @@ class ListPhoto extends StatefulWidget {
 class _ListPhotoState extends State<ListPhoto> {
   final TextEditingController _searchController = TextEditingController();
 
-  ListPhotoBloc? _bloc;
+  final _scrollController = ScrollController();
+  late ListPhotoBloc _bloc;
 
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_onScroll);
     _bloc = ListPhotoBloc();
+    _bloc.add(ListPhotoInitEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _bloc!..add(InitListPhotoEvent()),
-      child: Scaffold(
-          appBar: MyAppToolbar(title: 'Album'),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildSearchBar(),
-              Expanded(
-                child: BlocConsumer<ListPhotoBloc, ListPhotoState>(
-                  listenWhen: (previous, current) =>
-                      previous.status != current.status,
-                  listener: (context, state) {
-                    if (state.status == FormzSubmissionStatus.success) {
-
-                    } else if (state.status == FormzSubmissionStatus.failure) {
-
-                    }
-                  },
-                  buildWhen: (previous, current) =>
-                      previous.status != current.status,
-                  builder: (context, state) => BaseGridView<Album>(
-                    items: state.albums,
-                    childAspectRatio: 1,
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 8.0,
-                    crossAxisSpacing: 8.0,
-                    padding: EdgeInsets.all(15.0),
-                    onRefresh: () => _bloc?.add(LoadListPhotoEvent()),
-                    onLoadMore: () =>
-                        _bloc?.add(LoadListPhotoEvent(page: state.page + 1)),
-                    itemBuilder: (context, state, data) => ItemAlbum(data),
-                  ),
-                ),
-              ),
-            ],
-          )),
+    return Scaffold(
+      appBar: MyAppToolbar(title: 'Album'),
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSearchBar(),
+          BlocBuilder<ListPhotoBloc, ListPhotoState>(
+            bloc: _bloc,
+            builder: (context, state) {
+              return Container();
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -79,5 +57,16 @@ class _ListPhotoState extends State<ListPhoto> {
         onChanged: (p0) {},
       ),
     );
+  }
+
+  void _onScroll() {
+    if (_isBottom) _bloc.add(ListPhotoInitEvent());
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
   }
 }

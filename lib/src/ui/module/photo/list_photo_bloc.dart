@@ -9,10 +9,8 @@ class ListPhotoBloc extends Bloc<ListPhotoEvent, ListPhotoState> {
 
   ListPhotoBloc() : super(const ListPhotoState()) {
     _repository = PhotoRepository(NetworkHelper());
-    on<InitListPhotoEvent>(_onInit);
+    on<ListPhotoInitEvent>(_onInit);
   }
 
-  void _onInit(InitListPhotoEvent event, Emitter<ListPhotoState> emit) {
-
-  }
+  void _onInit(ListPhotoInitEvent event, Emitter<ListPhotoState> emit) async {}
 }
