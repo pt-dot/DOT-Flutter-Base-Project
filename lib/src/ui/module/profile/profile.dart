@@ -2,6 +2,7 @@ import 'package:base_flutter/src/core/data/models/user.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_bloc.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_event.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_state.dart';
+import 'package:base_flutter/src/ui/module/update_profile/update_profile_screen.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
 import 'package:base_flutter/src/ui/shared/ui_constants.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +75,17 @@ class _ProfileState extends State<Profile> {
           _content('Suite : ${user?.address?.suite}'),
           _title('Company'),
           _content('Name : ${user?.company?.name}'),
+          SizedBox(height: 20),
+          MaterialButton(
+            onPressed: () {
+              Navigator.pushNamed(context, UpdateProfileScreen.routeName);
+            },
+            child: Text(
+              'Update Profile',
+              style: TextStyle(color: Colors.white),
+            ),
+            color: Colors.blue,
+          ),
         ],
       ),
     );

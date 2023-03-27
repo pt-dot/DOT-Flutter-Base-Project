@@ -1,5 +1,6 @@
 import 'package:base_flutter/src/ui/module/home/home.dart';
 import 'package:base_flutter/src/ui/module/splash/splash.dart';
+import 'package:base_flutter/src/ui/module/update_profile/update_profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRoute {
@@ -12,6 +13,10 @@ class AppRoute {
       case Home.routeName:
         return MaterialPageRoute(
           builder: (BuildContext context) => Home(),
+        );
+      case UpdateProfileScreen.routeName:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => UpdateProfileScreen(),
         );
       default:
         return MaterialPageRoute(
