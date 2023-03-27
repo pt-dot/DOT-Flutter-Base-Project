@@ -9,10 +9,13 @@ class PhotoRepository {
 
   PhotoRepository(this._networkHelper);
 
-  Future<ApiServiceModel<ListAlbum>> getListAlbum(int start) async {
-    final Response<dynamic> response = await _networkHelper
-            .get('albums?_start=$start&_limit=${AppLimit.ALBUM_PAGE_SIZE}')
-        as Response<dynamic>;
+  Future<ApiServiceModel<ListAlbum>> getListAlbum(int page) async {
+    final params = {
+      '_page': page,
+      '_limit': AppLimit.ALBUM_PAGE_SIZE,
+    };
+    final Response<dynamic> response =
+        await _networkHelper.get('albums', query: params) as Response<dynamic>;
     return ApiServiceModel.fromList(response, ListAlbum.fromJson);
   }
 }
