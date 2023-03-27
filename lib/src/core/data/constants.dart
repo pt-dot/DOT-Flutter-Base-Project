@@ -7,7 +7,7 @@ mixin URLs {
 
 // constant for page limit & timeout
 mixin AppLimit {
-  static const int REQUEST_TIME_OUT = 30000;
+  static const int REQUEST_TIME_OUT = 30;
   static const int ALBUM_PAGE_SIZE = 18;
   static const int POST_PAGE_SIZE =  20;
 }
