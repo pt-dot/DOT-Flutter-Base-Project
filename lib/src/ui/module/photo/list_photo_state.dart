@@ -1,4 +1,4 @@
-import 'package:base_flutter/src/core/data/models/album.dart';
+import 'package:base_flutter/src/core/models/album.dart';
 import 'package:equatable/equatable.dart';
 
 enum AlbumStatus { initial, success, failure }

@@ -1,4 +1,4 @@
-import 'package:base_flutter/src/core/data/models/post.dart';
+import 'package:base_flutter/src/core/models/post.dart';
 import 'package:equatable/equatable.dart';
 
 enum PostStatus { initial, success, failure }

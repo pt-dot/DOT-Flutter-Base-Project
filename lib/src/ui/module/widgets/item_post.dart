@@ -1,4 +1,4 @@
-import 'package:base_flutter/src/core/data/models/post.dart';
+import 'package:base_flutter/src/core/models/post.dart';
 import 'package:base_flutter/src/ui/shared/ui_constants.dart';
 import 'package:flutter/material.dart';
 

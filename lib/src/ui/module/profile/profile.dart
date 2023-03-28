@@ -1,4 +1,4 @@
-import 'package:base_flutter/src/core/data/models/user.dart';
+import 'package:base_flutter/src/core/models/user.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_bloc.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_event.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_state.dart';

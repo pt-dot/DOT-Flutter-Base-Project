@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:base_flutter/src/core/data/constants.dart';
 import 'package:base_flutter/src/core/data/hive_constants.dart';
-import 'package:base_flutter/src/core/data/models/user.dart';
+import 'package:base_flutter/src/core/models/user.dart';
 import 'package:base_flutter/src/my_app.dart';
 import 'package:base_flutter/src/utils/app_helper.dart';
 import 'package:device_preview/device_preview.dart';
