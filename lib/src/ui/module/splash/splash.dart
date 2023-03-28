@@ -7,8 +7,14 @@ class Splash extends StatelessWidget {
     _delay(context);
     return Scaffold(
       body: Center(
-        child: Text('DOT Base Flutter',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        child: Text(
+          'DOT Base Flutter',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
     );
   }

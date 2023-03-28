@@ -1,24 +1,34 @@
 import 'package:base_flutter/src/core/data/models/post.dart';
+import 'package:base_flutter/src/ui/shared/ui_constants.dart';
 import 'package:flutter/material.dart';
 
+const style = TextStyle(
+  color: Colors.black,
+  fontSize: TextSizeConst.regular,
+);
+
 class ItemPost extends StatelessWidget {
-  const ItemPost(this.post);
+  const ItemPost({this.post});
 
   final Post? post;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text('${post?.id}. ${post?.title}'),
-          SizedBox(height: 8),
-          Divider(
-            thickness: 1,
-            height: 1,
-          )
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+      child: Row(
+        children: [
+          Text(
+            '${post?.id ?? 0}',
+            style: style,
+          ),
+          SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              post?.title ?? '',
+              style: style,
+            ),
+          ),
         ],
       ),
     );

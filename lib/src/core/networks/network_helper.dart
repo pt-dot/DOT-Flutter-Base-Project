@@ -7,9 +7,9 @@ class NetworkHelper {
   NetworkHelper() {
     _dio = Dio(BaseOptions(
       baseUrl: URLs.host,
-      connectTimeout: Duration(milliseconds: AppLimit.REQUEST_TIME_OUT),
-      receiveTimeout: Duration(milliseconds: AppLimit.REQUEST_TIME_OUT),
-      sendTimeout: Duration(milliseconds: AppLimit.REQUEST_TIME_OUT),
+      connectTimeout: Duration(seconds: AppLimit.REQUEST_TIME_OUT),
+      receiveTimeout: Duration(seconds: AppLimit.REQUEST_TIME_OUT),
+      sendTimeout: Duration(seconds: AppLimit.REQUEST_TIME_OUT),
     ));
     if (isInDebugMode) {
       _dio?.interceptors.add(LoggingInterceptor());
@@ -18,10 +18,13 @@ class NetworkHelper {
 
   Dio? _dio;
 
-  Future<dynamic> get(String url) async {
+  Future<dynamic> get(
+    String url, {
+    Map<String, dynamic>? query,
+  }) async {
     dynamic response;
     try {
-      response = await _dio?.get<dynamic>(url);
+      response = await _dio?.get<dynamic>(url, queryParameters: query);
     } catch (err) {
       rethrow;
     }

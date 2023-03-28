@@ -5,13 +5,6 @@ abstract class ListPostEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitListPostEvent extends ListPostEvent {}
+class ListPostInitEvent extends ListPostEvent {}
 
-class LoadListPostEvent extends ListPostEvent {
-  final int page;
-
-  LoadListPostEvent({this.page = 1});
-
-  @override
-  List<Object?> get props => [page];
-}
+class ListPostRefreshEvent extends ListPostEvent {}
