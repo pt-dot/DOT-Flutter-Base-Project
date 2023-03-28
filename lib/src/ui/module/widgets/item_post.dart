@@ -1,9 +1,10 @@
 import 'package:base_flutter/src/core/data/models/post.dart';
+import 'package:base_flutter/src/ui/shared/ui_constants.dart';
 import 'package:flutter/material.dart';
 
 const style = TextStyle(
   color: Colors.black,
-  fontSize: 16,
+  fontSize: TextSizeConst.regular,
 );
 
 class ItemPost extends StatelessWidget {
