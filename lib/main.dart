@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:base_flutter/src/core/data/constants.dart';
 import 'package:base_flutter/src/core/data/hive_constants.dart';
-import 'package:base_flutter/src/core/data/models/album.dart';
-import 'package:base_flutter/src/core/data/models/post.dart';
 import 'package:base_flutter/src/core/data/models/user.dart';
 import 'package:base_flutter/src/my_app.dart';
 import 'package:base_flutter/src/utils/app_helper.dart';
@@ -42,10 +40,6 @@ Future<void> _initHive() async {
   Hive.registerAdapter(GeoAdapter());
   Hive.registerAdapter(AddressAdapter());
   Hive.registerAdapter(UserAdapter());
-  Hive.registerAdapter(PostAdapter());
-  Hive.registerAdapter(AlbumAdapter());
 
   Hive.openBox<User>(DB_USER);
-  Hive.openBox<Post>(DB_POST);
-  Hive.openBox<Album>(DB_ALBUM);
 }

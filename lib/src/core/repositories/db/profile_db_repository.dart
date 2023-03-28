@@ -5,10 +5,9 @@ import 'package:hive/hive.dart';
 class ProfileDbRepository {
   Box<User> boxUser = Hive.box(DB_USER);
 
-  void saveUser(User user) {
-    boxUser.clear().then((result) {
-      boxUser.add(user);
-    });
+  void saveUser(User user) async {
+    await boxUser.clear();
+    await boxUser.add(user);
   }
 
   User? getUser() {

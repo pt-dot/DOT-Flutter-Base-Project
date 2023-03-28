@@ -1,15 +1,8 @@
 import 'package:hive/hive.dart';
-part 'album.g.dart';
 
-@HiveType(typeId: 5)
-class Album extends HiveObject {
-  @HiveField(0)
+class Album {
   int? userId;
-
-  @HiveField(1)
   int? id;
-
-  @HiveField(2)
   String? title;
 
   Album({this.userId, this.id, this.title});

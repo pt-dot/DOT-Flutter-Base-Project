@@ -1,18 +1,7 @@
-import 'package:hive/hive.dart';
-part 'post.g.dart';
-
-@HiveType(typeId: 6)
-class Post extends HiveObject {
-  @HiveField(0)
+class Post {
   int? userId;
-
-  @HiveField(1)
   int? id;
-
-  @HiveField(2)
   String? title;
-
-  @HiveField(3)
   String? body;
 
   Post({this.id, this.userId, this.title, this.body});
