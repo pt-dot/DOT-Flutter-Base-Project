@@ -30,6 +30,7 @@ dependencies:
   formz: ^0.5.0+1
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  package_info_plus: ^3.0.3
   path_provider: ^2.0.13
   sentry: ^6.21.0
   stream_transform: ^2.1.0

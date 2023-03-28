@@ -30,4 +30,5 @@ Tools • Dart 2.19.4 • DevTools 2.20.1
 - [Hive](https://pub.dev/packages/hive)
 - [flutter_bloc](https://pub.dev/packages/flutter_bloc)
 - [formz](https://pub.dev/packages/formz)
+- [Package Info Plus](https://pub.dev/packages/package_info_plus)
 - [Sentry](https://pub.dev/packages/sentry)
