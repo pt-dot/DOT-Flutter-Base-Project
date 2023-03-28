@@ -1,4 +1,4 @@
-import 'package:base_flutter/src/core/models/user.dart';
+import 'package:base_flutter/src/core/models/user_model.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_bloc.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_event.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_state.dart';
@@ -70,7 +70,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget _buildProfile(User? user) {
+  Widget _buildProfile(UserModel? user) {
     return Container(
       padding: EdgeInsets.all(16),
       height: MediaQuery.of(context).size.height,

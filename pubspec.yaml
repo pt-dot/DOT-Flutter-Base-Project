@@ -39,6 +39,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^2.0.0
+  build_runner: ^2.3.3
+  build_resolvers: ^2.0.0
 
 # dependency_overrides:
 #   dartx: ^0.3.0

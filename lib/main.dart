@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:base_flutter/src/core/data/constants.dart';
 import 'package:base_flutter/src/core/data/hive_constants.dart';
-import 'package:base_flutter/src/core/models/user.dart';
+import 'package:base_flutter/src/core/models/address_model.dart';
+import 'package:base_flutter/src/core/models/company_model.dart';
+import 'package:base_flutter/src/core/models/geo_model.dart';
+import 'package:base_flutter/src/core/models/user_model.dart';
 import 'package:base_flutter/src/my_app.dart';
 import 'package:base_flutter/src/utils/app_helper.dart';
 import 'package:device_preview/device_preview.dart';
@@ -36,10 +39,10 @@ Future<void> _setupFlavor() async {
 Future<void> _initHive() async {
   final Directory appDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDirectory.path);
-  Hive.registerAdapter(CompanyAdapter());
-  Hive.registerAdapter(GeoAdapter());
-  Hive.registerAdapter(AddressAdapter());
-  Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter(CompanyModelAdapter());
+  Hive.registerAdapter(GeoModelAdapter());
+  Hive.registerAdapter(AddressModelAdapter());
+  Hive.registerAdapter(UserModelAdapter());
 
-  Hive.openBox<User>(DB_USER);
+  Hive.openBox<UserModel>(DB_USER);
 }
