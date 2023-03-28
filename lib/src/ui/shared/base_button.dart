@@ -31,14 +31,15 @@ class RoundedButton extends StatelessWidget {
         ),
       ),
       style: ElevatedButton.styleFrom(
-        primary: enable ? backgroundColor : disableColor,
-        onSurface: disableColor,
+        backgroundColor: enable ? backgroundColor : disableColor,
+        disabledBackgroundColor: disableColor,
         splashFactory: NoSplash.splashFactory,
         elevation: enable ? null : 0.0,
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(BorderSize.regularBorderRadius),
         ),
+        padding: EdgeInsets.all(12),
       ),
     );
   }

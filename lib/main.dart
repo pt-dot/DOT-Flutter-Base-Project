@@ -5,11 +5,13 @@ import 'package:base_flutter/src/core/data/models/album.dart';
 import 'package:base_flutter/src/core/data/models/post.dart';
 import 'package:base_flutter/src/core/data/models/user.dart';
 import 'package:base_flutter/src/my_app.dart';
+import 'package:base_flutter/src/ui/constants/text_sizes.dart';
 import 'package:base_flutter/src/utils/app_helper.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' as service;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -19,9 +21,14 @@ void main() {
   SystemChrome.setPreferredOrientations([
     service.DeviceOrientation.portraitUp,
   ]).then((_) {
-    runApp(DevicePreview(
-      enabled: isInDebugMode,
-      builder: (context) => MyApp(),
+    runApp(ScreenUtilInit(
+      designSize: const Size(DeviceSize.width, DeviceSize.height),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, widgets) => DevicePreview(
+        enabled: isInDebugMode,
+        builder: (context) => MyApp(),
+      ),
     ));
   });
 }

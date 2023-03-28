@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class InputField extends StatefulWidget {
+class BaseTextField extends StatefulWidget {
   final TextEditingController? controller;
   final String? label;
   final TextInputType textInputType;
@@ -34,7 +34,7 @@ class InputField extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final bool isTransportation;
 
-  InputField({
+  BaseTextField({
     Key? key,
     this.controller,
     this.label,
@@ -67,10 +67,10 @@ class InputField extends StatefulWidget {
   });
 
   @override
-  _InputFieldState createState() => _InputFieldState();
+  _BaseTextFieldState createState() => _BaseTextFieldState();
 }
 
-class _InputFieldState extends State<InputField> {
+class _BaseTextFieldState extends State<BaseTextField> {
   @override
   Widget build(BuildContext context) {
     return widget.stream != null
@@ -132,8 +132,8 @@ class _InputFieldState extends State<InputField> {
         errorStyle: AppTextStyle.regularStyle.copyWith(color: Colors.red),
       ),
       style: widget.style ??
-          AppTextStyle.regularStyle.copyWith(
-              color: error == null ? Colors.blue.shade800 : Colors.red),
+          AppTextStyle.regularStyle
+              .copyWith(color: error == null ? Colors.black : Colors.red),
       controller: widget.controller,
       textAlign: widget.textAlign,
       textCapitalization: widget.textCapitalization,
