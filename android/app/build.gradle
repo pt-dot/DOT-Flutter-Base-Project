@@ -72,6 +72,21 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    flavorDimensions "default"
+    productFlavors {
+        development {
+            resValue "string", "app_name", "Base Flutter DEV"
+            applicationId "com.dot.base_flutter.dev"
+        }
+        staging {
+            resValue "string", "app_name", "Base Flutter STAGING"
+            applicationId "com.dot.base_flutter.staging"
+        }
+        production {
+            resValue "string", "app_name", "Base Flutter"
+        }
+    }
 }
 
 flutter {
