@@ -12,7 +12,7 @@ class PhotoRepository {
   Future<ApiServiceModel<ListAlbum>> getListAlbum(int page) async {
     final params = {
       '_page': page,
-      '_limit': AppLimit.ALBUM_PAGE_SIZE,
+      '_limit': Constants.ALBUM_PAGE_SIZE,
     };
     final Response<dynamic> response =
         await _networkHelper.get('albums', query: params) as Response<dynamic>;

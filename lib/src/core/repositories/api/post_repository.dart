@@ -12,7 +12,7 @@ class PostRepository {
   Future<ApiServiceModel<ListPost>> getListPost(int page) async {
     final params = {
       '_page': page,
-      '_limit': AppLimit.POST_PAGE_SIZE,
+      '_limit': Constants.POST_PAGE_SIZE,
     };
     final Response<dynamic> response =
         await _networkHelper.get('posts', query: params) as Response<dynamic>;

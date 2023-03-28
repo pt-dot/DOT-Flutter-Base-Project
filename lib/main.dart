@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:base_flutter/src/core/data/constants.dart';
 import 'package:base_flutter/src/core/data/hive_constants.dart';
 import 'package:base_flutter/src/core/data/models/album.dart';
 import 'package:base_flutter/src/core/data/models/post.dart';
@@ -13,9 +14,10 @@ import 'package:flutter/services.dart' as service;
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  _initHive();
+  await _setupFlavor();
+  await _initHive();
   SystemChrome.setPreferredOrientations([
     service.DeviceOrientation.portraitUp,
   ]).then((_) {
@@ -26,7 +28,13 @@ void main() {
   });
 }
 
-void _initHive() async {
+Future<void> _setupFlavor() async {
+  final flavor = await flavorConfig();
+  debugPrint('Main # $flavor');
+  Constants.baseUrl = flavor.baseUrl;
+}
+
+Future<void> _initHive() async {
   final Directory appDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDirectory.path);
   Hive.registerAdapter(CompanyAdapter());

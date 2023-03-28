@@ -5,18 +5,20 @@ import 'package:dio/dio.dart';
 
 class NetworkHelper {
   NetworkHelper() {
-    _dio = Dio(BaseOptions(
-      baseUrl: URLs.host,
-      connectTimeout: Duration(seconds: AppLimit.REQUEST_TIME_OUT),
-      receiveTimeout: Duration(seconds: AppLimit.REQUEST_TIME_OUT),
-      sendTimeout: Duration(seconds: AppLimit.REQUEST_TIME_OUT),
-    ));
+    _options = BaseOptions(
+      baseUrl: Constants.baseUrl,
+      connectTimeout: Duration(seconds: Constants.REQUEST_TIME_OUT),
+      receiveTimeout: Duration(seconds: Constants.REQUEST_TIME_OUT),
+      sendTimeout: Duration(seconds: Constants.REQUEST_TIME_OUT),
+    );
+    _dio = Dio(_options);
     if (isInDebugMode) {
-      _dio?.interceptors.add(LoggingInterceptor());
+      _dio.interceptors.add(LoggingInterceptor());
     }
   }
 
-  Dio? _dio;
+  late Dio _dio;
+  late BaseOptions _options;
 
   Future<dynamic> get(
     String url, {
@@ -24,7 +26,7 @@ class NetworkHelper {
   }) async {
     dynamic response;
     try {
-      response = await _dio?.get<dynamic>(url, queryParameters: query);
+      response = await _dio.get<dynamic>(url, queryParameters: query);
     } catch (err) {
       rethrow;
     }
