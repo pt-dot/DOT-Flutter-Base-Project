@@ -1,13 +1,11 @@
-import 'package:hive/hive.dart';
-
-class Album {
+class AlbumModel {
   int? userId;
   int? id;
   String? title;
 
-  Album({this.userId, this.id, this.title});
+  AlbumModel({this.userId, this.id, this.title});
 
-  Album.fromJson(dynamic json) {
+  AlbumModel.fromJson(dynamic json) {
     userId = int.parse(json['userId'].toString());
     id = int.parse(json['id'].toString());
     title = json['title'].toString();
@@ -26,7 +24,7 @@ class ListAlbum {
   ListAlbum({this.listAlbum});
 
   static ListAlbum fromJson(List<dynamic> json) =>
-      ListAlbum(listAlbum: json.map((dynamic i) => Album.fromJson(i)).toList());
+      ListAlbum(listAlbum: json.map((dynamic i) => AlbumModel.fromJson(i)).toList());
 
-  List<Album>? listAlbum;
+  List<AlbumModel>? listAlbum;
 }

@@ -1,12 +1,12 @@
-class Post {
+class PostModel {
   int? userId;
   int? id;
   String? title;
   String? body;
 
-  Post({this.id, this.userId, this.title, this.body});
+  PostModel({this.id, this.userId, this.title, this.body});
 
-  Post.fromJson(dynamic json) {
+  PostModel.fromJson(dynamic json) {
     userId = int.parse(json['userId'].toString());
     id = int.parse(json['id'].toString());
     title = json['title'].toString();
@@ -25,9 +25,9 @@ class Post {
 
 class ListPost {
   static ListPost fromJson(List<dynamic> json) =>
-      ListPost(listPost: json.map((dynamic i) => Post.fromJson(i)).toList());
+      ListPost(listPost: json.map((dynamic i) => PostModel.fromJson(i)).toList());
 
   ListPost({this.listPost});
 
-  List<Post>? listPost;
+  List<PostModel>? listPost;
 }
