@@ -18,8 +18,8 @@ extension FlavorExtension on Flavor {
 }
 
 class FlavorConfig {
-
   final String baseUrl;
+  final String displayName;
 
   factory FlavorConfig(Flavor flavor) {
     if (flavor == Flavor.production) {
@@ -33,27 +33,34 @@ class FlavorConfig {
 
   const FlavorConfig._({
     required this.baseUrl,
+    required this.displayName,
   });
 
-  FlavorConfig.production(): this._(
-    baseUrl: 'http://jsonplaceholder.typicode.com/'
-  );
+  FlavorConfig.production()
+      : this._(
+          baseUrl: 'http://jsonplaceholder.typicode.com/',
+          displayName: 'DOT Base Flutter',
+        );
 
-  FlavorConfig.staging(): this._(
-      baseUrl: 'http://jsonplaceholder.typicode.com/'
-  );
+  FlavorConfig.staging()
+      : this._(
+          baseUrl: 'http://jsonplaceholder.typicode.com/',
+          displayName: 'DOT Base Flutter STAGING',
+        );
 
-  FlavorConfig.development(): this._(
-      baseUrl: 'http://jsonplaceholder.typicode.com/'
-  );
+  FlavorConfig.development()
+      : this._(
+          baseUrl: 'http://jsonplaceholder.typicode.com/',
+          displayName: 'DOT Base Flutter DEV',
+        );
 
   Map toJson() => {
-    'baseUrl': baseUrl,
-  };
+        'baseUrl': baseUrl,
+        'displayName': displayName,
+      };
 
   @override
   String toString() {
     return toJson().toString();
   }
-
 }
