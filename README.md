@@ -1,8 +1,7 @@
 ## DOT Flutter Base Project ##
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/pt-dot/DOT-Flutter-Base-Project?label=latest%20release&style=for-the-badge)](https://github.com/pt-dot/DOT-Flutter-Base-Project/releases/latest)
 
-Build with Flutter, using BLoC pattern  
-Download apk [here](https://www.dropbox.com/s/beyyydndt0cvp0q)
+Build with Flutter, using [Bloc Library](https://bloclibrary.dev/#/) 
 How to run
 ```
 flutter run --flavor development
@@ -44,3 +43,4 @@ Tools • Dart 2.19.5 • DevTools 2.20.1
 #### References ####
 - [Medium](https://medium.com/@animeshjain/build-flavors-in-flutter-android-and-ios-with-different-firebase-projects-per-flavor-27c5c5dac10b)
 - [Medium](https://medium.com/flutter-community/flutter-ready-to-go-e59873f9d7de)
+- [bloclibrary.dev](https://bloclibrary.dev/#/flutterinfinitelisttutorial)
