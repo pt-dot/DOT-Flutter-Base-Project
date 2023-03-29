@@ -23,6 +23,11 @@ Tools • Dart 2.19.5 • DevTools 2.20.1
 | :---: | :---: | :---: | :---: |
 | ![](https://i.imgur.com/nH3nUcr.png) | ![List Post](https://i.imgur.com/jMID1zI.png) | ![List Photo](https://i.imgur.com/diCijr6.png) | ![Profile](https://i.imgur.com/bemAF0s.png) |
 
+#### Screenshot iOS ####
+| App Flavor | List Post | Album | Profile |
+| :---: | :---: | :---: | :---: |
+| ![](https://i.imgur.com/a7fjrWi.png) | - | - | - |
+
 #### List Libraries ####
 - [Bloc Concurency](https://pub.dev/packages/bloc_concurrency)
 - [Device Preview](https://pub.dev/packages/device_preview)
