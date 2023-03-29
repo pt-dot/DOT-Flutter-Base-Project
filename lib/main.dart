@@ -31,7 +31,7 @@ void main() async {
 
 Future<void> _setupFlavor() async {
   final flavor = await flavorConfig();
-  debugPrint('Main # $flavor');
+  logDebug('Main # $flavor');
   Constants.displayName = flavor.displayName;
   Constants.baseUrl = flavor.baseUrl;
 }

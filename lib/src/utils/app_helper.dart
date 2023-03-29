@@ -8,6 +8,12 @@ bool get isInDebugMode {
   return inDebugMode;
 }
 
+void logDebug(String? message) {
+  if (isInDebugMode) {
+    debugPrint(message, wrapWidth: 1024);
+  }
+}
+
 Future<FlavorConfig> flavorConfig() async {
   try {
     PackageInfo info = await PackageInfo.fromPlatform();
@@ -20,7 +26,7 @@ Future<FlavorConfig> flavorConfig() async {
       return FlavorConfig.production();
     }
   } catch (error) {
-    debugPrint('AppHelper # flavorConfig error $error', wrapWidth: 1024);
+    logDebug('AppHelper # flavorConfig error $error');
   }
   return FlavorConfig.production();
 }
