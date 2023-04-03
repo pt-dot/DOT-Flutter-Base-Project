@@ -1,53 +1,77 @@
 import 'package:base_flutter/src/core/networks/network_helper.dart';
 import 'package:base_flutter/src/core/repositories/api/photo_repository.dart';
-import 'package:base_flutter/src/core/repositories/db/album_db_repository.dart';
 import 'package:base_flutter/src/ui/module/photo/list_photo_event.dart';
 import 'package:base_flutter/src/ui/module/photo/list_photo_state.dart';
 import 'package:bloc/bloc.dart';
-import 'package:formz/formz.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:stream_transform/stream_transform.dart';
+
+const throttleDuration = Duration(milliseconds: 100);
+
+EventTransformer<E> throttleDroppable<E>(Duration duration) {
+  return (events, mapper) {
+    return droppable<E>().call(events.throttle(duration), mapper);
+  };
+}
 
 class ListPhotoBloc extends Bloc<ListPhotoEvent, ListPhotoState> {
   PhotoRepository? _repository;
-  final AlbumDbRepository _dbRepository = AlbumDbRepository();
 
   ListPhotoBloc() : super(const ListPhotoState()) {
     _repository = PhotoRepository(NetworkHelper());
-    on<InitListPhotoEvent>(_onInit);
-    on<LoadListPhotoEvent>(_onDataRequest);
+    on<ListPhotoInitEvent>(
+      _onInit,
+      transformer: throttleDroppable(
+        throttleDuration,
+      ),
+    );
+    on<ListPhotoRefreshEvent>(_onRefresh);
   }
 
-  void _onInit(InitListPhotoEvent event, Emitter<ListPhotoState> emit) {
-    add(LoadListPhotoEvent());
-  }
-
-  Future<void> _onDataRequest(
-    LoadListPhotoEvent event,
-    Emitter<ListPhotoState> emit,
-  ) async {
-    emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
+  void _onInit(ListPhotoInitEvent event, Emitter<ListPhotoState> emit) async {
+    if (state.hasReachedMax) return;
     try {
-      final result = await _repository?.getListAlbum(event.page);
-      final items = result?.data?.listAlbum ?? [];
-      final allItems = event.page < 2 ? items : state.albums + items;
-
-      /// save to local
-      _dbRepository.replaceAlbums(allItems);
-
-      emit(state.copyWith(
-        status: FormzSubmissionStatus.success,
-        albums: allItems,
-        page: event.page,
-      ));
-    } catch (e) {
-      if (event.page == 1) {
-        final items = _dbRepository.getAllAlbum();
+      if (state.status == AlbumStatus.initial) {
+        final response = await _repository?.getListAlbum(state.page);
+        final albums = response?.data?.listAlbum ?? [];
         emit(state.copyWith(
-          albums: items,
-          status: FormzSubmissionStatus.failure,
+          status: AlbumStatus.success,
+          albums: albums,
+          hasReachedMax: false,
+        ));
+      }
+      int nextPage = state.page + 1;
+      emit(state.copyWith(
+        page: nextPage,
+      ));
+      final response = await _repository?.getListAlbum(state.page);
+      final albums = response?.data?.listAlbum ?? [];
+      if (albums.isEmpty) {
+        emit(state.copyWith(
+          status: AlbumStatus.success,
+          hasReachedMax: true,
         ));
       } else {
-        emit(state.copyWith(status: FormzSubmissionStatus.failure));
+        emit(state.copyWith(
+          status: AlbumStatus.success,
+          albums: List.of(state.albums)..addAll(albums),
+          hasReachedMax: false,
+        ));
       }
+    } catch (e) {
+      emit(state.copyWith(
+        status: AlbumStatus.failure,
+      ));
     }
+  }
+
+  void _onRefresh(ListPhotoRefreshEvent event, Emitter<ListPhotoState> emit) {
+    emit(state.copyWith(
+      status: AlbumStatus.initial,
+      page: 1,
+      hasReachedMax: false,
+      albums: [],
+    ));
+    add(ListPhotoInitEvent());
   }
 }

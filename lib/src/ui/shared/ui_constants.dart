@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 
 // Colors
 mixin AppColors {
-  
-  static const Map<int, Color> color = {
-    50:Color(0x112CD28A),
-    100:Color(0x332CD28A),
-    200:Color(0x552CD28A),
-    300:Color(0x772CD28A),
-    400:Color(0x992CD28A),
-    500:Color(0xAA2CD28A),
-    600:Color(0xCC2CD28A),
-    700:Color(0xDD2CD28A),
-    800:Color(0xEE2CD28A),
-    900:Color(0xFF2CD28A)
-  };
-
-  static const MaterialColor primaryColor = MaterialColor(0xFF2CD28A, color);
+  static const MaterialColor appBlue = MaterialColor(
+    _bluePrimaryValue,
+    <int, Color>{
+      50: Color(0xFFE3F2FD),
+      100: Color(0xFFBBDEFB),
+      200: Color(0xFF90CAF9),
+      300: Color(0xFF64B5F6),
+      400: Color(0xFF42A5F5),
+      500: Color(_bluePrimaryValue),
+      600: Color(0xFF1E88E5),
+      700: Color(0xFF1976D2),
+      800: Color(0xFF1565C0),
+      900: Color(0xFF0D47A1),
+    },
+  );
+  static const int _bluePrimaryValue = 0xFF2196F3;
 
   static const Color green = Color(0xFF2CD28A);
   static const Color orange = Color(0xFFFFB138);
@@ -30,38 +31,23 @@ mixin AppColors {
   static const Color black = Color(0xFF444444);
   static const Color darkGrey = Color(0xFF828282);
   static const Color grey = Color(0xFFBCBDC2);
-
 }
 
 // Text Size
 mixin TextSizeConst {
-
-  static const double verySmall = 8.0;
-  static const double small = 12.0;
-  static const double regular = 16.0;
-  static const double medium = 20.0;
-  static const double large = 24.0;
-  static const double veryLarge = 30.0;
-
+  static const double verySmall = 8;
+  static const double small = 12;
+  static const double regular = 16;
+  static const double medium = 20;
+  static const double large = 24;
+  static const double veryLarge = 30;
 }
 
 // Text Style
 mixin TextStyleConst {
-  static const TextStyle titleText = TextStyle(color: AppColors.darkBlue, fontWeight: FontWeight.w700, fontSize: TextSizeConst.medium);
-}
-
-const double baseScreenWidth = 93.8;
-
-double dpConverter(BuildContext context, double size) {
-
-  final double screenWidth = MediaQuery.of(context).size.width;
-  
-  if (screenWidth > 400 && screenWidth < 500) {
-    return size * 21/5;
-  } if (screenWidth > 500 && screenWidth < 600) {
-    return size * 22/5;
-  } else {
-    return size * 19/5;
-  }
-  
+  static const TextStyle titleText = TextStyle(
+    color: AppColors.darkBlue,
+    fontWeight: FontWeight.w700,
+    fontSize: TextSizeConst.medium,
+  );
 }

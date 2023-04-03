@@ -1,4 +1,4 @@
-import 'package:base_flutter/src/core/data/models/user.dart';
+import 'package:base_flutter/src/core/models/user_model.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_bloc.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_event.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_state.dart';
@@ -17,49 +17,63 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  ProfileBloc? _bloc;
+  late ProfileBloc _bloc;
 
   @override
   void initState() {
     super.initState();
     _bloc = ProfileBloc();
+    _bloc.add(InitProfileEvent(id: ID_USER));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _bloc!..add(InitProfileEvent(id: ID_USER)),
-      child: Scaffold(
-          appBar: MyAppToolbar(title: 'Profile'),
-          body: RefreshIndicator(
-            onRefresh: () async {
-              _bloc!.add(InitProfileEvent(id: ID_USER));
-            },
-            child: SingleChildScrollView(
-              child: Container(
-                child: _buildBody(),
-              ),
-            ),
-          )),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: MyAppToolbar(title: 'Profile'),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _bloc.add(InitProfileEvent(id: ID_USER));
+        },
+        child: SingleChildScrollView(
+          child: _buildBody(),
+        ),
+      ),
     );
   }
 
   Widget _buildBody() {
     return BlocBuilder<ProfileBloc, ProfileState>(
+      bloc: _bloc,
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
-        return state.user != null
-            ? _buildProfile(state.user)
-            : state.status == FormzSubmissionStatus.inProgress
-                ? Center(child: Text('Loading...'))
-                : Container();
+        if (state.status == FormzSubmissionStatus.success) {
+          if (state.user != null) {
+            return _buildProfile(state.user);
+          } else {
+            return Container();
+          }
+        }
+        return _loadingUser();
       },
     );
   }
 
-  Widget _buildProfile(User? user) {
+  Widget _loadingUser() {
+    return Center(
+      child: Text(
+        'Loading...',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: TextSizeConst.regular,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProfile(UserModel? user) {
     return Container(
-      padding: EdgeInsets.all(dpConverter(context, 4)),
+      padding: EdgeInsets.all(16),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -92,12 +106,21 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _title(String content) {
-    return Text(content,
-        style: TextStyle(
-            fontSize: TextSizeConst.medium, fontWeight: FontWeight.bold));
+    return Text(
+      content,
+      style: TextStyle(
+        fontSize: TextSizeConst.medium,
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 
   Widget _content(String content) {
-    return Text(content, style: TextStyle(fontSize: TextSizeConst.regular));
+    return Text(
+      content,
+      style: TextStyle(
+        fontSize: TextSizeConst.regular,
+      ),
+    );
   }
 }

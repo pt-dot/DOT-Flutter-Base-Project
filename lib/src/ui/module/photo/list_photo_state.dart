@@ -1,27 +1,32 @@
-import 'package:base_flutter/src/core/data/models/album.dart';
+import 'package:base_flutter/src/core/models/album_model.dart';
 import 'package:equatable/equatable.dart';
-import 'package:formz/formz.dart';
+
+enum AlbumStatus { initial, success, failure }
 
 class ListPhotoState extends Equatable {
-  final List<Album> albums;
-  final FormzSubmissionStatus status;
+  final List<AlbumModel> albums;
+  final AlbumStatus status;
   final int page;
+  final bool hasReachedMax;
 
   const ListPhotoState({
     this.albums = const [],
-    this.status = FormzSubmissionStatus.initial,
+    this.status = AlbumStatus.initial,
     this.page = 1,
+    this.hasReachedMax = false,
   });
 
   ListPhotoState copyWith({
-    List<Album>? albums,
-    FormzSubmissionStatus? status,
+    List<AlbumModel>? albums,
+    AlbumStatus? status,
     int? page,
+    bool? hasReachedMax,
   }) =>
       ListPhotoState(
         albums: albums ?? this.albums,
         status: status ?? this.status,
         page: page ?? this.page,
+        hasReachedMax: hasReachedMax ?? this.hasReachedMax,
       );
 
   @override
@@ -29,6 +34,7 @@ class ListPhotoState extends Equatable {
         albums,
         status,
         page,
+        hasReachedMax,
       ];
 
   @override
