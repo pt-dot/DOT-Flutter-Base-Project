@@ -1,9 +1,9 @@
-import 'package:base_flutter/src/core/data/models/user.dart';
+import 'package:base_flutter/src/core/models/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 
 class ProfileState extends Equatable {
-  final User? user;
+  final UserModel? user;
   final FormzSubmissionStatus status;
 
   const ProfileState({
@@ -12,7 +12,7 @@ class ProfileState extends Equatable {
   });
 
   ProfileState copyWith({
-    User? user,
+    UserModel? user,
     FormzSubmissionStatus? status,
   }) =>
       ProfileState(

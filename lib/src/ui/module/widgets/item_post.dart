@@ -1,4 +1,4 @@
-import 'package:base_flutter/src/core/data/models/post.dart';
+import 'package:base_flutter/src/core/models/post_model.dart';
 import 'package:base_flutter/src/ui/shared/ui_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,7 @@ const style = TextStyle(
 class ItemPost extends StatelessWidget {
   const ItemPost({this.post});
 
-  final Post? post;
+  final PostModel? post;
 
   @override
   Widget build(BuildContext context) {

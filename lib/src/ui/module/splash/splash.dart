@@ -1,3 +1,4 @@
+import 'package:base_flutter/src/core/data/constants.dart';
 import 'package:base_flutter/src/ui/module/home/home.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ class Splash extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Text(
-          'DOT Base Flutter',
+          Constants.displayName,
           style: TextStyle(
             color: Colors.black,
             fontSize: 18,

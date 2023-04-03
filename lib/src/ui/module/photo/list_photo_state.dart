@@ -1,10 +1,10 @@
-import 'package:base_flutter/src/core/data/models/album.dart';
+import 'package:base_flutter/src/core/models/album_model.dart';
 import 'package:equatable/equatable.dart';
 
 enum AlbumStatus { initial, success, failure }
 
 class ListPhotoState extends Equatable {
-  final List<Album> albums;
+  final List<AlbumModel> albums;
   final AlbumStatus status;
   final int page;
   final bool hasReachedMax;
@@ -17,7 +17,7 @@ class ListPhotoState extends Equatable {
   });
 
   ListPhotoState copyWith({
-    List<Album>? albums,
+    List<AlbumModel>? albums,
     AlbumStatus? status,
     int? page,
     bool? hasReachedMax,

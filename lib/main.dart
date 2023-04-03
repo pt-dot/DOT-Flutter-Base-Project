@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:base_flutter/src/core/data/constants.dart';
 import 'package:base_flutter/src/core/data/hive_constants.dart';
-import 'package:base_flutter/src/core/data/models/album.dart';
-import 'package:base_flutter/src/core/data/models/post.dart';
-import 'package:base_flutter/src/core/data/models/user.dart';
+import 'package:base_flutter/src/core/models/address_model.dart';
+import 'package:base_flutter/src/core/models/company_model.dart';
+import 'package:base_flutter/src/core/models/geo_model.dart';
+import 'package:base_flutter/src/core/models/user_model.dart';
 import 'package:base_flutter/src/my_app.dart';
 import 'package:base_flutter/src/utils/app_helper.dart';
 import 'package:device_preview/device_preview.dart';
@@ -13,9 +15,10 @@ import 'package:flutter/services.dart' as service;
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  _initHive();
+  await _setupFlavor();
+  await _initHive();
   SystemChrome.setPreferredOrientations([
     service.DeviceOrientation.portraitUp,
   ]).then((_) {
@@ -26,17 +29,20 @@ void main() {
   });
 }
 
-void _initHive() async {
+Future<void> _setupFlavor() async {
+  final flavor = await flavorConfig();
+  logDebug('Main # $flavor');
+  Constants.displayName = flavor.displayName;
+  Constants.baseUrl = flavor.baseUrl;
+}
+
+Future<void> _initHive() async {
   final Directory appDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDirectory.path);
-  Hive.registerAdapter(CompanyAdapter());
-  Hive.registerAdapter(GeoAdapter());
-  Hive.registerAdapter(AddressAdapter());
-  Hive.registerAdapter(UserAdapter());
-  Hive.registerAdapter(PostAdapter());
-  Hive.registerAdapter(AlbumAdapter());
+  Hive.registerAdapter(CompanyModelAdapter());
+  Hive.registerAdapter(GeoModelAdapter());
+  Hive.registerAdapter(AddressModelAdapter());
+  Hive.registerAdapter(UserModelAdapter());
 
-  Hive.openBox<User>(DB_USER);
-  Hive.openBox<Post>(DB_POST);
-  Hive.openBox<Album>(DB_ALBUM);
+  Hive.openBox<UserModel>(DB_USER);
 }

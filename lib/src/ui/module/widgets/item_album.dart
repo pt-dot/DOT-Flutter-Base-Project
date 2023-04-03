@@ -1,11 +1,11 @@
-import 'package:base_flutter/src/core/data/models/album.dart';
+import 'package:base_flutter/src/core/models/album_model.dart';
 import 'package:base_flutter/src/ui/shared/ui_constants.dart';
 import 'package:flutter/material.dart';
 
 class ItemAlbum extends StatelessWidget {
   const ItemAlbum(this.album);
 
-  final Album? album;
+  final AlbumModel? album;
 
   @override
   Widget build(BuildContext context) {
