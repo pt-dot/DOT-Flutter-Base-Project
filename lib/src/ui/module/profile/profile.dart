@@ -17,7 +17,11 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  static const kExpandedHeight = 220.0;
+
   late ProfileBloc _bloc;
+  late ScrollController _scrollController;
+  Color _textColor = Colors.white;
 
   @override
   void initState() {
@@ -26,19 +30,84 @@ class _ProfileState extends State<Profile> {
     _bloc.add(InitProfileEvent(id: ID_USER));
   }
 
+  bool get _isSliverAppBarExpanded {
+    return _scrollController.hasClients &&
+        _scrollController.offset > kExpandedHeight - kToolbarHeight;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: MyAppToolbar(title: 'Profile'),
       body: RefreshIndicator(
         onRefresh: () async {
           _bloc.add(InitProfileEvent(id: ID_USER));
         },
-        child: SingleChildScrollView(
-          child: _buildBody(),
+        child: NestedScrollView(
+          controller: _scrollController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              _buildSliverAppBar(),
+            ];
+          },
+          body: _buildBody(),
         ),
       ),
+    );
+  }
+
+  Widget _buildSliverAppBar() {
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      bloc: _bloc,
+      builder: (context, state) {
+        return SliverAppBar(
+          expandedHeight: kExpandedHeight,
+          floating: false,
+          pinned: true,
+          centerTitle: false,
+          title: _isSliverAppBarExpanded
+              ? Text(
+                  "Profile",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                )
+              : null,
+          flexibleSpace: FlexibleSpaceBar(
+            background: Container(
+              padding: EdgeInsets.only(top: 48),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 108,
+                    height: 108,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.person,
+                      size: 64,
+                      color: AppColors.appBlue,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    state.user?.name ?? '-',
+                    style: TextStyleConst.titleText.copyWith(
+                      color: AppColors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
