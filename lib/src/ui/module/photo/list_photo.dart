@@ -96,6 +96,7 @@ class _ListPhotoState extends State<ListPhoto> {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
         ),
+        padding: EdgeInsets.all(8),
         itemBuilder: (context, index) {
           return index >= length
               ? ItemLoadMore()
