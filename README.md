@@ -10,6 +10,7 @@ flutter run --flavor production
 ```
 
 Or choose flavour types from run and debug menu in VScode and run using CTRL+F5 shortcut or Run Without Debugging
+
 ![debug_menu](./docs/images/debug_menu.jpg)
 
 #### Dependencies ####
