@@ -1,5 +1,5 @@
 import 'package:base_flutter/src/core/models/album_model.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -20,8 +20,9 @@ class ItemAlbum extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: CachedNetworkImage(
-              imageUrl: 'https://picsum.photos/seed/${album?.title}/200',
+            child: ExtendedImage.network(
+              'https://picsum.photos/seed/${album?.title}/200',
+              cache: true,
             ),
           ),
           Container(
