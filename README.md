@@ -1,6 +1,10 @@
 ## DOT Flutter Base Project ##
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/pt-dot/DOT-Flutter-Base-Project?label=latest%20release&style=for-the-badge)](https://github.com/pt-dot/DOT-Flutter-Base-Project/releases/latest)
 
+## Setup Vscode Plugin & Enviroment ##
+- Launch VS Code Quick Open (Ctrl+P), paste the following command `ext install studio-cloud.asset-syncronation`, and press enter.
+- run `flutter pub get`
+
 Build with Flutter, using [Bloc Library](https://bloclibrary.dev/#/) 
 How to run
 ```
