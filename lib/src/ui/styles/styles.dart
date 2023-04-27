@@ -48,4 +48,10 @@ class AppTextStyle {
     fontSize: TextSize.regular,
     fontWeight: FontWeight.w900,
   );
+  static TextStyle titleStyle = TextStyle(
+    color: textColor,
+    fontSize: 96,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Rolest'
+  );
 }
