@@ -14,7 +14,7 @@ class AppTitle extends StatelessWidget {
     return ShaderMask(
       shaderCallback: (size) {
         return linearGradient.createShader(
-          Rect.fromLTWH(0, 0, size.width, size.height + 24),
+          Rect.fromLTWH(0, 0, size.width, size.height),
         );
       },
       child: Text(
