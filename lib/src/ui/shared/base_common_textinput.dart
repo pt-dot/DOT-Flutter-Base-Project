@@ -1,4 +1,4 @@
-import 'package:base_flutter/src/ui/shared/ui_constants.dart';
+import 'package:base_flutter/src/ui/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 class BaseCommonTextInput extends StatelessWidget {
@@ -27,8 +27,8 @@ class BaseCommonTextInput extends StatelessWidget {
       onChanged: onChanged,
       decoration: InputDecoration(
           hintText: label,
-          fillColor: backgroundColor ?? AppColors.white,
-          hintStyle: TextStyle(color: AppColors.grey),
+          fillColor: backgroundColor ?? Colors.white,
+          hintStyle: TextStyle(color: textTintColor),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
             borderSide: BorderSide(
@@ -40,8 +40,8 @@ class BaseCommonTextInput extends StatelessWidget {
           filled: true,
           contentPadding: EdgeInsets.symmetric(horizontal: 15)),
       style: TextStyle(
-        fontSize: TextSizeConst.regular,
-        color: AppColors.darkBlue,
+        fontSize: 16,
+        color: textColor,
       ),
       controller: textFieldController,
     );
