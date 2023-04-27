@@ -3,7 +3,7 @@ import 'package:base_flutter/src/ui/module/profile/profile_bloc.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_event.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_state.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
-import 'package:base_flutter/src/ui/shared/ui_constants.dart';
+import 'package:base_flutter/src/ui/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -62,10 +62,7 @@ class _ProfileState extends State<Profile> {
     return Center(
       child: Text(
         'Loading...',
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: TextSizeConst.regular,
-        ),
+        style: AppTextStyle.regularStyle,
       ),
     );
   }
@@ -96,9 +93,8 @@ class _ProfileState extends State<Profile> {
   Widget _title(String content) {
     return Text(
       content,
-      style: TextStyle(
-        fontSize: TextSizeConst.medium,
-        fontWeight: FontWeight.bold,
+      style: AppTextStyle.boldStyle.copyWith(
+        fontSize: 18,
       ),
     );
   }
@@ -106,9 +102,7 @@ class _ProfileState extends State<Profile> {
   Widget _content(String content) {
     return Text(
       content,
-      style: TextStyle(
-        fontSize: TextSizeConst.regular,
-      ),
+      style: AppTextStyle.regularStyle,
     );
   }
 }

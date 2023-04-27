@@ -1,11 +1,6 @@
 import 'package:base_flutter/src/core/models/post_model.dart';
-import 'package:base_flutter/src/ui/shared/ui_constants.dart';
+import 'package:base_flutter/src/ui/styles/styles.dart';
 import 'package:flutter/material.dart';
-
-const style = TextStyle(
-  color: Colors.black,
-  fontSize: TextSizeConst.regular,
-);
 
 class ItemPost extends StatelessWidget {
   const ItemPost({this.post});
@@ -20,13 +15,13 @@ class ItemPost extends StatelessWidget {
         children: [
           Text(
             '${post?.id ?? 0}',
-            style: style,
+            style: AppTextStyle.regularStyle,
           ),
           SizedBox(width: 8),
           Flexible(
             child: Text(
               post?.title ?? '',
-              style: style,
+              style: AppTextStyle.regularStyle,
             ),
           ),
         ],
