@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       builder: DevicePreview.appBuilder,
       theme: ThemeData(
         primarySwatch: AppColors.appBlue,
-        fontFamily: 'Product-Sans',
+        fontFamily: 'Montserrat',
       ),
       onGenerateRoute: AppRoute.routes,
     );
