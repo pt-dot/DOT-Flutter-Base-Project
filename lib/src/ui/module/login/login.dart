@@ -1,4 +1,7 @@
 import 'package:base_flutter/src/ui/shared/app_title.dart';
+import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
+import 'package:base_flutter/src/ui/styles/colors.dart';
+import 'package:base_flutter/src/ui/styles/sizes.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,9 +13,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  TextEditingController textControllerUserName = TextEditingController();
+  TextEditingController textControllerPassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -22,10 +30,39 @@ class _LoginScreenState extends State<LoginScreen> {
               Center(
                 child: AppTitle(),
               ),
+              SizedBox(height: 11),
+              _inputEmail(),
+              SizedBox(height: 18),
+              _inputPassword(),
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget _inputEmail() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MarginSize.defaultMargin,
+      ),
+      child: BaseCommonTextInput(
+        textFieldController: textControllerUserName,
+        label: 'Phone number, email address or username',
+      ),
+    );
+  }
+
+  Widget _inputPassword() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MarginSize.defaultMargin,
+      ),
+      child: BaseCommonTextInput(
+        textFieldController: textControllerPassword,
+        label: 'Password',
+      ),
+    );
+  }
+
 }
