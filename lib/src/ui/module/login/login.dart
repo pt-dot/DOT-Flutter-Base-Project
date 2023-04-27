@@ -1,5 +1,6 @@
 import 'package:base_flutter/src/ui/shared/app_title.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
+import 'package:base_flutter/src/ui/shared/primary_button.dart';
 import 'package:base_flutter/src/ui/styles/colors.dart';
 import 'package:base_flutter/src/ui/styles/sizes.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   TextEditingController textControllerUserName = TextEditingController();
   TextEditingController textControllerPassword = TextEditingController();
 
@@ -34,6 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
               _inputEmail(),
               SizedBox(height: 18),
               _inputPassword(),
+              SizedBox(height: 18),
+              _buttonLogin(),
             ],
           ),
         ),
@@ -65,4 +67,19 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget _buttonLogin() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MarginSize.defaultMargin,
+      ),
+      child: SizedBox(
+        width: double.infinity,
+        height: 42,
+        child: PrimaryButton(
+          onPress: () {},
+          title: 'Login',
+        ),
+      ),
+    );
+  }
 }

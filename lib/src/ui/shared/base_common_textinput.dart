@@ -41,7 +41,7 @@ class BaseCommonTextInput extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(horizontal: 15),
       ),
       style: TextStyle(
-        fontSize: 16,
+        fontSize: 14,
         color: textColor,
       ),
       controller: textFieldController,
