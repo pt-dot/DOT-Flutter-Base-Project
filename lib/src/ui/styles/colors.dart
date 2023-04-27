@@ -17,6 +17,12 @@ const MaterialColor appPink = MaterialColor(
 );
 const int _pinkPrimary = 0xFFFF00B8;
 
+final Gradient linearGradient = LinearGradient(
+  colors: <Color>[primary, primaryGradient],
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+);
+
 const Color primary = Color(0xFFFF00B8);
 const Color primaryGradient = Color(0xFFFF0000);
 const Color textColor = Color(0xFF000000);
