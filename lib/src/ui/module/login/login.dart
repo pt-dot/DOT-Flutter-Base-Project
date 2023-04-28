@@ -40,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 18),
               _forgotten(),
               SizedBox(height: 18),
+              _buildOr(),
             ],
           ),
         ),
@@ -89,7 +90,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _forgotten() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: MarginSize.defaultMargin),
+      padding: EdgeInsets.symmetric(
+        horizontal: MarginSize.defaultMargin,
+      ),
       child: Wrap(
         children: [
           Text(
@@ -103,6 +106,44 @@ class _LoginScreenState extends State<LoginScreen> {
             'Get help with logging in.',
             style: AppTextStyle.semiBoldStyle.copyWith(
               fontSize: TextSize.superSmall,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOr() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MarginSize.defaultMargin,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Divider(
+              thickness: 1,
+              color: lineColor,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 6,
+            ),
+            child: Text(
+              'OR',
+              style: AppTextStyle.semiBoldStyle.copyWith(
+                fontSize: TextSize.superSmall,
+                color: lineColor,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Divider(
+              thickness: 1,
+              color: lineColor,
             ),
           ),
         ],
