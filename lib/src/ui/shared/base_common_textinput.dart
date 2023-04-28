@@ -26,21 +26,38 @@ class BaseCommonTextInput extends StatelessWidget {
       textInputAction: textInputAction ?? TextInputAction.done,
       onChanged: onChanged,
       decoration: InputDecoration(
-          hintText: label,
-          fillColor: backgroundColor ?? Colors.white,
-          hintStyle: TextStyle(color: textTintColor),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: BorderSide(
-              style: BorderStyle.solid,
-              width: 1,
-              color: Colors.grey[50]!,
-            ),
+        hintText: label,
+        fillColor: backgroundColor ?? textFieldBackgroundColor,
+        hintStyle: TextStyle(color: textTintColor, fontSize: 12),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(
+            style: BorderStyle.solid,
+            width: 1,
+            color: borderColor,
           ),
-          filled: true,
-          contentPadding: EdgeInsets.symmetric(horizontal: 15)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(
+            style: BorderStyle.solid,
+            width: 1,
+            color: borderColor,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(
+            style: BorderStyle.solid,
+            width: 1,
+            color: primary,
+          ),
+        ),
+        filled: true,
+        contentPadding: EdgeInsets.symmetric(horizontal: 15),
+      ),
       style: TextStyle(
-        fontSize: 16,
+        fontSize: 14,
         color: textColor,
       ),
       controller: textFieldController,
