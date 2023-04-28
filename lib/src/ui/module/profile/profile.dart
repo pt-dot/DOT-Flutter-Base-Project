@@ -4,6 +4,7 @@ import 'package:base_flutter/src/ui/module/profile/profile_event.dart';
 import 'package:base_flutter/src/ui/module/profile/profile_state.dart';
 import 'package:base_flutter/src/ui/shared/my_app_toolbar.dart';
 import 'package:base_flutter/src/ui/styles/styles.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -29,7 +30,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: MyAppToolbar(title: 'Profile'),
+      appBar: MyAppToolbar(title: 'profile.title'.tr()),
       body: RefreshIndicator(
         onRefresh: () async {
           _bloc.add(InitProfileEvent(id: ID_USER));

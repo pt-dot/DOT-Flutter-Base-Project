@@ -1,0 +1,15 @@
+{
+  "login": {
+    "username_label": "Phone number, email address or username",
+    "password": "Password",
+    "login": "Login",
+    "forgot_password": "Forgotten your login details?",
+    "forgot_password_action": "Get help with logging in.",
+    "or": "OR",
+    "dont_have_account": "Don't have an account?",
+    "sign_up": "Sign up."
+  },
+  "profile": {
+    "title": "Profile"
+  }
+}

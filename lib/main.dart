@@ -9,6 +9,7 @@ import 'package:base_flutter/src/core/models/user_model.dart';
 import 'package:base_flutter/src/my_app.dart';
 import 'package:base_flutter/src/utils/app_helper.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' as service;
@@ -19,13 +20,25 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _setupFlavor();
   await _initHive();
+  await EasyLocalization.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     service.DeviceOrientation.portraitUp,
   ]).then((_) {
-    runApp(DevicePreview(
-      enabled: isInDebugMode,
-      builder: (context) => MyApp(),
-    ));
+    runApp(
+      EasyLocalization(
+        supportedLocales: [
+          const Locale('id', 'ID'),
+          const Locale('en', 'US'),
+        ],
+        path:
+            'assets/translations', // <-- change the path of the translation files
+        fallbackLocale: Locale('id', 'ID'),
+        child: DevicePreview(
+          enabled: isInDebugMode,
+          builder: (context) => MyApp(),
+        ),
+      ),
+    );
   });
 }
 
