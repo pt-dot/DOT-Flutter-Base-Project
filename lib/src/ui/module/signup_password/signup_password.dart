@@ -1,3 +1,4 @@
+import 'package:base_flutter/src/ui/module/signup_done/signup_done.dart';
 import 'package:base_flutter/src/ui/shared/app_title.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
 import 'package:base_flutter/src/ui/shared/bottom_language.dart';
@@ -101,7 +102,7 @@ class _SignUpPasswordScreenState extends State<SignUpPasswordScreen> {
         height: 42,
         child: PrimaryButton(
           onPress: () {
-
+            Navigator.pushNamed(context, SignUpDoneScreen.routeName);
           },
           title: 'Next',
         ),
