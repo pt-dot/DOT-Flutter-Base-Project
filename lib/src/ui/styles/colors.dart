@@ -32,3 +32,4 @@ const Color red500 = Color(0xFFFF0000);
 const Color successGreen = Color(0xFF087119);
 const Color backgroundColor = Color(0xFFF4F8FB);
 const Color lineColor = Color(0xFF545454);
+const Color borderColor = Color(0x40545454);

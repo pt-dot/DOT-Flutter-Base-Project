@@ -34,7 +34,23 @@ class BaseCommonTextInput extends StatelessWidget {
           borderSide: BorderSide(
             style: BorderStyle.solid,
             width: 1,
-            color: Colors.grey[50]!,
+            color: borderColor,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(
+            style: BorderStyle.solid,
+            width: 1,
+            color: borderColor,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(
+            style: BorderStyle.solid,
+            width: 1,
+            color: primary,
           ),
         ),
         filled: true,

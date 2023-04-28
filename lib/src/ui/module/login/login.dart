@@ -76,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: BaseCommonTextInput(
         textFieldController: textControllerPassword,
         label: 'Password',
+        textInputType: TextInputType.visiblePassword,
       ),
     );
   }
