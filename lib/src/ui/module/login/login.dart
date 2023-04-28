@@ -1,4 +1,5 @@
 import 'package:base_flutter/r.dart';
+import 'package:base_flutter/src/ui/module/signup/signup.dart';
 import 'package:base_flutter/src/ui/shared/app_title.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
 import 'package:base_flutter/src/ui/shared/bottom_language.dart';
@@ -209,10 +210,15 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(width: 6),
-            Text(
-              'login.sign_up'.tr(),
-              style: AppTextStyle.semiBoldStyle.copyWith(
-                fontSize: TextSize.superSmall,
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, SignUpScreen.routeName);
+              },
+              child: Text(
+                'login.sign_up'.tr(),
+                style: AppTextStyle.semiBoldStyle.copyWith(
+                  fontSize: TextSize.superSmall,
+                ),
               ),
             ),
           ],
