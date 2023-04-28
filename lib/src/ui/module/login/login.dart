@@ -1,6 +1,7 @@
 import 'package:base_flutter/r.dart';
 import 'package:base_flutter/src/ui/shared/app_title.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
+import 'package:base_flutter/src/ui/shared/bottom_language.dart';
 import 'package:base_flutter/src/ui/shared/primary_button.dart';
 import 'package:base_flutter/src/ui/styles/colors.dart';
 import 'package:base_flutter/src/ui/styles/sizes.dart';
@@ -51,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomLanguage(),
     );
   }
 
@@ -216,4 +218,5 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
 }
