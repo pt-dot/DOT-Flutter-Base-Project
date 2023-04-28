@@ -1,3 +1,4 @@
+import 'package:base_flutter/r.dart';
 import 'package:base_flutter/src/ui/shared/app_title.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
 import 'package:base_flutter/src/ui/shared/primary_button.dart';
@@ -5,6 +6,7 @@ import 'package:base_flutter/src/ui/styles/colors.dart';
 import 'package:base_flutter/src/ui/styles/sizes.dart';
 import 'package:base_flutter/src/ui/styles/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = 'login';
@@ -43,6 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
               _buildOr(),
               SizedBox(height: 18),
               _buildGoogleFacebook(),
+              SizedBox(height: 18),
+              _haveAccount(),
             ],
           ),
         ),
@@ -164,19 +168,47 @@ class _LoginScreenState extends State<LoginScreen> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                border: Border.all(color: primary),
                 shape: BoxShape.circle,
                 color: Colors.white,
               ),
+              child: SvgPicture.asset(AssetIcons.icGoogle),
             ),
             SizedBox(width: 24),
             Container(
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                border: Border.all(color: primary),
                 shape: BoxShape.circle,
                 color: Colors.white,
+              ),
+              child: SvgPicture.asset(AssetIcons.icFacebook),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _haveAccount() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MarginSize.defaultMargin,
+      ),
+      child: Center(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "Don't have an account?",
+              style: AppTextStyle.regularStyle.copyWith(
+                fontSize: TextSize.superSmall,
+              ),
+            ),
+            SizedBox(width: 6),
+            Text(
+              'Sign up.',
+              style: AppTextStyle.semiBoldStyle.copyWith(
+                fontSize: TextSize.superSmall,
               ),
             ),
           ],
