@@ -1,5 +1,7 @@
 import 'package:base_flutter/src/ui/shared/app_title.dart';
+import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
 import 'package:base_flutter/src/ui/shared/bottom_language.dart';
+import 'package:base_flutter/src/ui/shared/primary_button.dart';
 import 'package:base_flutter/src/ui/styles/colors.dart';
 import 'package:base_flutter/src/ui/styles/sizes.dart';
 import 'package:base_flutter/src/ui/styles/styles.dart';
@@ -14,6 +16,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreen extends State<SignUpScreen> {
+  TextEditingController textControllerUserName = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +35,10 @@ class _SignUpScreen extends State<SignUpScreen> {
               _chooseUserName(),
               SizedBox(height: 3),
               _chooseLater(),
+              SizedBox(height: 22),
+              _inputUsername(),
+              SizedBox(height: 16),
+              _buildButton(),
             ],
           ),
         ),
@@ -63,6 +71,34 @@ class _SignUpScreen extends State<SignUpScreen> {
         style: AppTextStyle.mediumStyle.copyWith(
           fontSize: TextSize.superSmall,
           color: lineColor,
+        ),
+      ),
+    );
+  }
+
+  Widget _inputUsername() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MarginSize.defaultMargin,
+      ),
+      child: BaseCommonTextInput(
+        textFieldController: textControllerUserName,
+        label: 'Username',
+      ),
+    );
+  }
+
+  Widget _buildButton() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MarginSize.defaultMargin,
+      ),
+      child: SizedBox(
+        width: double.infinity,
+        height: 42,
+        child: PrimaryButton(
+          onPress: () {},
+          title: 'Next',
         ),
       ),
     );
