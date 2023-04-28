@@ -41,6 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
               _forgotten(),
               SizedBox(height: 18),
               _buildOr(),
+              SizedBox(height: 18),
+              _buildGoogleFacebook(),
             ],
           ),
         ),
@@ -147,6 +149,38 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildGoogleFacebook() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: MarginSize.defaultMargin),
+      child: Center(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border.all(color: primary),
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(width: 24),
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border.all(color: primary),
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
