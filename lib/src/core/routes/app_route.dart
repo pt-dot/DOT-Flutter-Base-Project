@@ -1,4 +1,5 @@
 import 'package:base_flutter/src/ui/module/home/home.dart';
+import 'package:base_flutter/src/ui/module/login/login.dart';
 import 'package:base_flutter/src/ui/module/splash/splash.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,10 @@ class AppRoute {
       case '/':
         return MaterialPageRoute(
           builder: (BuildContext context) => Splash(),
+        );
+      case LoginScreen.routeName:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => LoginScreen(),
         );
       case Home.routeName:
         return MaterialPageRoute(

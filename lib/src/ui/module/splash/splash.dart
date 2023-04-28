@@ -1,5 +1,5 @@
 import 'package:base_flutter/src/core/data/constants.dart';
-import 'package:base_flutter/src/ui/module/home/home.dart';
+import 'package:base_flutter/src/ui/module/login/login.dart';
 import 'package:flutter/material.dart';
 
 class Splash extends StatelessWidget {
@@ -26,7 +26,7 @@ class Splash extends StatelessWidget {
       if (context.mounted) {
         Navigator.pushNamedAndRemoveUntil(
           context,
-          Home.routeName,
+          LoginScreen.routeName,
           ModalRoute.withName('/'),
         );
       }
