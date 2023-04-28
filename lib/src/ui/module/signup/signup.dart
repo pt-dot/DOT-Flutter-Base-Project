@@ -1,3 +1,4 @@
+import 'package:base_flutter/src/ui/module/signup_password/signup_password.dart';
 import 'package:base_flutter/src/ui/shared/app_title.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
 import 'package:base_flutter/src/ui/shared/bottom_language.dart';
@@ -97,7 +98,9 @@ class _SignUpScreen extends State<SignUpScreen> {
         width: double.infinity,
         height: 42,
         child: PrimaryButton(
-          onPress: () {},
+          onPress: () {
+            Navigator.pushNamed(context, SignUpPasswordScreen.routeName);
+          },
           title: 'Next',
         ),
       ),
