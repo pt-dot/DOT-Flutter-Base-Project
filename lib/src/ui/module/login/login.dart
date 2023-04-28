@@ -6,6 +6,7 @@ import 'package:base_flutter/src/ui/shared/primary_button.dart';
 import 'package:base_flutter/src/ui/styles/colors.dart';
 import 'package:base_flutter/src/ui/styles/sizes.dart';
 import 'package:base_flutter/src/ui/styles/styles.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -63,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       child: BaseCommonTextInput(
         textFieldController: textControllerUserName,
-        label: 'Phone number, email address or username',
+        label: 'login.username_label'.tr(),
       ),
     );
   }
@@ -75,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       child: BaseCommonTextInput(
         textFieldController: textControllerPassword,
-        label: 'Password',
+        label: 'login.password'.tr(),
         textInputType: TextInputType.visiblePassword,
       ),
     );
@@ -91,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
         height: 42,
         child: PrimaryButton(
           onPress: () {},
-          title: 'Login',
+          title: 'login.login'.tr(),
         ),
       ),
     );
@@ -105,14 +106,14 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Wrap(
         children: [
           Text(
-            'Forgotten your login details?',
+            'login.forgot_password'.tr(),
             style: AppTextStyle.regularStyle.copyWith(
               fontSize: TextSize.superSmall,
             ),
           ),
           SizedBox(width: 6),
           Text(
-            'Get help with logging in.',
+            'login.forgot_password_action'.tr(),
             style: AppTextStyle.semiBoldStyle.copyWith(
               fontSize: TextSize.superSmall,
             ),
@@ -142,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
               horizontal: 6,
             ),
             child: Text(
-              'OR',
+              'login.or'.tr(),
               style: AppTextStyle.semiBoldStyle.copyWith(
                 fontSize: TextSize.superSmall,
                 color: lineColor,
@@ -202,14 +203,14 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Don't have an account?",
+              'login.dont_have_account'.tr(),
               style: AppTextStyle.regularStyle.copyWith(
                 fontSize: TextSize.superSmall,
               ),
             ),
             SizedBox(width: 6),
             Text(
-              'Sign up.',
+              'login.sign_up'.tr(),
               style: AppTextStyle.semiBoldStyle.copyWith(
                 fontSize: TextSize.superSmall,
               ),
@@ -219,5 +220,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 }
