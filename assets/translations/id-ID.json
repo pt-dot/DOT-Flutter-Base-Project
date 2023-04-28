@@ -1,0 +1,15 @@
+{
+  "login": {
+    "username_label": "Nomor telpon, email atau username",
+    "password": "Password",
+    "login": "Login",
+    "forgot_password": "Lupa detail akun loginmu?",
+    "forgot_password_action": "Bantuan untuk login",
+    "or": "Atau",
+    "dont_have_account": "Belum punya akun?",
+    "sign_up": "Daftar"
+  },
+  "profile": {
+    "title": "Profil"
+  }
+}
