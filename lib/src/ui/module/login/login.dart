@@ -3,6 +3,7 @@ import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
 import 'package:base_flutter/src/ui/shared/primary_button.dart';
 import 'package:base_flutter/src/ui/styles/colors.dart';
 import 'package:base_flutter/src/ui/styles/sizes.dart';
+import 'package:base_flutter/src/ui/styles/styles.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -36,6 +37,9 @@ class _LoginScreenState extends State<LoginScreen> {
               _inputPassword(),
               SizedBox(height: 18),
               _buttonLogin(),
+              SizedBox(height: 18),
+              _forgotten(),
+              SizedBox(height: 18),
             ],
           ),
         ),
@@ -79,6 +83,29 @@ class _LoginScreenState extends State<LoginScreen> {
           onPress: () {},
           title: 'Login',
         ),
+      ),
+    );
+  }
+
+  Widget _forgotten() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: MarginSize.defaultMargin),
+      child: Wrap(
+        children: [
+          Text(
+            'Forgotten your login details?',
+            style: AppTextStyle.regularStyle.copyWith(
+              fontSize: TextSize.superSmall,
+            ),
+          ),
+          SizedBox(width: 6),
+          Text(
+            'Get help with logging in.',
+            style: AppTextStyle.semiBoldStyle.copyWith(
+              fontSize: TextSize.superSmall,
+            ),
+          ),
+        ],
       ),
     );
   }
