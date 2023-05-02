@@ -10,6 +10,7 @@ import 'package:base_flutter/src/my_app.dart';
 import 'package:base_flutter/src/utils/app_helper.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' as service;
@@ -21,6 +22,7 @@ void main() async {
   await _setupFlavor();
   await _initHive();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([
     service.DeviceOrientation.portraitUp,
   ]).then((_) {

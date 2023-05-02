@@ -126,6 +126,14 @@
           }
         },
         {
+          "client_id": "510861949096-hosmj4dqmc2ac7t00mg81l1io7lhqomf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dot.base_flutter.staging",
+            "certificate_hash": "4d9fb0fca3bfaeefd748d7a2bc7fe8d63ab261ef"
+          }
+        },
+        {
           "client_id": "510861949096-0614igfar5fht9sfad5ekka3kaqobmcq.apps.googleusercontent.com",
           "client_type": 3
         }
