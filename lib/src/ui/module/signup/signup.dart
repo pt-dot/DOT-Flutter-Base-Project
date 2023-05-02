@@ -1,3 +1,6 @@
+import 'package:base_flutter/src/ui/module/signup/signup_bloc.dart';
+import 'package:base_flutter/src/ui/module/signup/signup_event.dart';
+import 'package:base_flutter/src/ui/module/signup/signup_state.dart';
 import 'package:base_flutter/src/ui/module/signup_password/signup_password.dart';
 import 'package:base_flutter/src/ui/shared/app_title.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
@@ -7,6 +10,7 @@ import 'package:base_flutter/src/ui/styles/colors.dart';
 import 'package:base_flutter/src/ui/styles/sizes.dart';
 import 'package:base_flutter/src/ui/styles/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String routeName = 'signup';
@@ -18,6 +22,14 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreen extends State<SignUpScreen> {
   TextEditingController textControllerUserName = TextEditingController();
+
+  late SignupBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = context.read<SignupBloc>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +94,19 @@ class _SignUpScreen extends State<SignUpScreen> {
       padding: EdgeInsets.symmetric(
         horizontal: MarginSize.defaultMargin,
       ),
-      child: BaseCommonTextInput(
-        textFieldController: textControllerUserName,
-        label: 'Username',
+      child: BlocBuilder<SignupBloc, SignupState>(
+        bloc: _bloc,
+        buildWhen: (prev, current) => prev.username != current.username,
+        builder: (context, state) => BaseCommonTextInput(
+          textFieldController: textControllerUserName,
+          label: 'Username',
+          onChanged: (value) => _bloc.add(
+            SignupChangeUsernameEvent(
+              username: value,
+            ),
+          ),
+          error: state.usernameError,
+        ),
       ),
     );
   }
@@ -97,11 +119,16 @@ class _SignUpScreen extends State<SignUpScreen> {
       child: SizedBox(
         width: double.infinity,
         height: 42,
-        child: PrimaryButton(
-          onPress: () {
-            Navigator.pushNamed(context, SignUpPasswordScreen.routeName);
-          },
-          title: 'Next',
+        child: BlocBuilder<SignupBloc, SignupState>(
+          bloc: _bloc,
+          buildWhen: (prev, current) => prev.isFormValid != current.isFormValid,
+          builder: (context, state) => PrimaryButton(
+            onPress: () {
+              Navigator.pushNamed(context, SignUpPasswordScreen.routeName);
+            },
+            title: 'Next',
+            isEnabled: state.isFormValid,
+          ),
         ),
       ),
     );
