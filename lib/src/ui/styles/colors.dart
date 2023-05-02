@@ -23,6 +23,12 @@ final Gradient linearGradient = LinearGradient(
   end: Alignment.bottomCenter,
 );
 
+final Gradient linearGradientDisabled = LinearGradient(
+  colors: <Color>[borderColor, lineColor],
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+);
+
 const Color primary = Color(0xFFFF00B8);
 const Color primaryGradient = Color(0xFFFF0000);
 const Color textColor = Color(0xFF000000);
