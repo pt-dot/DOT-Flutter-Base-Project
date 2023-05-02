@@ -1,5 +1,6 @@
 import 'package:base_flutter/r.dart';
 import 'package:base_flutter/src/ui/module/home/home.dart';
+import 'package:base_flutter/src/ui/module/login/login_bloc.dart';
 import 'package:base_flutter/src/ui/module/signup/signup.dart';
 import 'package:base_flutter/src/ui/shared/app_title.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
@@ -10,6 +11,7 @@ import 'package:base_flutter/src/ui/styles/sizes.dart';
 import 'package:base_flutter/src/ui/styles/styles.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -23,6 +25,14 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController textControllerUserName = TextEditingController();
   TextEditingController textControllerPassword = TextEditingController();
+
+  late LoginBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = context.read<LoginBloc>();
+  }
 
   @override
   Widget build(BuildContext context) {
