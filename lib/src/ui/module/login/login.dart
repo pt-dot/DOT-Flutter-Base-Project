@@ -9,8 +9,11 @@ import 'package:base_flutter/src/ui/styles/colors.dart';
 import 'package:base_flutter/src/ui/styles/sizes.dart';
 import 'package:base_flutter/src/ui/styles/styles.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = 'login';
@@ -21,8 +24,66 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController textControllerUserName = TextEditingController();
-  TextEditingController textControllerPassword = TextEditingController();
+  final TextEditingController textControllerUserName = TextEditingController();
+  final TextEditingController textControllerPassword = TextEditingController();
+  final _firebaseAuth = FirebaseAuth.instance;
+  final _googleSignIn = GoogleSignIn();
+
+  Future _handleGooleSignIn() async {
+    try {
+      final result = await _googleSignIn.signIn();
+      final authentication = await result?.authentication;
+      if (authentication != null)
+        loginToFirebase(
+          accessToken: authentication.accessToken,
+          idToken: authentication.idToken,
+        );
+    } catch (error) {
+      debugPrint(error.toString());
+    }
+  }
+
+  Future<String?> _getFacebookToken() async {
+    final LoginResult result = await FacebookAuth.instance.login();
+    if (result.status == LoginStatus.success) {
+      final AccessToken? accessToken = result.accessToken;
+      return accessToken?.token;
+    } else {
+      return null;
+    }
+  }
+
+  Future _handleGoogleSignIn() async {
+    String? facebookAccessToken = await _getFacebookToken();
+    loginToFirebase(accessToken: facebookAccessToken, isGoogle: false);
+  }
+
+  void loginToFirebase({
+    String? accessToken,
+    String? idToken,
+    bool isGoogle = true,
+  }) async {
+    // Google Auth Provider
+    OAuthCredential? credential;
+    if (isGoogle) {
+      credential = GoogleAuthProvider.credential(
+        accessToken: accessToken,
+        idToken: idToken,
+      );
+    } else {
+      credential = FacebookAuthProvider.credential(accessToken ?? '');
+    }
+
+    // Sign in with credential to firebase
+    final userCredential = await _firebaseAuth.signInWithCredential(credential);
+    if (userCredential.credential?.accessToken == null) return;
+
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Home.routeName,
+      ModalRoute.withName('/'),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,24 +237,30 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
+            GestureDetector(
+              onTap: _handleGooleSignIn,
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: SvgPicture.asset(AssetIcons.icGoogle),
               ),
-              child: SvgPicture.asset(AssetIcons.icGoogle),
             ),
             SizedBox(width: 24),
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
+            GestureDetector(
+              onTap: _handleGoogleSignIn,
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: SvgPicture.asset(AssetIcons.icFacebook),
               ),
-              child: SvgPicture.asset(AssetIcons.icFacebook),
             ),
           ],
         ),
