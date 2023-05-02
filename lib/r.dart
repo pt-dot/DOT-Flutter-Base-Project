@@ -25,3 +25,8 @@ class AssetIcons {
 	static const String icTrash = 'assets/icons/ic_trash.svg';
 }
 
+class AssetTranslations {
+	static const String enUs = 'assets/translations/en-US.json';
+	static const String idId = 'assets/translations/id-ID.json';
+}
+
