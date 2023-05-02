@@ -1,4 +1,5 @@
 import 'package:base_flutter/r.dart';
+import 'package:base_flutter/src/ui/module/home/home.dart';
 import 'package:base_flutter/src/ui/module/signup/signup.dart';
 import 'package:base_flutter/src/ui/shared/app_title.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
@@ -92,7 +93,13 @@ class _LoginScreenState extends State<LoginScreen> {
         width: double.infinity,
         height: 42,
         child: PrimaryButton(
-          onPress: () {},
+          onPress: () {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              Home.routeName,
+              ModalRoute.withName('/'),
+            );
+          },
           title: 'login.login'.tr(),
         ),
       ),
