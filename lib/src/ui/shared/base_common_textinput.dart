@@ -8,6 +8,7 @@ class BaseCommonTextInput extends StatelessWidget {
   final TextInputAction? textInputAction;
   final Color? backgroundColor;
   final Function(String)? onChanged;
+  final String? error;
 
   const BaseCommonTextInput({
     required this.textFieldController,
@@ -16,6 +17,7 @@ class BaseCommonTextInput extends StatelessWidget {
     this.textInputType,
     this.textInputAction,
     this.backgroundColor,
+    this.error,
   });
 
   @override
@@ -26,6 +28,7 @@ class BaseCommonTextInput extends StatelessWidget {
       textInputAction: textInputAction ?? TextInputAction.done,
       onChanged: onChanged,
       decoration: InputDecoration(
+        errorText: error,
         hintText: label,
         fillColor: backgroundColor ?? textFieldBackgroundColor,
         hintStyle: TextStyle(color: textTintColor, fontSize: 12),

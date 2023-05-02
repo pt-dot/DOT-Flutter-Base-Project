@@ -1,5 +1,8 @@
 import 'package:base_flutter/r.dart';
 import 'package:base_flutter/src/ui/module/home/home.dart';
+import 'package:base_flutter/src/ui/module/login/login_bloc.dart';
+import 'package:base_flutter/src/ui/module/login/login_event.dart';
+import 'package:base_flutter/src/ui/module/login/login_state.dart';
 import 'package:base_flutter/src/ui/module/signup/signup.dart';
 import 'package:base_flutter/src/ui/shared/app_title.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
@@ -12,6 +15,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -85,6 +89,14 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  late LoginBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = context.read<LoginBloc>();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,9 +137,19 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: EdgeInsets.symmetric(
         horizontal: MarginSize.defaultMargin,
       ),
-      child: BaseCommonTextInput(
-        textFieldController: textControllerUserName,
-        label: 'login.username_label'.tr(),
+      child: BlocBuilder<LoginBloc, LoginState>(
+        bloc: _bloc,
+        buildWhen: (prev, current) => prev.username != current.username,
+        builder: (context, state) => BaseCommonTextInput(
+          textFieldController: textControllerUserName,
+          label: 'login.username_label'.tr(),
+          onChanged: (value) => _bloc.add(
+            LoginChangeUsernameEvent(
+              username: value,
+            ),
+          ),
+          error: state.usernameError,
+        ),
       ),
     );
   }
@@ -137,10 +159,20 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: EdgeInsets.symmetric(
         horizontal: MarginSize.defaultMargin,
       ),
-      child: BaseCommonTextInput(
-        textFieldController: textControllerPassword,
-        label: 'login.password'.tr(),
-        textInputType: TextInputType.visiblePassword,
+      child: BlocBuilder<LoginBloc, LoginState>(
+        bloc: _bloc,
+        buildWhen: (prev, current) => prev.password != current.password,
+        builder: (context, state) => BaseCommonTextInput(
+          textFieldController: textControllerPassword,
+          label: 'login.password'.tr(),
+          textInputType: TextInputType.visiblePassword,
+          onChanged: (password) => _bloc.add(
+            LoginChangePasswordEvent(
+              password: password,
+            ),
+          ),
+          error: state.passwordError,
+        ),
       ),
     );
   }
@@ -153,15 +185,21 @@ class _LoginScreenState extends State<LoginScreen> {
       child: SizedBox(
         width: double.infinity,
         height: 42,
-        child: PrimaryButton(
-          onPress: () {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Home.routeName,
-              ModalRoute.withName('/'),
-            );
-          },
-          title: 'login.login'.tr(),
+        child: BlocBuilder<LoginBloc, LoginState>(
+          bloc: _bloc,
+          buildWhen: (previous, current) =>
+              previous.isFormValid != current.isFormValid,
+          builder: (context, state) => PrimaryButton(
+            onPress: () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Home.routeName,
+                ModalRoute.withName('/'),
+              );
+            },
+            title: 'login.login'.tr(),
+            isEnabled: state.isFormValid,
+          ),
         ),
       ),
     );
