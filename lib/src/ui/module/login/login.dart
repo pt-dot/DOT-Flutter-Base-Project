@@ -76,13 +76,18 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: EdgeInsets.symmetric(
         horizontal: MarginSize.defaultMargin,
       ),
-      child: BaseCommonTextInput(
-        textFieldController: textControllerUserName,
-        label: 'login.username_label'.tr(),
-        onChanged: (value) => _bloc.add(
-          LoginChangeUsernameEvent(
-            username: value,
+      child: BlocBuilder<LoginBloc, LoginState>(
+        bloc: _bloc,
+        buildWhen: (prev, current) => prev.username != current.username,
+        builder: (context, state) => BaseCommonTextInput(
+          textFieldController: textControllerUserName,
+          label: 'login.username_label'.tr(),
+          onChanged: (value) => _bloc.add(
+            LoginChangeUsernameEvent(
+              username: value,
+            ),
           ),
+          error: state.usernameError,
         ),
       ),
     );
@@ -93,14 +98,19 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: EdgeInsets.symmetric(
         horizontal: MarginSize.defaultMargin,
       ),
-      child: BaseCommonTextInput(
-        textFieldController: textControllerPassword,
-        label: 'login.password'.tr(),
-        textInputType: TextInputType.visiblePassword,
-        onChanged: (password) => _bloc.add(
-          LoginChangePasswordEvent(
-            password: password,
+      child: BlocBuilder<LoginBloc, LoginState>(
+        bloc: _bloc,
+        buildWhen: (prev, current) => prev.password != current.password,
+        builder: (context, state) => BaseCommonTextInput(
+          textFieldController: textControllerPassword,
+          label: 'login.password'.tr(),
+          textInputType: TextInputType.visiblePassword,
+          onChanged: (password) => _bloc.add(
+            LoginChangePasswordEvent(
+              password: password,
+            ),
           ),
+          error: state.passwordError,
         ),
       ),
     );
