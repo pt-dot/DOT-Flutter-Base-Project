@@ -1,6 +1,8 @@
 import 'package:base_flutter/r.dart';
 import 'package:base_flutter/src/ui/module/home/home.dart';
 import 'package:base_flutter/src/ui/module/login/login_bloc.dart';
+import 'package:base_flutter/src/ui/module/login/login_event.dart';
+import 'package:base_flutter/src/ui/module/login/login_state.dart';
 import 'package:base_flutter/src/ui/module/signup/signup.dart';
 import 'package:base_flutter/src/ui/shared/app_title.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
@@ -90,6 +92,11 @@ class _LoginScreenState extends State<LoginScreen> {
         textFieldController: textControllerPassword,
         label: 'login.password'.tr(),
         textInputType: TextInputType.visiblePassword,
+        onChanged: (password) => _bloc.add(
+          LoginChangePasswordEvent(
+            password: password,
+          ),
+        ),
       ),
     );
   }
@@ -102,15 +109,21 @@ class _LoginScreenState extends State<LoginScreen> {
       child: SizedBox(
         width: double.infinity,
         height: 42,
-        child: PrimaryButton(
-          onPress: () {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Home.routeName,
-              ModalRoute.withName('/'),
-            );
-          },
-          title: 'login.login'.tr(),
+        child: BlocBuilder<LoginBloc, LoginState>(
+          bloc: _bloc,
+          buildWhen: (previous, current) =>
+              previous.isFormValid != current.isFormValid,
+          builder: (context, state) => PrimaryButton(
+            onPress: () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Home.routeName,
+                ModalRoute.withName('/'),
+              );
+            },
+            title: 'login.login'.tr(),
+            isEnabled: state.isFormValid,
+          ),
         ),
       ),
     );

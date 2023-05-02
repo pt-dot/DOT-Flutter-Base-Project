@@ -1,5 +1,6 @@
 import 'package:base_flutter/src/ui/module/login/login_event.dart';
 import 'package:base_flutter/src/ui/module/login/login_state.dart';
+import 'package:base_flutter/src/utils/validations/password_validation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -16,5 +17,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   void _onPasswordChanged(
     LoginChangePasswordEvent event,
     Emitter<LoginState> emit,
-  ) {}
+  ) {
+    final password = Password.dirty(event.password ?? '');
+    emit(state.copyWith(
+      password: password,
+      passwordError: password.error,
+      isFormValid: password.isValid,
+    ));
+  }
 }
