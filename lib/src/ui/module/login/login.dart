@@ -79,6 +79,11 @@ class _LoginScreenState extends State<LoginScreen> {
       child: BaseCommonTextInput(
         textFieldController: textControllerUserName,
         label: 'login.username_label'.tr(),
+        onChanged: (value) => _bloc.add(
+          LoginChangeUsernameEvent(
+            username: value,
+          ),
+        ),
       ),
     );
   }
