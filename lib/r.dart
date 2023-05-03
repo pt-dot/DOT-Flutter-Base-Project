@@ -9,6 +9,8 @@ class AssetIcons {
 	static const String icAddStory = 'assets/icons/ic_add_story.svg';
 	static const String icAttachment = 'assets/icons/ic_attachment.svg';
 	static const String icCancel = 'assets/icons/ic_cancel.svg';
+	static const String icChat = 'assets/icons/ic_chat.svg';
+	static const String icCircle = 'assets/icons/ic_circle.svg';
 	static const String icComment = 'assets/icons/ic_comment.svg';
 	static const String icEdit = 'assets/icons/ic_edit.svg';
 	static const String icExplore = 'assets/icons/ic_explore.svg';
