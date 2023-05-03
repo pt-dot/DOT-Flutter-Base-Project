@@ -5,6 +5,7 @@ import 'package:base_flutter/src/ui/module/signup/signup.dart';
 import 'package:base_flutter/src/ui/module/signup/signup_bloc.dart';
 import 'package:base_flutter/src/ui/module/signup_done/signup_done.dart';
 import 'package:base_flutter/src/ui/module/signup_password/signup_password.dart';
+import 'package:base_flutter/src/ui/module/signup_password/signup_password_bloc.dart';
 import 'package:base_flutter/src/ui/module/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +33,10 @@ class AppRoute {
         );
       case SignUpPasswordScreen.routeName:
         return MaterialPageRoute(
-          builder: (BuildContext context) => SignUpPasswordScreen(),
+          builder: (BuildContext context) => BlocProvider(
+            create: (context) => SignupPasswordBloc(),
+            child: SignUpPasswordScreen(),
+          ),
         );
       case SignUpDoneScreen.routeName:
         return MaterialPageRoute(
