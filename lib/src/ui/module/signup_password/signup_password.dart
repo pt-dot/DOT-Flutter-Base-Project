@@ -1,4 +1,7 @@
 import 'package:base_flutter/src/ui/module/signup_done/signup_done.dart';
+import 'package:base_flutter/src/ui/module/signup_password/signup_password_bloc.dart';
+import 'package:base_flutter/src/ui/module/signup_password/signup_password_event.dart';
+import 'package:base_flutter/src/ui/module/signup_password/signup_password_state.dart';
 import 'package:base_flutter/src/ui/shared/app_title.dart';
 import 'package:base_flutter/src/ui/shared/base_common_textinput.dart';
 import 'package:base_flutter/src/ui/shared/bottom_language.dart';
@@ -7,6 +10,7 @@ import 'package:base_flutter/src/ui/styles/colors.dart';
 import 'package:base_flutter/src/ui/styles/sizes.dart';
 import 'package:base_flutter/src/ui/styles/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpPasswordScreen extends StatefulWidget {
   static const String routeName = 'signup_password';
@@ -18,8 +22,15 @@ class SignUpPasswordScreen extends StatefulWidget {
 }
 
 class _SignUpPasswordScreenState extends State<SignUpPasswordScreen> {
-
   TextEditingController textControllerPassword = TextEditingController();
+
+  late SignupPasswordBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = context.read<SignupPasswordBloc>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +95,18 @@ class _SignUpPasswordScreenState extends State<SignUpPasswordScreen> {
       padding: EdgeInsets.symmetric(
         horizontal: MarginSize.defaultMargin,
       ),
-      child: BaseCommonTextInput(
-        textFieldController: textControllerPassword,
-        label: 'Password',
-        textInputType: TextInputType.visiblePassword,
+      child: BlocBuilder<SignupPasswordBloc, SignupPasswordState>(
+        bloc: _bloc,
+        buildWhen: (prev, current) => prev.password != current.password,
+        builder: (context, state) => BaseCommonTextInput(
+          textFieldController: textControllerPassword,
+          label: 'Password',
+          textInputType: TextInputType.visiblePassword,
+          onChanged: (value) => _bloc.add(
+            SignupPasswordChangeEvent(password: value),
+          ),
+          error: state.passwordError,
+        ),
       ),
     );
   }
@@ -100,14 +119,18 @@ class _SignUpPasswordScreenState extends State<SignUpPasswordScreen> {
       child: SizedBox(
         width: double.infinity,
         height: 42,
-        child: PrimaryButton(
-          onPress: () {
-            Navigator.pushNamed(context, SignUpDoneScreen.routeName);
-          },
-          title: 'Next',
+        child: BlocBuilder<SignupPasswordBloc, SignupPasswordState>(
+          bloc: _bloc,
+          buildWhen: (prev, current) => prev.isFormValid != current.isFormValid,
+          builder: (context, state) => PrimaryButton(
+            onPress: () {
+              Navigator.pushNamed(context, SignUpDoneScreen.routeName);
+            },
+            title: 'Next',
+            isEnabled: state.isFormValid,
+          ),
         ),
       ),
     );
   }
-
 }
