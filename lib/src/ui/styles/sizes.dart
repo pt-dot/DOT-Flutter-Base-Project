@@ -33,4 +33,5 @@ class BorderSize {
 
 class BorderRadiusSize {
   static const double postBorderRadius = 14;
+  static const double bottomNavRadius = 14;
 }
